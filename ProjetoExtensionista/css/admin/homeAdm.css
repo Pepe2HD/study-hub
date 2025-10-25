@@ -1,0 +1,163 @@
+body {
+    margin: 0;
+    display: flex;
+    font-family: Arial, sans-serif;
+    display: flex;
+}
+
+.sidebar {
+    background-color: #2b2b2b;
+    width: 20%;
+    position: fixed;
+    height: 100vh;
+    padding: 20px;
+    color: #fff;
+    position: fixed;
+    left: 0;
+    top: 0;
+    transition: 0.3s;
+}
+
+.sidebar.active {
+    left: -20%;
+}
+
+nav {
+    margin-top: 100px;
+}
+
+.logo {
+    width: 200px;
+    display: block;
+    margin: 0 auto 30px;
+    border-radius: 20px;
+}
+
+.sidebar a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    margin: 40px auto;
+    font-size: 35px;
+    width: 60%;
+    position: relative;
+    padding-bottom: 5px;
+}
+
+
+
+.sidebar a::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 3px;
+    width: 100%;
+    background-color: #555;
+    transform-origin: right;
+    transform: scaleX(0);
+    transition: transform 0.5s ease-in-out;
+}
+
+.sidebar a:hover::after {
+    transform: scaleX(1);
+}
+
+.sidebar .sair {
+    color: rgb(212, 96, 96);
+    margin-top: 150px;
+}
+
+.sidebar .sair::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 3px;
+    width: 100%;
+    background-color: #c75e5e;
+    transform-origin: right;
+    transform: scaleX(0);
+    transition: transform 0.5s ease-in-out;
+}
+
+
+
+header {
+    width: 100%;
+    background: transparent;
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px;
+    position: fixed;
+    top: 0;
+}
+
+.menu-btn {
+    background: none;
+    border: none;
+    font-size: 50px;
+    cursor: pointer;
+    color: #ffffff;
+    margin-left: 18%;
+    transition: 0.3s;
+}
+
+.menu-btn.active {
+    margin-left: 30px;
+    color: #2b2b2b;
+}
+
+main {
+    margin-left: 20%;
+    padding: 80px 10px;
+    background-color: #cfe8ff;
+    width: 80%;
+    min-height: 84vh;
+    display: flex;
+    justify-content: center;
+    transition: 0.3s;
+}
+
+.sidebar.active~main {
+    margin-left: 0;
+    width: 100%;
+}
+
+.content {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    font-size: 50px;
+    margin-bottom: 12px;
+}
+
+p {
+    margin-top: 0;
+    font-size: 23px;
+}
+
+.buttons {
+    margin-top: 80px;
+    display: flex;
+    gap: 100px;
+}
+
+.btn {
+    background-color: #4f8ac8;
+    padding: 60px 100px;
+    color: white;
+    text-decoration: none;
+    font-size: 35px;
+    border-radius: 10px;
+    box-shadow: -10px 10px 0px #a1b7c9;
+    transition: transform .2s;
+}
+
+.btn:hover {
+    transform: translate(-10px, 10px);
+    box-shadow: 0px 0px 0px;
+}

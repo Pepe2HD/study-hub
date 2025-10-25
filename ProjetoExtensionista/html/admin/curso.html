@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fasec - Curso</title>
+    <link rel="stylesheet" href="/css/admin/curso.css">
+</head>
+
+<body>
+    <div class="sidebar" id="sidebar">
+        <img src="/images/fasec.jpeg" alt="Logo" class="logo">
+        <nav>
+            <a href="homeAdm.html">Início</a>
+            <a href="prof.html">Professores</a>
+            <a href="curso.html">Cursos</a>
+            <a href="disciplina.html">Disciplinas</a>
+            <a href="sala.html">Salas</a>
+            <a href="/html/user/home.html" class="sair">Sair</a>
+        </nav>
+    </div>
+
+    <header>
+        <button class="menu-btn" id="menu-btn">☰</button>
+    </header>
+
+    <div id="modal" class="modal">
+        <div class="modalContent">
+            <div class="modal-content">
+                <input type="text" id="modalSearch" placeholder="Pesquisar...">
+                <ul id="modalList">
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="confirmModal" class="modalRemove" role="dialog" aria-modal="true">
+        <div class="modalContentRemove">
+            <div class="modal-confirm-box">
+                <p id="confirmText"></p>
+                <div class="modal-buttons">
+                    <button id="confirmNo">Voltar</button>
+                    <button id="confirmYes">Excluir</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <main>
+        <div class="content">
+            <div class="curso-container">
+                <div class="search-bar">
+                    <button id="searchBtn">🔍</button>
+                    <input type="text" placeholder="Pesquisar curso..." id="searchInput">
+                </div>
+
+                <div class="filters">
+                    <button id="btnDisciplinas">Disciplinas</button>
+                    <button id="btnCurso">Professores</button>
+                </div>
+                <div class="filtersActives">
+                    <div id="activeFilters" class="active-filters">
+                    </div>
+                </div>
+
+                <div class="cursos-box">
+                    <div class="cursos-header">
+                        <h3>Cursos</h3>
+                    </div>
+
+                    <ul class="curso-list" id="curso-list">
+                        <li data-professor="Pedro Henrique" data-disciplinas="Introdução à Programação">
+                            <span class="course-name">Engenharia de Software</span>
+                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
+                                <button class="delete-btn">🗑️ Excluir</button>
+                            </div>
+                        </li>
+                        <li data-professor="Giovanna Bonfim" data-disciplinas="Matemática Aplicada,Física Geral">
+                            <span class="course-name">Ciência da Computação</span>
+                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
+                                <button class="delete-btn">🗑️ Excluir</button>
+                            </div>
+                        </li>
+                        <li data-professor="Marcos" data-disciplinas="Física Geral">
+                            <span class="course-name">Biotecnologia</span>
+                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
+                                <button class="delete-btn">🗑️ Excluir</button>
+                            </div>
+                        </li>
+                        <li data-professor="Ana Cecilia" data-disciplinas="Gestão de Pessoas">
+                            <span class="course-name">Ciências Contábeis</span>
+                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
+                                <button class="delete-btn">🗑️ Excluir</button>
+                            </div>
+                        </li>
+                        <li data-professor="Fernando H." data-disciplinas="Introdução à Programação">
+                            <span class="course-name">Design Gráfico</span>
+                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
+                                <button class="delete-btn">🗑️ Excluir</button>
+                            </div>
+                        </li>
+                        <li data-professor="Tiago G." data-disciplinas="Gestão de Pessoas">
+                            <span class="course-name">Psicologia</span>
+                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
+                                <button class="delete-btn">🗑️ Excluir</button>
+                            </div>
+                        </li>
+                        <li data-professor="Lorena M." data-disciplinas="Matemática Aplicada">
+                            <span class="course-name">Medicina</span>
+                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
+                                <button class="delete-btn">🗑️ Excluir</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="createCurso">
+                    <div class="text">
+                        <div class="title">Cadastre um curso</div>
+                        <div class="subtitle">Inclua um curso e configure suas atribuições na faculdade.</div>
+                    </div>
+                    <div class="button">
+                        <a href="/html/admin/createCurso.html">
+                            <button>Cadastre-aqui</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/js/admin/curso.js"></script>
+</body>
+
+</html>

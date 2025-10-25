@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fasec - Atualizando Professor</title>
+    <link rel="stylesheet" href="/css/admin/edit.css">
+</head>
+
+<body>
+    <div class="sidebar" id="sidebar">
+        <img src="/images/fasec.jpeg" alt="Logo" class="logo">
+        <nav>
+            <a href="homeAdm.html">Início</a>
+            <a href="prof.html">Professores</a>
+            <a href="curso.html">Cursos</a>
+            <a href="disciplina.html">Disciplinas</a>
+            <a href="sala.html">Salas</a>
+            <a href="/html/user/home.html" class="sair">Sair</a>
+        </nav>
+    </div>
+
+    <header>
+        <button class="menu-btn" id="menu-btn">☰</button>
+    </header>
+
+    <main>
+        <div class="content">
+            <div class="form-container">
+                <div class="title">
+                    <h1>Atualizando professor</h1>
+                </div>
+
+                <div class="form-box">
+                    <input type="text" id="nome" name="nome" placeholder="Nome">
+                    <input type="email" id="email" name="email" placeholder="Email">
+                </div>
+
+                <div class="button-group">
+                    <button class="btn-voltar" onclick="window.history.back()">Voltar</button>
+                    <button class="btn-cadastrar" id="btnCadastrar" type="button">Cadastrar</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/js/admin/editProf.js"></script>
+</body>
+
+</html>

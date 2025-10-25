@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fasec - Salas</title>
+    <link rel="stylesheet" href="/css/admin/sala.css">
+</head>
+
+<body>
+    <div class="sidebar" id="sidebar">
+        <img src="/images/fasec.jpeg" alt="Logo" class="logo">
+        <nav>
+            <a href="homeAdm.html">Início</a>
+            <a href="prof.html">Professores</a>
+            <a href="curso.html">Cursos</a>
+            <a href="disciplina.html">Disciplinas</a>
+            <a href="sala.html">Salas</a>
+            <a href="/html/user/home.html" class="sair">Sair</a>
+        </nav>
+    </div>
+
+    <header>
+        <button class="menu-btn" id="menu-btn">☰</button>
+    </header>
+
+    <div id="modal" class="modal">
+        <div class="modalContent">
+            <div class="modal-content">
+                <input type="text" id="modalSearch" placeholder="Pesquisar...">
+                <ul id="modalList">
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="confirmModal" class="modalRemove" role="dialog" aria-modal="true">
+        <div class="modalContentRemove">
+            <div class="modal-confirm-box">
+                <p id="confirmText"></p>
+                <div class="modal-buttons">
+                    <button id="confirmNo">Voltar</button>
+                    <button id="confirmYes">Excluir</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <main>
+        <div class="content">
+            <div class="sala-container">
+                <div class="search-bar">
+                    <button id="searchBtn">🔍</button>
+                    <input type="text" placeholder="Pesquisar sala..." id="searchInput">
+                </div>
+
+                <div class="filters">
+                    <button id="btnBlocos">Bloco</button>
+                </div>
+                <div class="filtersActives">
+                    <div id="activeFilters" class="active-filters">
+                    </div>
+                </div>
+
+                <div class="salas-box">
+                    <div class="salas-header">
+                        <h3>Salas</h3>
+                    </div>
+
+                    <ul class="sala-list" id="sala-list">
+                        <li data-bloco="Bloco A">
+                            <span class="course-name">Sala 11 - Bloco B</span>
+                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
+                                <button class="delete-btn">🗑️ Excluir</button>
+                            </div>
+                        </li>
+                        <li data-bloco="Bloco A">
+                            <span class="course-name">Sala 13 - Bloco A</span>
+                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
+                                <button class="delete-btn">🗑️ Excluir</button>
+                            </div>
+                        </li>
+                        <li data-bloco="Bloco A">
+                            <span class="course-name">Sala 8 - Bloco A</span>
+                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
+                                <button class="delete-btn">🗑️ Excluir</button>
+                            </div>
+                        </li>
+                        <li data-bloco="Bloco B">
+                            <span class="course-name">Sala 9 - Bloco B</span>
+                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
+                                <button class="delete-btn">🗑️ Excluir</button>
+                            </div>
+                        </li>
+                        <li data-bloco="Bloco B">
+                            <span class="course-name">Sala 16 - Bloco A</span>
+                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
+                                <button class="delete-btn">🗑️ Excluir</button>
+                            </div>
+                        </li>
+                        <li data-bloco="Bloco B">
+                            <span class="course-name">Sala 18 - Bloco B</span>
+                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
+                                <button class="delete-btn">🗑️ Excluir</button>
+                            </div>
+                        </li>
+                        <li data-bloco="Bloco B">
+                            <span class="course-name">Sala 20 - Bloco B</span>
+                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
+                                <button class="delete-btn">🗑️ Excluir</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="createSala">
+                    <div class="text">
+                        <div class="title">Cadastre uma sala</div>
+                        <div class="subtitle">Inclua uma sala e configure suas atribuições na faculdade.</div>
+                    </div>
+                    <div class="button">
+                        <a href="/html/admin/createSala.html">
+                            <button>Cadastre-aqui</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/js/admin/sala.js"></script>
+</body>
+
+</html>

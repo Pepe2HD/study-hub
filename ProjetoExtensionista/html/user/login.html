@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fasec - Login</title>
+    <link rel="stylesheet" href="/css/user/login.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="left-side">
+            <h1>Ainda não cadastrado?</h1>
+            <p>Cadastre-se agora mesmo clicando no botão abaixo!</p>
+            <button id="btn-cadastro" onclick="cadastrar()">Cadastre-se</button>
+        </div>
+
+        <div class="right-side">
+            <img src="/images/fasec.jpeg" alt="Logo FASEC" class="logo">
+            <div class="login-box">
+                <input type="text" placeholder="Usuário" id="usuario">
+                <input type="password" placeholder="Senha" id="senha">
+                <a href="#" id="esqueceu-senha">Esqueci a senha...</a>
+                <button id="btn-login" onclick="login()">LOGIN</button>
+                <button id="btn-entrar-sem-login" onclick="entrarSemLogin()">ENTRAR SEM LOGIN</button>
+            </div>
+            <button id="btn-voltar" onclick="voltar()">VOLTAR</button>
+        </div>
+    </div>
+
+    <script src="/js/user/login.js"></script>
+</body>
+
+</html>

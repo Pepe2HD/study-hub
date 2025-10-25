@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fasec - Cadastro</title>
+    <link rel="stylesheet" href="/css/user/register.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="left-side">
+            <img src="/images/fasec.jpeg" alt="Logo FASEC" class="logo">
+            <div class="login-box">
+                <input type="text" placeholder="Usuário" id="usuario">
+                <input type="password" placeholder="Senha" id="senha">
+                <button id="btn-login" onclick="cadastrar()">CADASTRAR</button>
+                <button id="btn-entrar-sem-login" onclick="entrarSemLogin()">ENTRAR SEM LOGIN</button>
+            </div>
+            <button id="btn-voltar" onclick="voltar()">VOLTAR</button>
+        </div>
+        <div class="right-side">
+            <h1>Já possui login?</h1>
+            <p>Faça login agora mesmo clicando no botão aqui abaixo para se atualizar!</p>
+            <button id="btn-cadastro" onclick="login()">Login</button>
+        </div>
+
+
+
+    </div>
+
+    <script src="/js/user/register.js"></script>
+</body>
+
+</html>

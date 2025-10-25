@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fasec - Atualizando Curso</title>
+    <link rel="stylesheet" href="/css/admin/edit.css        ">
+</head>
+
+<body>
+    <div class="sidebar" id="sidebar">
+        <img src="/images/fasec.jpeg" alt="Logo" class="logo">
+        <nav>
+            <a href="homeAdm.html">Início</a>
+            <a href="prof.html">Professores</a>
+            <a href="curso.html">Cursos</a>
+            <a href="disciplina.html">Disciplinas</a>
+            <a href="sala.html">Salas</a>
+            <a href="/html/user/home.html" class="sair">Sair</a>
+        </nav>
+    </div>
+
+    <header>
+        <button class="menu-btn" id="menu-btn">☰</button>
+    </header>
+
+    <div id="overlay"></div>
+    <div id="modalHorario">
+        <span id="closeModal">&times;</span>
+        <table>
+            <tr>
+                <th>Horário</th>
+                <th>Segunda-feira</th>
+                <th>Terça-feira</th>
+                <th>Quarta-feira</th>
+                <th>Quinta-feira</th>
+                <th>Sexta-feira</th>
+                <th>Sábado</th>
+                <th>Domingo</th>
+            </tr>
+            <tr>
+                <td>8:00 - 9:50</td>
+                <td>Probabilidade e Estatistica <br>Bloco A, Sala 20</td>
+                <td>Programação Orientada a Objeto <br>Bloco A, Sala 16</td>
+                <td>Estrutura de Dados 1 <br>Bloco B, Sala 18</td>
+                <td>Prática Extensionista <br>Bloco A, Sala 5</td>
+                <td>Metodologia Cíentifica <br>Bloco B, Sala 7</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>9:50 - 11:40</td>
+                <td>Probabilidade e Estatistica <br>Bloco A, Sala 20</td>
+                <td>Programação Orientada a Objeto <br>Bloco A, Sala 16</td>
+                <td>Estrutura de Dados 1 <br>Bloco B, Sala 18</td>
+                <td>Prática Extensionista <br>Bloco A, Sala 5</td>
+                <td>Metodologia Cíentifica <br>Bloco B, Sala 7</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Almoço <br>11:00 - 14:00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>14:00 - 15:50</td>
+                <td></td>
+                <td></td>
+                <td>Calculo diferencial e integral I <br> Bloco A, Sala 18</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>15:50 - 17:40</td>
+                <td></td>
+                <td></td>
+                <td>Calculo diferencial e integral I <br> Bloco A, Sala 18</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Jantar <br>17:40 - 19:00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>19:00 - 20:50</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>20:50 - 22:00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+
+    <main>
+        <div class="content">
+            <div class="form-container">
+                <div class="title">
+                    <h1>Atualizando curso</h1>
+                </div>
+
+                <div class="form-box">
+                    <input type="text" id="nome" name="nome" placeholder="Nome">
+                    <input type="number" id="hours" name="hours" placeholder="Carga horaria total">
+
+                    <input type="button" id="btnHorario" name="btnHorario" value="Quadro de horarios">
+                </div>
+
+                <div class="button-group">
+                    <button class="btn-voltar" onclick="window.history.back()">Voltar</button>
+                    <button class="btn-cadastrar" id="btnCadastrar" type="button">Cadastrar</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/js/admin/editCurso.js"></script>
+</body>
+
+</html>

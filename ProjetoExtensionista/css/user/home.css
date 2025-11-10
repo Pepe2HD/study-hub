@@ -439,9 +439,54 @@ p {
 }
 
 
+/* ======== RESPONSIVIDADE GERAL ======== */
+
+/* Tablets (até 1024px) */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 30%;
+    }
+
+    main {
+        margin-left: 30%;
+        width: 70%;
+    }
+
+    .buttons {
+        gap: 40px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .sidebar.active {
+        left: -30%;
+    }
+
+    .menu-btn {
+        margin-left: 25%;
+        color: #fff;
+    }
+
+    .btn {
+        padding: 40px 60px;
+        font-size: 28px;
+    }
+
+    h1 {
+        font-size: 40px;
+    }
+
+    p {
+        font-size: 20px;
+    }
+}
+
+/* Celulares (até 768px) */
 @media (max-width: 768px) {
     .sidebar {
-        left: -220px;
+        left: -100%;
+        width: 70%;
+        transition: 0.3s;
     }
 
     .sidebar.active {
@@ -450,10 +495,126 @@ p {
 
     .menu-btn {
         margin-left: 10px;
+        font-size: 40px;
+        color: #2b2b2b;
+    }
+
+    .menu-btn.active {
+        margin-left: 60%;
+        color: #fff;
     }
 
     main {
         margin-left: 0;
-        padding: 80px 20px;
+        width: 100%;
+        padding: 100px 20px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .content {
+        width: 100%;
+        text-align: center;
+    }
+
+    .buttons {
+        flex-direction: column;
+        gap: 25px;
+        align-items: center;
+    }
+
+    .btn {
+        padding: 30px 50px;
+        font-size: 24px;
+    }
+
+    .search-bar {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+        align-items: stretch;
+    }
+
+    .search-bar input {
+        width: 100%;
+        margin-bottom: 10px;
+        font-size: 18px;
+    }
+
+    .search-bar button {
+        width: 100%;
+        height: 50px;
+        margin: 0;
+        border-radius: 10px;
+    }
+
+    .filters {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .filters button {
+        width: 45%;
+        font-size: 15px;
+    }
+
+    .cursos-box {
+        width: 100%;
+        padding: 15px;
+    }
+
+    #modal {
+        width: 95%;
+        padding: 15px;
+    }
+
+    #modal table,
+    #modal th,
+    #modal td {
+        font-size: 12px;
+    }
+
+    .modal-content-grade {
+        width: 95%;
+        padding: 25px;
+    }
+
+    .gradeContent {
+        width: 80%;
+        padding: 25px;
+    }
+}
+
+/* Celulares pequenos (até 480px) */
+@media (max-width: 480px) {
+    .logo {
+        width: 120px;
+    }
+
+    .btn {
+        padding: 20px 30px;
+        font-size: 20px;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+
+    p {
+        font-size: 18px;
+    }
+
+    .filters button {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .filter-tag {
+        font-size: 12px;
+        padding: 4px 8px;
+    }
+
+    #closeModal {
+        font-size: 28px;
     }
 }

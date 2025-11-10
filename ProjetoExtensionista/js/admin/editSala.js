@@ -43,14 +43,4 @@ document.addEventListener('DOMContentLoaded', function () {
             window.location.href = '/html/admin/sala.html';
         });
     }
-
-    const menuBtn = document.getElementById('menu-btn');
-    const sidebar = document.getElementById('sidebar');
-
-    if (menuBtn && sidebar) {
-        menuBtn.addEventListener('click', function () {
-            sidebar.classList.toggle('active');
-        });
-    }
-
 });

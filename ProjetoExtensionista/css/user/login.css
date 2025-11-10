@@ -169,3 +169,191 @@ html {
 #btn-voltar:hover {
     background-color: #c0392b;
 }
+
+/* ======== RESPONSIVIDADE ======== */
+
+@media (max-width: 1354px) {
+    .left-side h1 {
+        font-size: 40px;
+    }
+
+    .left-side p {
+        font-size: 16px;
+    }
+
+    .login-box {
+        width: 70%;
+        height: auto;
+        margin-top: 25%;
+        padding: 25px;
+    }
+
+    .login-box input {
+        font-size: 16px;
+    }
+
+    .login-box button {
+        font-size: 18px;
+    }
+
+    .logo {
+        width: 130px;
+    }
+}
+
+@media (max-width: 1100px) {
+    .left-side h1 {
+        font-size: 50px;
+    }
+
+    .left-side p {
+        font-size: 16px;
+    }
+
+    .login-box {
+        width: 90%;
+        height: auto;
+        margin-top: 25%;
+        padding: 25px;
+    }
+
+    .login-box input {
+        font-size: 16px;
+    }
+
+    .login-box button {
+        font-size: 18px;
+    }
+
+    
+}
+
+@media (max-width: 830px) {
+    .container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .left-side {
+        flex: none;
+        width: 100%;
+        height: auto;
+        padding: 40px 20px;
+        text-align: center;
+    }
+
+    .left-side h1 {
+        font-size: 36px;
+        margin-top: 10%;
+    }
+
+    .left-side p {
+        font-size: 16px;
+        margin-top: 15px;
+    }
+
+    .left-side button {
+        margin-top: 30px;
+        padding: 12px 25px;
+        font-size: 18px;
+    }
+
+    .right-side {
+        flex: none;
+        width: 100%;
+        padding: 30px 20px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .login-box {
+        width: 75%;
+        height: auto;
+        padding: 25px;
+        margin-top: 5%;
+    }
+
+    .login-box input {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    #btn-login {
+        width: 100%;
+    }
+
+    .login-box button {
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    #btn-entrar-sem-login {
+        width: 100%;
+    }
+
+    .logo {
+        position: static;
+        transform: none;
+        width: 120px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    #btn-voltar {
+        width: 60%;
+        font-size: 16px;
+        padding: 15px;
+    }
+
+    .logo {
+        width: 200px;
+    }
+}
+
+@media (max-width: 540px) {
+    .login-box {
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .left-side h1 {
+        font-size: 30px;
+    }
+
+    .left-side p {
+        font-size: 14px;
+    }
+
+    .left-side button {
+        width: 100%;
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    .login-box {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .login-box input {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .login-box button {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .logo {
+        width: 100px;
+        margin-bottom: 15px;
+    }
+
+    #btn-voltar {
+        font-size: 15px;
+        padding: 12px;
+        width: 100%;
+    }
+}

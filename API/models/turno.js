@@ -25,6 +25,10 @@ module.exports = (sequelize, DataTypes) => {
     turno: {
       type: DataTypes.STRING(50),
       allowNull: false,
+    },
+    numero: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     }
   }, {
     sequelize,

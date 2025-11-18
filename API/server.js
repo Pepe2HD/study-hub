@@ -8,6 +8,7 @@ app.use(cors({
     "https://studys-hub.netlify.app",
     "http://localhost:3000"         
   ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], 
   credentials: true // se você usa cookies ou autenticação
 }));
 

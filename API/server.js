@@ -4,9 +4,11 @@ const app = express();
 const routes = require('./routes');
 
 app.use(cors({
-    origin: ['http://127.0.0.1:5500','https://studys-hub.netlify.app/'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
-    allowedHeaders: ['Content-Type']
+  origin: [
+    "https://studys-hub.netlify.app",
+    "http://localhost:3000"         
+  ],
+  credentials: true // se você usa cookies ou autenticação
 }));
 
 app.use(express.json());

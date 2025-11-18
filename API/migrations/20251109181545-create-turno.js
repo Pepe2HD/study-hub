@@ -13,6 +13,10 @@ module.exports = {
         type: Sequelize.STRING(50),
         allowNull: false,
       },
+      numero: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
     });
   },
   async down(queryInterface, Sequelize) {

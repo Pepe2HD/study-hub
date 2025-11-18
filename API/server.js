@@ -6,7 +6,7 @@ const routes = require('./routes');
 app.use(cors({
   origin: [
     "https://studys-hub.netlify.app",
-    "http://localhost:3000"         
+    "http://127.0.0.1"         
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE'], 
   credentials: true // se você usa cookies ou autenticação

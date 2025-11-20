@@ -17,7 +17,7 @@
             <a href="curso.html">Cursos</a>
             <a href="disciplina.html">Disciplinas</a>
             <a href="sala.html">Salas</a>
-            <a href="/html/user/home.html" class="sair">Sair</a>
+            <a href="/index.html" class="sair">Sair</a>
         </nav>
     </div>
 
@@ -28,7 +28,7 @@
     <div id="overlay"></div>
     <div id="modalHorario">
         <span id="closeModal">&times;</span>
-        <table>
+        <table id="tabelaHorario">
             <tr>
                 <th>Horário</th>
                 <th>Segunda-feira</th>
@@ -41,86 +41,125 @@
             </tr>
             <tr>
                 <td>8:00 - 9:50</td>
-                <td>Probabilidade e Estatistica <br>Bloco A, Sala 20</td>
-                <td>Programação Orientada a Objeto <br>Bloco A, Sala 16</td>
-                <td>Estrutura de Dados 1 <br>Bloco B, Sala 18</td>
-                <td>Prática Extensionista <br>Bloco A, Sala 5</td>
-                <td>Metodologia Cíentifica <br>Bloco B, Sala 7</td>
-                <td></td>
-                <td></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
             </tr>
             <tr>
                 <td>9:50 - 11:40</td>
-                <td>Probabilidade e Estatistica <br>Bloco A, Sala 20</td>
-                <td>Programação Orientada a Objeto <br>Bloco A, Sala 16</td>
-                <td>Estrutura de Dados 1 <br>Bloco B, Sala 18</td>
-                <td>Prática Extensionista <br>Bloco A, Sala 5</td>
-                <td>Metodologia Cíentifica <br>Bloco B, Sala 7</td>
-                <td></td>
-                <td></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
             </tr>
             <tr>
                 <td>Almoço <br>11:00 - 14:00</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td >-</td>
+                <td >-</td>
+                <td >-</td>
+                <td >-</td>
+                <td >-</td>
+                <td >-</td>
+                <td >-</td>
             </tr>
             <tr>
                 <td>14:00 - 15:50</td>
-                <td></td>
-                <td></td>
-                <td>Calculo diferencial e integral I <br> Bloco A, Sala 18</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
             </tr>
             <tr>
                 <td>15:50 - 17:40</td>
-                <td></td>
-                <td></td>
-                <td>Calculo diferencial e integral I <br> Bloco A, Sala 18</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
             </tr>
             <tr>
                 <td>Jantar <br>17:40 - 19:00</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
             </tr>
             <tr>
                 <td>19:00 - 20:50</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
             </tr>
             <tr>
                 <td>20:50 - 22:00</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
             </tr>
         </table>
     </div>
+
+<div id="overlaySelecao" class="overlay-selecao"></div>
+
+<div id="modalSelecao" class="modal-selecao">
+    <div class="modal-header-selecao">
+        <h2>Selecionar Disciplina / Professor / Sala</h2>
+        <button id="closeSelecao" class="close-selecao">&times;</button>
+    </div>
+
+    <div class="modal-body-selecao">
+
+        <!-- SEÇÃO DISCIPLINAS -->
+        <div class="selecao-bloco">
+            <h3>Disciplinas</h3>
+            <input id="buscaDisciplina" type="text" placeholder="Pesquisar disciplina...">
+            <ul id="listaDisciplinas" class="lista-selecao"></ul>
+        </div>
+
+        <!-- SEÇÃO PROFESSORES -->
+        <div class="selecao-bloco">
+            <h3>Professores</h3>
+            <input id="buscaProfessor" type="text" placeholder="Pesquisar professor..." disabled>
+            <ul id="listaProfessores" class="lista-selecao"></ul>
+        </div>
+
+        <!-- SEÇÃO SALAS -->
+        <div class="selecao-bloco">
+            <h3>Salas</h3>
+            <input id="buscaSala" type="text" placeholder="Pesquisar sala..." disabled>
+            <ul id="listaSalas" class="lista-selecao"></ul>
+        </div>
+
+    </div>
+
+    <div class="modal-footer-selecao">
+        <button id="btnAdicionarHorario" class="btn-adicionar-horario">Adicionar ao horário</button>
+    </div>
+</div>
+
 
     <main>
         <div class="content">
@@ -132,13 +171,21 @@
                 <div class="form-box">
                     <input type="text" id="nome" name="nome" placeholder="Nome">
                     <input type="number" id="hours" name="hours" placeholder="Carga horaria total">
+                    <div class="form-box">
+                        <label for="periodo">Período:</label>
+                        <select id="periodo" name="periodo">
+                            <option value="">-- Selecione período --</option>
+                        </select>
+                        <span id="textoPeriodoSelecionado"></span>
+                    </div>
+
 
                     <input type="button" id="btnHorario" name="btnHorario" value="Quadro de horarios">
                 </div>
 
                 <div class="button-group">
                     <button class="btn-voltar" onclick="window.history.back()">Voltar</button>
-                    <button class="btn-cadastrar" id="btnCadastrar" type="button">Cadastrar</button>
+                    <button class="btn-cadastrar" id="btnCadastrar" type="button">Atualizar</button>
                 </div>
             </div>
         </div>

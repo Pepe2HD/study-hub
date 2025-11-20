@@ -798,4 +798,19 @@ p {
         width: 90%;
         font-size: 18px;
     }
+
+
+    .search-bar input {
+    width: 100%;
+}
+
+.search-bar ::placeholder {
+    font-size: 18px;
+}
+
+.search-bar button {
+    padding: 10px 15px;
+    font-size: 18px;
+    margin-left: 5px;
+}
 }

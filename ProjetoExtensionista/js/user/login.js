@@ -16,9 +16,9 @@ function login() {
 }
 
 function entrarSemLogin() {
-    window.location.href = "home.html";
+    window.location.href = "/index.html";
 }
 
 function voltar() {
-    window.location.href = "home.html";
+    window.location.href = "/index.html";
 }

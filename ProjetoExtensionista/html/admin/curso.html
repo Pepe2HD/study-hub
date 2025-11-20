@@ -17,7 +17,7 @@
             <a href="curso.html">Cursos</a>
             <a href="disciplina.html">Disciplinas</a>
             <a href="sala.html">Salas</a>
-            <a href="/html/user/home.html" class="sair">Sair</a>
+            <a href="/index.html" class="sair">Sair</a>
         </nav>
     </div>
 
@@ -59,7 +59,7 @@
 
                 <div class="filters">
                     <button id="btnDisciplinas">Disciplinas</button>
-                    <button id="btnCurso">Professores</button>
+                    <button id="btnProfessores">Professores</button>
                 </div>
                 <div class="filtersActives">
                     <div id="activeFilters" class="active-filters">
@@ -71,50 +71,7 @@
                         <h3>Cursos</h3>
                     </div>
 
-                    <ul class="curso-list" id="curso-list">
-                        <li data-professor="Pedro Henrique" data-disciplinas="Introdução à Programação">
-                            <span class="course-name">Engenharia de Software</span>
-                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
-                                <button class="delete-btn">🗑️ Excluir</button>
-                            </div>
-                        </li>
-                        <li data-professor="Giovanna Bonfim" data-disciplinas="Matemática Aplicada,Física Geral">
-                            <span class="course-name">Ciência da Computação</span>
-                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
-                                <button class="delete-btn">🗑️ Excluir</button>
-                            </div>
-                        </li>
-                        <li data-professor="Marcos" data-disciplinas="Física Geral">
-                            <span class="course-name">Biotecnologia</span>
-                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
-                                <button class="delete-btn">🗑️ Excluir</button>
-                            </div>
-                        </li>
-                        <li data-professor="Ana Cecilia" data-disciplinas="Gestão de Pessoas">
-                            <span class="course-name">Ciências Contábeis</span>
-                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
-                                <button class="delete-btn">🗑️ Excluir</button>
-                            </div>
-                        </li>
-                        <li data-professor="Fernando H." data-disciplinas="Introdução à Programação">
-                            <span class="course-name">Design Gráfico</span>
-                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
-                                <button class="delete-btn">🗑️ Excluir</button>
-                            </div>
-                        </li>
-                        <li data-professor="Tiago G." data-disciplinas="Gestão de Pessoas">
-                            <span class="course-name">Psicologia</span>
-                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
-                                <button class="delete-btn">🗑️ Excluir</button>
-                            </div>
-                        </li>
-                        <li data-professor="Lorena M." data-disciplinas="Matemática Aplicada">
-                            <span class="course-name">Medicina</span>
-                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
-                                <button class="delete-btn">🗑️ Excluir</button>
-                            </div>
-                        </li>
-                    </ul>
+                    <ul class="curso-list" id="curso-list"></ul>
                 </div>
 
                 <div class="createCurso">

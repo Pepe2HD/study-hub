@@ -8,7 +8,6 @@ if (menuBtn && sidebar) {
     });
 }
 
-
 document.addEventListener('DOMContentLoaded', function () {
     const btnCadastrar = document.getElementById('btnCadastrar');
     const inputNome = document.getElementById('nome');

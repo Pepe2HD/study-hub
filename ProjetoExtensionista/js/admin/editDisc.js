@@ -36,7 +36,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-
 });
 
 const btnAbrirModalCurso = document.getElementById('btnAbrirModalCurso');
@@ -167,6 +166,5 @@ btnCadastrar.addEventListener('click', () => {
     cursosAssociadosTags.innerHTML = '';
     updateButtonStatus();
 });
-
 
 updateButtonStatus();

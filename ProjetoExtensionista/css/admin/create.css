@@ -452,6 +452,288 @@ h1 {
     font-weight: bold;
 }
 
+.btnAdd {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.btnAdd:hover {
+    background: #0056b3;
+}
+
+.modal-disciplina {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999999;
+}
+
+.modal-disciplina .modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.modal-disciplina input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.modal-disciplina button {
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}
+
+#btnSalvarHorario {
+    background: #28a745;
+    color: white;
+}
+
+#btnFecharDisciplina {
+    background: #dc3545;
+    color: white;
+}
+
+/* ====================== OVERLAY ====================== */
+
+.overlay-selecao {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(3px);
+    display: none;
+    z-index: 90;
+}
+
+/* ====================== MODAL ====================== */
+
+.modal-selecao {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 850px;
+    max-width: 95%;
+    background: #fff;
+    transform: translate(-50%, -50%);
+    border-radius: 12px;
+    padding: 0;
+    display: none;
+    z-index: 100;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        scale: 0.95;
+    }
+
+    to {
+        opacity: 1;
+        scale: 1;
+    }
+}
+
+/* ====================== HEADER ====================== */
+
+.modal-header-selecao {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #0d6efd;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 12px 12px 0 0;
+}
+
+.modal-header-selecao h2 {
+    margin: 0;
+}
+
+.close-selecao {
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+}
+
+.close-selecao:hover {
+    opacity: 0.7;
+}
+
+/* ====================== BODY ====================== */
+
+.modal-body-selecao {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+
+.selecao-bloco {
+    flex: 1;
+    border-right: 1px solid #ddd;
+    padding-right: 20px;
+}
+
+.selecao-bloco:last-child {
+    border-right: none;
+}
+
+.selecao-bloco input {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #bbb;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.selecao-bloco input:disabled {
+    background: #eee;
+    cursor: not-allowed;
+}
+
+.lista-selecao {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 260px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.lista-selecao li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+.lista-selecao li:hover {
+    background: #f2f6ff;
+}
+
+.lista-selecao li:last-child {
+    border-bottom: none;
+}
+
+/* ====================== FOOTER ====================== */
+
+.modal-footer-selecao {
+    padding: 15px 20px;
+    background: #f8f8f8;
+    border-radius: 0 0 12px 12px;
+    text-align: right;
+}
+
+.btn-adicionar-horario {
+    background: #198754;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.btn-adicionar-horario:hover {
+    background: #157347;
+}
+
+.campo-vazio {
+    color: #888;
+    font-style: italic;
+    cursor: pointer;
+    text-align: center;
+}
+
+.campo-vazio:hover {
+    color: #000;
+}
+
+.texto-periodo {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.cell-content-agenda {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    padding: 2px 5px;
+
+    font-size: 0.8em;
+    line-height: 1.2;
+
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.cell-content-agenda strong {
+    margin-bottom: 0;
+    font-weight: bold;
+}
+
+.cell-content-agenda span {
+    margin: 0;
+    color: #666;
+}
+
+.remover-horario-btn {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    color: #d9534f;
+    font-size: 1.1em;
+    padding: 0 4px;
+    line-height: 1;
+    opacity: 0.8;
+}
+
+.remover-horario-btn:hover {
+    opacity: 1;
+}
+
+
+
+
 /* ===================== RESPONSIVIDADE ===================== */
 
 @media (max-width: 1200px) {
@@ -468,7 +750,7 @@ h1 {
         left: -25%;
     }
 
-    .sidebar.active ~ main {
+    .sidebar.active~main {
         margin-left: 0;
         width: 100%;
     }

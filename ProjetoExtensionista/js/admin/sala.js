@@ -1,3 +1,6 @@
+/* ============================
+   MENU LATERAL
+=============================*/
 const menuBtn = document.getElementById('menu-btn');
 const sidebar = document.getElementById('sidebar');
 
@@ -8,22 +11,155 @@ if (menuBtn && sidebar) {
     });
 }
 
-const btnBlocos = document.getElementById('btnBlocos');
+/* ============================
+   ELEMENTOS DA PÁGINA
+=============================*/
+const salasList = document.getElementById('sala-list');
+const searchInput = document.getElementById('searchInput');
 
+const confirmModal = document.getElementById('confirmModal');
+const confirmText = document.getElementById('confirmText');
+const confirmYes = document.getElementById('confirmYes');
+const confirmNo = document.getElementById('confirmNo');
+
+const btnBlocos = document.getElementById('btnBlocos');
 const modalFiltro = document.getElementById('modal');
 const modalList = document.getElementById('modalList');
 const modalSearch = document.getElementById('modalSearch');
-
-const salaList = document.getElementById('sala-list');
 const activeFiltersDiv = document.getElementById('activeFilters');
 
-const blocos = [
-    'Bloco A',
-    'Bloco B'
-];
-
+let salaSelecionada = null;
+let blocos = [];
 let activeFilters = { blocos: [] };
 let currentList = [];
+
+/* ============================
+   API
+=============================*/
+const API_URL = "https://study-hub-7qc5.onrender.com/sala";
+
+/* ============================
+   1. CARREGAR SALAS DA API
+=============================*/
+let salasCache = [];
+
+async function carregarSalas() {
+    salasList.innerHTML = "<li>Carregando salas...</li>";
+
+    try {
+        const response = await fetch(API_URL);
+        const salas = await response.json();
+        salasCache = salas;
+
+        if (!Array.isArray(salas) || salas.length === 0) {
+            salasList.innerHTML = `
+                <li style="text-align:center; padding:15px;">
+                    Nenhuma sala foi adicionada ainda.
+                </li>
+            `;
+            return;
+        }
+
+        gerarListaDeBlocos(salas);
+        renderizarSalas(salas);
+
+    } catch (error) {
+        console.error(error);
+        salasList.innerHTML = "<li>Erro ao carregar salas.</li>";
+    }
+}
+
+/* ============================
+   2. GERAR LISTA DE BLOCOS DINAMICAMENTE
+=============================*/
+function gerarListaDeBlocos(salas) {
+    const setBlocos = new Set();
+
+    salas.forEach(sala => {
+        if (sala.bloco) setBlocos.add(sala.bloco);
+    });
+
+    blocos = [...setBlocos];
+}
+
+/* ============================
+   3. RENDERIZAR SALAS
+=============================*/
+function renderizarSalas(salas) {
+    salasList.innerHTML = "";
+
+    salas.forEach(sala => {
+        const li = document.createElement("li");
+        li.dataset.bloco = sala.bloco;
+
+        li.innerHTML = `
+            <span class="course-name">
+                ${sala.nome} — Bloco ${sala.bloco}
+            </span>
+
+            <div class="actions">
+                <button class="edit-btn" onclick="editarSala(${sala.id_sala})">✏️ Editar</button>
+                <button class="delete-btn" onclick="abrirModalExcluir(${sala.id_sala}, '${sala.nome}')">🗑️ Excluir</button>
+            </div>
+        `;
+
+        salasList.appendChild(li);
+    });
+
+    filterSalas();
+}
+
+/* ============================
+   4. EDITAR SALA
+=============================*/
+function editarSala(id) {
+    window.location.href = `/html/admin/editSala.html?id=${id}`;
+}
+
+/* ============================
+   5. EXCLUSÃO
+=============================*/
+function abrirModalExcluir(id, nome) {
+    salaSelecionada = id;
+    confirmText.textContent = `Tem certeza que deseja excluir a sala “${nome}”?`;
+    confirmModal.style.display = "flex";
+}
+
+confirmYes.addEventListener("click", async () => {
+    if (!salaSelecionada) return;
+
+    try {
+        const response = await fetch(`${API_URL}/${salaSelecionada}`, {
+            method: "DELETE"
+        });
+
+        if (!response.ok) {
+            alert("Não foi possível excluir a sala.");
+            return;
+        }
+
+        confirmModal.style.display = "none";
+        carregarSalas();
+
+    } catch (error) {
+        console.error(error);
+        alert("Erro ao excluir sala.");
+    }
+});
+
+confirmNo.addEventListener("click", () => {
+    confirmModal.style.display = "none";
+});
+
+/* ============================
+   6. PESQUISA POR NOME
+=============================*/
+searchInput.addEventListener("input", () => filterSalas());
+
+/* ============================
+   7. FILTROS DE BLOCO
+=============================*/
+btnBlocos.addEventListener("click", () => openFiltro(blocos, 'blocos'));
 
 function openFiltro(list, type) {
     currentList = list;
@@ -35,70 +171,27 @@ function openFiltro(list, type) {
 }
 
 function renderList(list, type) {
-    modalList.innerHTML = '';
+    modalList.innerHTML = "";
+
     list.forEach(item => {
-        const li = document.createElement('li');
+        const li = document.createElement("li");
         li.textContent = item;
+
         li.onclick = () => {
             addFilter(item, type);
             closeFiltro();
             filterSalas();
         };
+
         modalList.appendChild(li);
     });
 }
 
 function closeFiltro() {
-    modalFiltro.style.display = 'none';
+    modalFiltro.style.display = "none";
 }
 
-function addFilter(item, type) {
-    if (type === 'blocos') {
-        activeFilters.blocos.forEach(f => removeFilter(f, 'blocos'));
-    }
-
-    if (!activeFilters[type].includes(item)) {
-        activeFilters[type].push(item);
-        const tag = document.createElement('span');
-        tag.classList.add('filter-tag');
-        tag.textContent = item + ' ✕';
-        tag.onclick = () => removeFilter(item, type);
-        activeFiltersDiv.appendChild(tag);
-    }
-}
-
-function removeFilter(item, type) {
-    activeFilters[type] = activeFilters[type].filter(f => f !== item);
-    [...activeFiltersDiv.children].forEach(tag => {
-        if (tag.textContent.startsWith(item)) tag.remove();
-    });
-    filterSalas(); // Chama a função de filtro
-}
-
-// Filtrar Salas (Ajustado para considerar o filtro de Bloco)
-function filterSalas() {
-    const items = salaList.querySelectorAll('li');
-
-    items.forEach(li => {
-        // Assume-se que a informação do bloco está no atributo data-bloco do <li>.
-        const itemBloco = li.dataset.bloco || '';
-
-        let show = true;
-
-        // Lógica do Filtro de Blocos
-        if (activeFilters.blocos.length > 0) {
-            // A sala deve estar associada a UM dos blocos filtrados
-            show = activeFilters.blocos.some(blocoFilter => itemBloco.includes(blocoFilter));
-        }
-
-        li.style.display = show ? 'flex' : 'none';
-    });
-}
-
-// Event Listener para o botão de Bloco
-btnBlocos.addEventListener('click', () => openFiltro(blocos, 'blocos'));
-
-modalSearch.addEventListener('input', () => {
+modalSearch.addEventListener("input", () => {
     const type = modalFiltro.dataset.type;
     const filtered = currentList.filter(item =>
         item.toLowerCase().includes(modalSearch.value.toLowerCase())
@@ -106,61 +199,67 @@ modalSearch.addEventListener('input', () => {
     renderList(filtered, type);
 });
 
-window.addEventListener('click', (e) => {
-    if (e.target == modalFiltro) closeFiltro();
+window.addEventListener("click", (e) => {
+    if (e.target === modalFiltro) closeFiltro();
 });
 
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeFiltro();
-});
+/* ============================
+   8. ADICIONAR / REMOVER FILTRO
+=============================*/
+function addFilter(item, type) {
+    if (type === "blocos") {
+        activeFilters.blocos.forEach(f => removeFilter(f, "blocos"));
+    }
 
+    if (!activeFilters[type].includes(item)) {
+        activeFilters[type].push(item);
 
+        const tag = document.createElement("span");
+        tag.classList.add("filter-tag");
+        tag.textContent = item + " ✕";
+        tag.onclick = () => removeFilter(item, type);
 
-const confirmModal = document.getElementById('confirmModal');
-const confirmText = document.getElementById('confirmText');
-const confirmYes = document.getElementById('confirmYes');
-const confirmNo = document.getElementById('confirmNo');
+        activeFiltersDiv.appendChild(tag);
+    }
+}
 
-let salaSelecionada = null;
+function removeFilter(item, type) {
+    activeFilters[type] = activeFilters[type].filter(f => f !== item);
 
-salaList.addEventListener('click', (e) => {
-    if (e.target.classList.contains('delete-btn')) {
-        const li = e.target.closest('li');
-        salaSelecionada = li;
+    [...activeFiltersDiv.children].forEach(tag => {
+        if (tag.textContent.startsWith(item)) tag.remove();
+    });
 
-        const salaNameElement = li.querySelector('.course-name');
-        let nomeSala = 'esta sala';
-        if (salaNameElement) {
-            nomeSala = salaNameElement.textContent.trim();
+    filterSalas();
+}
+
+/* ============================
+   9. FILTRAR SALAS
+=============================*/
+function filterSalas() {
+    const termo = searchInput.value.toLowerCase();
+    const items = salasList.querySelectorAll("li");
+
+    items.forEach(li => {
+        let show = true; 
+        const nome = li.querySelector(".course-name").textContent.toLowerCase();
+        const bloco = li.dataset.bloco;
+
+        if (!nome.includes(termo)) {
+            show = false;
         }
 
-        confirmText.textContent = `Tem certeza que deseja excluir a sala “${nomeSala}”?`;
-
-        confirmModal.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-    }
-
-    if (e.target.classList.contains('edit-btn')) {
-        const li = e.target.closest('li');
-        const salaNameElement = li.querySelector('.course-name');
-        let nomeSala = '';
-        if (salaNameElement) {
-            nomeSala = salaNameElement.textContent.trim();
+        if (activeFilters.blocos.length > 0) {
+            if (!activeFilters.blocos.includes(bloco)) {
+                show = false;
+            }
         }
-        window.location.href = `/html/admin/editSala.html?nome=${encodeURIComponent(nomeSala)}`;
-    }
-});
 
-confirmYes.addEventListener('click', () => {
-    if (salaSelecionada) {
-        salaSelecionada.remove();
-        salaSelecionada = null;
-    }
-    confirmModal.style.display = 'none';
-    document.body.style.overflow = '';
-});
+        li.style.display = show ? "flex" : "none";
+    });
+}
 
-confirmNo.addEventListener('click', () => {
-    confirmModal.style.display = 'none';
-    document.body.style.overflow = '';
-});
+/* ============================
+   10. INICIAR
+=============================*/
+carregarSalas();

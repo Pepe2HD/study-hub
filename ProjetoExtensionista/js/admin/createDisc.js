@@ -165,5 +165,4 @@ btnCadastrar.addEventListener('click', () => {
     updateButtonStatus();
 });
 
-
 updateButtonStatus();

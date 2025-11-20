@@ -1,47 +1,53 @@
+//-----------------------------------------
+// MENU LATERAL
+//-----------------------------------------
 const menuBtn = document.getElementById('menu-btn');
 const sidebar = document.getElementById('sidebar');
 
 if (menuBtn && sidebar) {
-    menuBtn.addEventListener('click', () => {
-        sidebar.classList.toggle('active');
-        menuBtn.classList.toggle('active');
-    });
+  menuBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('active');
+    menuBtn.classList.toggle('active');
+  });
 }
 
+//-----------------------------------------
+// CADASTRAR SALA
+//-----------------------------------------
+const btnCadastrar = document.getElementById('btnCadastrar');
 
-document.addEventListener('DOMContentLoaded', function () {
-    const btnCadastrar = document.getElementById('btnCadastrar');
-    const inputNome = document.getElementById('nome');
-    const inputBloco = document.getElementById('bloco');
-    const inputCapac = document.getElementById('capacidade');
+btnCadastrar.addEventListener('click', async () => {
+  const nome = document.getElementById('nome').value.trim();
+  const bloco = document.getElementById('bloco').value.trim();
+  const capacidade = document.getElementById('capacidade').value.trim();
 
-    if (btnCadastrar && inputNome && inputBloco && inputCapac) {
-        btnCadastrar.addEventListener('click', function (event) {
-            const nomeValue = inputNome.value.trim();
-            const blocoValue = inputBloco.value.trim();
-            const capacValue = inputBloco.value.trim();
+  if (!nome) return alert("Digite o nome da sala.");
+  if (!bloco) return alert("Digite o bloco.");
+  if (!capacidade) return alert("Digite a capacidade.");
 
-            if (nomeValue === "") {
-                alert("Por favor, preencha o campo Nome.");
-                inputNome.focus();
-            }
+  try {
+    const res = await fetch("https://study-hub-7qc5.onrender.com/sala", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        nome: nome,
+        bloco: bloco,
+        capacidade: parseInt(capacidade)
+      })
+    });
 
-            if (blocoValue === "") {
-                alert("Por favor, preencha o campo do bloco.");
-                inputHours.focus();
-                return;
-            }
+    if (!res.ok) throw new Error("Erro ao cadastrar sala.");
 
-            if (capacValue === "") {
-                alert("Por favor, preencha o campo de capacidade.");
-                inputHours.focus();
-                return;
-            }
+    const salaCriada = await res.json();
+    alert(`Sala "${salaCriada.nome}" cadastrada com sucesso!`);
+    
+    document.getElementById('nome').value = "";
+    document.getElementById('bloco').value = "";
+    document.getElementById('capacidade').value = "";
 
-            alert("Sala cadastrada com sucesso!");
+    window.location.href = "/html/admin/sala.html";
 
-            window.location.href = '/html/admin/sala.html';
-        });
-    }
-
+  } catch (err) {
+    alert("Erro: " + err.message);
+  }
 });

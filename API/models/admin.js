@@ -32,6 +32,22 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
+    login_code: {
+      type: DataTypes.STRING(6),
+      allowNull: true,
+    },
+    login_expires: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    reset_token: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    reset_expires: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
   }, {
     sequelize,
     modelName: 'Admin',

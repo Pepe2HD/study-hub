@@ -11,7 +11,7 @@ const professorRoutes = require('./professorRoutes');
 const salaRoutes = require('./salaRoutes');
 const turnoRoutes = require('./turnoRoutes');
 const curso_disciplinaRouter = require('./curso_disciplinaRoutes');
-const disciplina_professorRouter = require('./disciplina_professorRoutes');
+const loginRouter = require('./loginRoutes');
 
 router.use('/admin', adminRoutes);
 router.use('/curso', cursoRoutes);
@@ -22,6 +22,7 @@ router.use('/professor', professorRoutes);
 router.use('/sala', salaRoutes);
 router.use('/turno', turnoRoutes);
 router.use('/curso/disciplina', curso_disciplinaRouter);
-router.use('/disciplina/professor', disciplina_professorRouter);
+router.use('/login', loginRouter);
+
 
 module.exports = router;

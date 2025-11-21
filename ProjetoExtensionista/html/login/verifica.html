@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificação</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #6fa3dd, #3f6ca8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: #ffffff22;
+            padding: 40px 50px;
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0px 0px 20px #00000040;
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #e8f2ff;
+            margin-top: 0;
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .code-box {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 35px;
+        }
+
+        .digit {
+            width: 55px;
+            height: 65px;
+            font-size: 35px;
+            text-align: center;
+            border: none;
+            border-radius: 12px;
+            background: #ffffffaa;
+            color: #2b4e73;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .digit:focus {
+            background: #ffffffdd;
+            box-shadow: 0 0 10px #00000040;
+        }
+
+        button {
+            width: 70%;
+            padding: 15px;
+            font-size: 25px;
+            background: #2b4e73;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #1c3550;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Digite o código</h1>
+        <p>Insira os 6 dígitos para continuar</p>
+
+        <div class="code-box">
+            <input type="text" maxlength="1" class="digit">
+            <input type="text" maxlength="1" class="digit">
+            <input type="text" maxlength="1" class="digit">
+            <input type="text" maxlength="1" class="digit">
+            <input type="text" maxlength="1" class="digit">
+            <input type="text" maxlength="1" class="digit">
+        </div>
+
+        <button id="prosseguirBtn">Prosseguir</button>
+
+    </div>
+
+    <script>
+
+        const inputs = document.querySelectorAll(".digit");
+
+        // Movimenta automaticamente para o próximo campo
+        inputs.forEach((input, index) => {
+            input.addEventListener("input", () => {
+                if (input.value.length === 1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+            });
+
+            // Caso o usuário aperte backspace e o campo esteja vazio
+            input.addEventListener("keydown", (e) => {
+                if (e.key === "Backspace" && input.value === "" && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            });
+        });
+
+        document.getElementById("prosseguirBtn").addEventListener("click", () => {
+            let codigo = "";
+
+            inputs.forEach(input => codigo += input.value);
+
+            if (codigo.length !== 6) {
+                alert("Digite todos os 6 dígitos.");
+                return;
+            }
+
+            alert("Código aceito: " + codigo);
+        });
+
+    </script>
+
+</body>
+</html>

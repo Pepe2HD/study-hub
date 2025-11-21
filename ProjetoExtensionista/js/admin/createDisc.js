@@ -1,162 +1,108 @@
-//------------------------------------
-// API NECESSÁRIAS
-//------------------------------------
+// ------------------------------------------
+// URLs
+// ------------------------------------------
 const API_DISCIPLINA = "https://study-hub-7qc5.onrender.com/disciplina";
 const API_SALA = "https://study-hub-7qc5.onrender.com/sala";
 const API_CURSO = "https://study-hub-7qc5.onrender.com/curso";
-const API_PERIODO = "https://study-hub-7qc5.onrender.com/periodo";
-const API_TURNO = "https://study-hub-7qc5.onrender.com/turno";
+const API_CURSO_DISCIPLINA = "https://study-hub-7qc5.onrender.com/curso/disciplina";
 
-//------------------------------------
-// ELEMENTOS DO DOM
-//------------------------------------
-const btnMenu = document.getElementById("menu-btn");
-const sidebar = document.getElementById("sidebar");
+// ------------------------------------------
+// Carregar Salas
+// ------------------------------------------
+async function carregarSalas() {
+  const select = document.getElementById("id_sala");
 
-const inputNome = document.getElementById("nome");
-const selectTipo = document.getElementById("tipo");
-const selectPeriodo = document.getElementById("periodo");
-const selectTurno = document.getElementById("turno");
-const selectSala = document.getElementById("sala");
+  try {
+    const res = await fetch(API_SALA);
+    const dados = await res.json();
 
-const btnAbrirModalCurso = document.getElementById("btnAbrirModalCurso");
-const modal = document.getElementById("modal");
-const modalList = document.getElementById("modalList");
-const modalSearch = document.getElementById("modalSearch");
-const cursosTags = document.getElementById("cursosAssociadosTags");
-
-const btnCadastrar = document.getElementById("btnCadastrar");
-
-let cursos = [];
-let cursosSelecionados = [];
-
-//------------------------------------
-// MENU LATERAL
-//------------------------------------
-btnMenu.addEventListener("click", () => {
-    sidebar.classList.toggle("active");
-});
-
-//------------------------------------
-// CARREGAR SELECTS BASICOS
-//------------------------------------
-async function carregarSelects() {
-    const [periodos, turnos, salas, cursosBD] = await Promise.all([
-        fetch(API_PERIODO).then(r => r.json()),
-        fetch(API_TURNO).then(r => r.json()),
-        fetch(API_SALA).then(r => r.json()),
-        fetch(API_CURSO).then(r => r.json())
-    ]);
-
-    cursos = cursosBD;
-
-    preencherSelect(selectPeriodo, periodos, "id_periodo", "numero");
-    preencherSelect(selectTurno, turnos, "id_turno", "turno");
-    preencherSelect(selectSala, salas, "id_sala", "nome");
-}
-
-function preencherSelect(select, lista, id, texto) {
-    select.innerHTML = "";
-    lista.forEach(item => {
-        const op = document.createElement("option");
-        op.value = item[id];
-        op.textContent = item[texto];
-        select.appendChild(op);
+    dados.forEach(s => {
+      const option = document.createElement("option");
+      option.value = s.id_sala;
+      option.textContent = s.nome;
+      select.appendChild(option);
     });
+
+  } catch (err) {
+    alert("Erro ao carregar salas.");
+  }
 }
 
-carregarSelects();
+// ------------------------------------------
+// Carregar Cursos
+// ------------------------------------------
+async function carregarCursos() {
+  const container = document.getElementById("listaCursos");
 
-//------------------------------------
-// MODAL DOS CURSOS
-//------------------------------------
-btnAbrirModalCurso.addEventListener("click", () => {
-    modal.style.display = "flex";
-    renderList(cursos);
-    modalSearch.value = "";
-    modalSearch.focus();
-});
+  try {
+    const res = await fetch(API_CURSO);
+    const cursos = await res.json();
 
-modalSearch.addEventListener("input", () => {
-    const filtrado = cursos.filter(c =>
-        c.nome.toLowerCase().includes(modalSearch.value.toLowerCase())
-    );
-    renderList(filtrado);
-});
+    cursos.forEach(c => {
+      const div = document.createElement("div");
+      div.classList.add("checkbox-item");
 
-window.addEventListener("click", e => {
-    if (e.target === modal) modal.style.display = "none";
-});
+      div.innerHTML = `
+        <label>
+          <input type="checkbox" value="${c.id_curso}">
+          ${c.nome}
+        </label>
+      `;
 
-function renderList(lista) {
-    modalList.innerHTML = "";
-    lista.forEach(curso => {
-        if (cursosSelecionados.includes(curso.id_curso)) return;
-
-        const li = document.createElement("li");
-        li.textContent = curso.nome;
-        li.onclick = () => addCurso(curso);
-        modalList.appendChild(li);
+      container.appendChild(div);
     });
+
+  } catch (err) {
+    alert("Erro ao carregar cursos.");
+  }
 }
 
-function addCurso(curso) {
-    cursosSelecionados.push(curso.id_curso);
+// ------------------------------------------
+// Salvar Disciplina
+// ------------------------------------------
+document.getElementById("btnSalvar").addEventListener("click", async () => {
+  const nome = document.getElementById("nome").value.trim();
+  const tipo = document.getElementById("tipo").value.trim();
+  const id_sala = document.getElementById("id_sala").value;
 
-    const tag = document.createElement("span");
-    tag.classList.add("filter-tag");
-    tag.textContent = curso.nome + " ✕";
-    tag.onclick = () => removerCurso(curso.id_curso, tag);
+  if (!nome || !tipo || !id_sala) {
+    return alert("Preencha todos os campos.");
+  }
 
-    cursosTags.appendChild(tag);
-    atualizarBotao();
-    modal.style.display = "none";
-}
+  try {
+    // 1️⃣ Criar a disciplina
+    const res = await fetch(API_DISCIPLINA, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nome, tipo, id_sala: Number(id_sala) })
+    });
 
-function removerCurso(id, elemento) {
-    cursosSelecionados = cursosSelecionados.filter(c => c !== id);
-    elemento.remove();
-    atualizarBotao();
-}
+    const novaDisciplina = await res.json();
+    const id_disciplina = novaDisciplina.id_disciplina;
 
-function atualizarBotao() {
-    btnAbrirModalCurso.value =
-        cursosSelecionados.length > 0
-            ? `Cursos Associados (${cursosSelecionados.length}) 🟢`
-            : "Cursos Associados ⚪";
-}
+    // 2️⃣ Associar cursos
+    const cursosMarcados = [...document.querySelectorAll("#listaCursos input:checked")]
+      .map(check => Number(check.value));
 
-//------------------------------------
-// CADASTRAR DISCIPLINA
-//------------------------------------
-btnCadastrar.addEventListener("click", async () => {
-
-    if (!inputNome.value.trim()) return alert("Digite o nome da disciplina!");
-    if (cursosSelecionados.length === 0) return alert("Selecione pelo menos 1 curso!");
-
-    const dados = {
-        nome: inputNome.value.trim(),
-        tipo: selectTipo.value,
-        fk_id_periodo: parseInt(selectPeriodo.value),
-        fk_id_turno: parseInt(selectTurno.value),
-        fk_id_sala: parseInt(selectSala.value),
-        cursos: cursosSelecionados
-    };
-
-    try {
-        const response = await fetch(API_DISCIPLINA, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(dados)
-        });
-
-        if (!response.ok) throw new Error("Erro ao cadastrar disciplina");
-
-        alert("Disciplina cadastrada com sucesso!");
-        window.location.href = "/html/admin/disciplina.html";
-
-    } catch (err) {
-        console.error(err);
-        alert("Erro ao cadastrar disciplina.");
+    for (const idCurso of cursosMarcados) {
+      await fetch(API_CURSO_DISCIPLINA, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id_curso: idCurso,
+          id_disciplina
+        })
+      });
     }
+
+    alert("Disciplina criada com sucesso!");
+    window.location.href = "/html/admin/disciplina.html";
+
+  } catch (err) {
+    alert("Erro ao criar disciplina.");
+  }
 });
+
+// Carregar dados iniciais
+carregarSalas();
+carregarCursos();

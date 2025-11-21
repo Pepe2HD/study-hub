@@ -13,13 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.Horario, {
         foreignKey: 'id_professor' ,
         as: 'horario',
-      }),
-      this.belongsToMany(models.Disciplina, {
-        through: 'disciplina_professor',
-        foreignKey: 'id_professor',
-        otherKey: 'id_disciplina',
-        as: 'disciplina',
-        timestamps: false
       });
     }
   }

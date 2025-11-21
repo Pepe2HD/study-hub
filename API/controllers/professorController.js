@@ -47,22 +47,7 @@ class professorController {
             return res.status(400).json({error : erro.message});
         }
     }
-
-    async showPD(req, res) {
-        try {
-            const professor = await Professor.findByPk(req.params.id, {
-                include: { model: Disciplina, as: 'disciplina' }
-            });
-
-            if (!professor) {
-                return res.status(404).json({ error: 'Professor não encontrado.' });
-            }
-
-            return res.json(professor.disciplina);
-        } catch (erro) {
-            return res.status(400).json({ error: erro.message });
-        }
-    }
 }
+
 
 module.exports = new professorController();

@@ -731,6 +731,40 @@ h1 {
     opacity: 1;
 }
 
+.horario-create {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+.horario-create select {
+    width: 90%;
+    padding: 15px 15px;
+    border: none;
+    border-radius: 8px;
+    box-sizing: border-box;
+    background-color: #5B7EAC;
+    color: white;
+    font-size: 18px;
+    outline: none;
+    height: 50px;
+}
+
+.horario-create #btnHorario {
+    width: 30%;
+    margin-top: 100px;
+    cursor: pointer;
+    transition: 0.3s;
+    padding: 10px 10px;
+    border-radius: 5px;
+    font-size: 30px;
+    background-color: #5f80ac;
+    color: #ffffff;
+}
+
+.horario-create #btnHorario:hover {
+    background-color: #4473b1;
+}
 
 
 

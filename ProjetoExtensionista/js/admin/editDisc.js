@@ -1,170 +1,95 @@
-const menuBtn = document.getElementById('menu-btn');
-const sidebar = document.getElementById('sidebar');
+const API_DISCIPLINA = "https://study-hub-7qc5.onrender.com/disciplina";
+const API_SALA = "https://study-hub-7qc5.onrender.com/sala";
+const API_CURSO = "https://study-hub-7qc5.onrender.com/curso";
+const API_CURSO_DISC = "https://study-hub-7qc5.onrender.com/curso/disciplina";
 
-if (menuBtn && sidebar) {
-    menuBtn.addEventListener('click', () => {
-        sidebar.classList.toggle('active');
-        menuBtn.classList.toggle('active');
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+// ------------------------------------
+// Carregar dados iniciais
+// ------------------------------------
+async function carregarDados() {
+  const [resD, resS, resC, resCD] = await Promise.all([
+    fetch(`${API_DISCIPLINA}/${id}`),
+    fetch(API_SALA),
+    fetch(API_CURSO),
+    fetch(API_CURSO_DISC)
+  ]);
+
+  const disciplina = await resD.json();
+  const salas = await resS.json();
+  const cursos = await resC.json();
+  const cursosDisc = await resCD.json();
+
+  // Preencher campos
+  document.getElementById("nome").value = disciplina.nome;
+  document.getElementById("tipo").value = disciplina.tipo;
+
+  const selectSala = document.getElementById("id_sala");
+  salas.forEach(s => {
+    const op = document.createElement("option");
+    op.value = s.id_sala;
+    op.textContent = s.nome;
+    if (s.id_sala === disciplina.id_sala) op.selected = true;
+    selectSala.appendChild(op);
+  });
+
+  // Cursos associados
+  const associados = cursosDisc
+    .filter(cd => cd.id_disciplina === disciplina.id_disciplina)
+    .map(cd => cd.id_curso);
+
+  // Lista de cursos
+  const lista = document.getElementById("listaCursos");
+  cursos.forEach(c => {
+    const div = document.createElement("div");
+    div.classList.add("checkbox-item");
+
+    div.innerHTML = `
+      <label>
+        <input type="checkbox" value="${c.id_curso}"
+        ${associados.includes(c.id_curso) ? "checked" : ""}>
+        ${c.nome}
+      </label>
+    `;
+
+    lista.appendChild(div);
+  });
+}
+
+// ------------------------------------
+// Salvar alterações
+// ------------------------------------
+document.getElementById("btnSalvar").addEventListener("click", async () => {
+  const nome = document.getElementById("nome").value.trim();
+  const tipo = document.getElementById("tipo").value.trim();
+  const id_sala = document.getElementById("id_sala").value;
+
+  await fetch(`${API_DISCIPLINA}/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ nome, tipo, id_sala: Number(id_sala) })
+  });
+
+  // Atualizar cursos associados
+  const cursosMarcados = [...document.querySelectorAll("input:checked")]
+    .map(c => Number(c.value));
+
+  await fetch(`${API_CURSO_DISC}/disciplina/${id}`, {
+    method: "DELETE"
+  });
+
+  for (const idCurso of cursosMarcados) {
+    await fetch(API_CURSO_DISC, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id_curso: idCurso, id_disciplina: Number(id) })
     });
-}
+  }
 
-
-document.addEventListener('DOMContentLoaded', function () {
-    const btnCadastrar = document.getElementById('btnCadastrar');
-    const inputNome = document.getElementById('nome');
-    const inputTipo = document.getElementById('tipo');
-
-    if (btnCadastrar && inputNome && inputTipo) {
-        btnCadastrar.addEventListener('click', function (event) {
-            const nomeValue = inputNome.value.trim();
-            const tipoValue = inputTipo.value.trim();
-
-            if (nomeValue === "") {
-                alert("Por favor, preencha o campo Nome.");
-                inputNome.focus();
-            }
-
-            if (tipoValue === "") {
-                alert("Por favor, preencha o tipo.");
-                inputTipo.focus();
-                return;
-            }
-
-            alert("Disciplina atualizada com sucesso!");
-
-            window.location.href = '/html/admin/disciplina.html';
-        });
-    }
-
+  alert("Disciplina atualizada!");
+  window.location.href = "/html/admin/disciplina.html";
 });
 
-const btnAbrirModalCurso = document.getElementById('btnAbrirModalCurso');
-const btnCadastrar = document.getElementById('btnCadastrar');
-const inputNome = document.getElementById('nome');
-const selectTipo = document.getElementById('tipo');
-const cursosAssociadosTags = document.getElementById('cursosAssociadosTags');
-
-const modalFiltro = document.getElementById('modal');
-const modalList = document.getElementById('modalList');
-const modalSearch = document.getElementById('modalSearch');
-
-const cursosDisponiveis = [
-    'Engenharia de Software',
-    'Ciência da Computação',
-    'Biotecnologia',
-    'Ciências Contábeis',
-    'Design Gráfico',
-    'Psicologia',
-    'Engenharia Civil',
-    'Medicina'
-];
-
-let cursosSelecionados = [];
-let currentList = [];
-
-
-function openFiltro(list) {
-    currentList = list;
-    renderList(list);
-    modalFiltro.style.display = 'flex';
-    modalSearch.value = '';
-    modalSearch.focus();
-}
-
-function renderList(list) {
-    modalList.innerHTML = '';
-    list.forEach(item => {
-        if (cursosSelecionados.includes(item)) return;
-
-        const li = document.createElement('li');
-        li.textContent = item;
-        li.onclick = () => {
-            addCurso(item);
-            closeFiltro();
-        };
-        modalList.appendChild(li);
-    });
-}
-
-function closeFiltro() {
-    modalFiltro.style.display = 'none';
-}
-
-function addCurso(item) {
-    if (!cursosSelecionados.includes(item)) {
-        cursosSelecionados.push(item);
-
-        const tag = document.createElement('span');
-        tag.classList.add('filter-tag');
-        tag.textContent = item + ' ✕';
-
-        tag.onclick = () => removeCurso(item, tag);
-
-        cursosAssociadosTags.appendChild(tag);
-        updateButtonStatus();
-    }
-}
-
-function removeCurso(item, tagElement) {
-    cursosSelecionados = cursosSelecionados.filter(c => c !== item);
-    tagElement.remove();
-    updateButtonStatus();
-}
-
-function updateButtonStatus() {
-    if (cursosSelecionados.length > 0) {
-        btnAbrirModalCurso.value = `Cursos Associados (${cursosSelecionados.length}) 🟢`;
-    } else {
-        btnAbrirModalCurso.value = "Cursos Associados ⚪";
-    }
-}
-
-
-btnAbrirModalCurso.addEventListener('click', () => openFiltro(cursosDisponiveis));
-
-modalSearch.addEventListener('input', () => {
-    const filtered = cursosDisponiveis.filter(item =>
-        item.toLowerCase().includes(modalSearch.value.toLowerCase())
-    );
-    renderList(filtered);
-});
-
-window.addEventListener('click', (e) => {
-    if (e.target == modalFiltro) closeFiltro();
-});
-
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeFiltro();
-});
-
-btnCadastrar.addEventListener('click', () => {
-    const nomeDisciplina = inputNome.value.trim();
-    const tipoDisciplina = selectTipo.value;
-
-    if (nomeDisciplina === "") {
-        alert("Por favor, preencha o nome da disciplina.");
-        return;
-    }
-
-    if (cursosSelecionados.length === 0) {
-        alert("Selecione pelo menos um Curso Associado.");
-        return;
-    }
-
-    const novaDisciplina = {
-        nome: nomeDisciplina,
-        tipo: tipoDisciplina === '1' ? 'Obrigatoria' : 'Optativa',
-        cursos: cursosSelecionados
-    };
-
-    console.log("Nova Disciplina Cadastrada:", novaDisciplina);
-    alert(`Disciplina "${nomeDisciplina}" cadastrada com sucesso nos cursos: ${cursosSelecionados.join(', ')}.`);
-
-    inputNome.value = '';
-    selectTipo.value = '1';
-    cursosSelecionados = [];
-    cursosAssociadosTags.innerHTML = '';
-    updateButtonStatus();
-});
-
-updateButtonStatus();
+carregarDados();

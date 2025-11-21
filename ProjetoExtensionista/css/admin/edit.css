@@ -640,6 +640,84 @@ h1 {
     margin-bottom: 2px; /* Reduz a margem após o nome da Disciplina */
 }
 
+.horario-create {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+/* SELECTS */
+.horario-create select {
+    width: 90%;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: none;
+    font-size: 18px;
+    background: #5f80ac;
+    color: #fff;
+    outline: none;
+    appearance: none;
+    cursor: pointer;
+    transition: 0.25s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Sombra ao focar */
+.horario-create select:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+
+/* BOTÃO */
+.horario-create #btnHorario {
+    width: 260px;
+    margin-top: 80px;
+    cursor: pointer;
+    padding: 14px 20px;
+    border-radius: 14px;
+    border: none;
+    font-size: 24px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #5f80ac, #4a6fb3);
+    color: #ffffff;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+}
+
+.horario-create #btnHorario:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(135deg, #6f95c6, #577fbd);
+    box-shadow: 0 6px 22px rgba(0,0,0,0.25);
+}
+
+.horario-create #btnHorario:active {
+    transform: scale(0.97);
+}
+
+.btn-salvar-horarios {
+    width: 220px;
+    margin-top: 50px;
+    cursor: pointer;
+    padding: 14px 20px;
+    border-radius: 14px;
+    font-size: 18px;
+    background: linear-gradient(135deg, #4a6fb3, #3a5a99);
+    color: #fff;
+    border: none;
+    font-weight: 600;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-salvar-horarios:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
+    background: linear-gradient(135deg, #5a8ad6, #496fb8);
+}
+
+.btn-salvar-horarios:active {
+    transform: scale(0.97);
+}
+
 
 
 

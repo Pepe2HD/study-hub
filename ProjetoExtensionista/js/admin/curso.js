@@ -157,15 +157,19 @@ function renderizarCursos(cursos) {
         li.dataset.professores = curso.professoresNomes.join(',');
 
         li.innerHTML = `
-            <span class="course-name">
-                ${curso.nome}
-            </span>
-            
-            <div class="actions">
-                <button class="edit-btn" onclick="editarCurso(${curso.id_curso})">✏️ Editar</button>
-                <button class="delete-btn" onclick="abrirModalExcluir(${curso.id_curso}, '${curso.nome}')">🗑️ Excluir</button>
+            <span class="course-name">${curso.nome}</span>
+
+            <div class="option-container">
+                <button class="option-btn">⋮</button>
+
+                <div class="option-dropdown">
+                    <button onclick="editarCurso(${curso.id_curso})">✏️ Editar</button>
+                    <button onclick="abrirQuadroHorario(${curso.id_curso})">📅 Horários</button>
+                    <button onclick="abrirModalExcluir(${curso.id_curso}, '${curso.nome}')">🗑️ Excluir</button>
+                </div>
             </div>
         `;
+
 
         cursosList.appendChild(li);
     });
@@ -179,6 +183,14 @@ function renderizarCursos(cursos) {
 function editarCurso(id) {
     window.location.href = `/html/admin/editCurso.html?id=${id}`;
 }
+
+/* ============================
+   3.1. ABRIR QUADRO DE HORÁRIOS
+=============================*/
+function abrirQuadroHorario(idCurso) {
+    window.location.href = `/html/admin/quadroHorario.html?id=${idCurso}`;
+}
+
 
 /* ============================
    4. ABRIR MODAL DE EXCLUSÃO
@@ -336,3 +348,31 @@ function filterCursos() {
    9. INICIAR
 =============================*/
 carregarCursos();
+
+/* ============================
+   10. ABRIR OPÇÕES
+=============================*/
+
+document.addEventListener("click", function(event) {
+    const isButton = event.target.matches(".option-btn");
+    const allMenus = document.querySelectorAll(".option-dropdown");
+
+    if (isButton) {
+        const dropdown = event.target.nextElementSibling;
+
+        
+        const isOpen = dropdown.style.display === "block";
+
+        
+        allMenus.forEach(menu => menu.style.display = "none");
+
+        
+        if (!isOpen) {
+            dropdown.style.display = "block";
+        }
+
+    } else {
+        
+        allMenus.forEach(menu => menu.style.display = "none");
+    }
+});

@@ -17,7 +17,7 @@
             <a href="curso.html">Cursos</a>
             <a href="disciplina.html">Disciplinas</a>
             <a href="sala.html">Salas</a>
-            <a href="/index.html" class="sair">Sair</a>
+            <a href="/html/user/home.html" class="sair">Sair</a>
         </nav>
     </div>
 
@@ -25,39 +25,41 @@
         <button class="menu-btn" id="menu-btn">☰</button>
     </header>
 
+    <!-- MODAL -->
     <div id="modal" class="modal">
         <div class="modalContent">
             <div class="modal-content">
                 <h2>Selecionar Cursos</h2>
                 <input type="text" id="modalSearch" placeholder="Pesquisar curso...">
-                <ul id="modalList">
-                </ul>
+                <ul id="modalList"></ul>
             </div>
         </div>
     </div>
+
     <main>
         <div class="content">
             <div class="form-container">
-                <div class="title">
-                    <h1>Cadastrando disciplina</h1>
-                </div>
+                <div class="title"><h1>Cadastrando disciplina</h1></div>
 
                 <div class="form-box">
-                    <input type="text" id="nome" name="nome" placeholder="Nome">
-                    <select name="tipo" id="tipo">
-                        <option value="1">Obrigatorio</option>
-                        <option value="2">Optativa</option>
+                    <input type="text" id="nome" placeholder="Nome da disciplina">
+
+                    <select id="tipo">
+                        <option value="Obrigatoria">Obrigatória</option>
+                        <option value="Optativa">Optativa</option>
                     </select>
 
-                    <input type="button" id="btnAbrirModalCurso" name="curso" value="Cursos Associados ⚪">
+                    <select id="periodo"></select>
+                    <select id="turno"></select>
+                    <select id="sala"></select>
 
-                    <div class="tags-container" id="cursosAssociadosTags">
-                    </div>
+                    <input type="button" id="btnAbrirModalCurso" value="Cursos Associados ⚪">
+                    <div class="tags-container" id="cursosAssociadosTags"></div>
                 </div>
 
                 <div class="button-group">
                     <button class="btn-voltar" onclick="window.history.back()">Voltar</button>
-                    <button class="btn-cadastrar" id="btnCadastrar" type="button">Cadastrar</button>
+                    <button class="btn-cadastrar" id="btnCadastrar">Cadastrar</button>
                 </div>
             </div>
         </div>
@@ -65,5 +67,4 @@
 
     <script src="/js/admin/createDisc.js"></script>
 </body>
-
 </html>

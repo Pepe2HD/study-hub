@@ -28,7 +28,7 @@ const btnCadastrar = document.getElementById('btnCadastrar');
 /* ============================
    API
 ============================ */
-const API_SALA = "https://study-hub-7qc5.onrender.com/sala";
+const API_SALA = "https://study-hub-2mr9.onrender.com/sala";
 
 /* ============================
    CARREGAR SALA EXISTENTE
@@ -89,3 +89,4 @@ if (btnCadastrar) {
    INICIAR
 ============================ */
 document.addEventListener('DOMContentLoaded', carregarSala);
+

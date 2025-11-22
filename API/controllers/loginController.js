@@ -195,7 +195,7 @@ class loginController {
     async validateToken (req, res) {
         const { token } = req.params;
         const admin = await Admin.findOne({
-            where: { reset_token: token, reset_expires: { [Op.gt]: new Date() } }
+            where: { reset_token: token, reset_expires: { [Op.gt]: new Date() - 10800000 } }
         });
 
         if (!admin) return res.status(400).send("Token inválido ou expirado.");
@@ -206,7 +206,7 @@ class loginController {
         const { token, novaSenha } = req.body;
 
         const admin = await Admin.findOne({
-            where: { reset_token: token, reset_expires: { [Op.gt]: new Date() } }
+            where: { reset_token: token, reset_expires: { [Op.gt]: new Date() - 10800000 } }
         });
 
         if (!admin) return res.status(400).json({ erro: "Token inválido ou expirado." });
@@ -220,6 +220,7 @@ class loginController {
 }
 
 module.exports = new loginController();
+
 
 
 

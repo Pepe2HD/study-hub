@@ -118,7 +118,7 @@ class loginController {
 
             await admin.update({ reset_token: token, reset_expires: expires });
 
-            const link = `${process.env.BASE_URL}/reset-password/${token}`;
+            const link = `${process.env.BASE_URL}?token=${token}`;
 
             const htmlTemplate = `
                     <div style="
@@ -220,6 +220,7 @@ class loginController {
 }
 
 module.exports = new loginController();
+
 
 
 

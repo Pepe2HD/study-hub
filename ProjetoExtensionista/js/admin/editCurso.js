@@ -15,7 +15,7 @@ if (menuBtn && sidebar) {
 //-----------------------------------------
 // BASE DA API (hospedada)
 //-----------------------------------------
-const API_BASE = "https://study-hub-7qc5.onrender.com";
+const API_BASE = "https://study-hub-2mr9.onrender.com";
 
 //-----------------------------------------
 // PEGAR ID DO CURSO DA URL
@@ -96,3 +96,4 @@ btnSalvar.addEventListener("click", async () => {
         alert("Erro ao salvar alterações. Veja o console para detalhes.");
     }
 });
+

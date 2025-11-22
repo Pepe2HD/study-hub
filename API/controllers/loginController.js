@@ -70,7 +70,7 @@ class loginController {
                 where: {
                 email: user,
                 login_code: code,
-                login_expires: { [Op.gt]: new Date() }
+                login_expires: { [Op.gt]: new Date() - 10800000 }
                 }
             });
 
@@ -79,7 +79,7 @@ class loginController {
                     where: {
                     nome: user,
                     login_code: code,
-                    login_expires: { [Op.gt]: new Date() }
+                    login_expires: { [Op.gt]: new Date() - 10800000 }
                     }
                 });
                 if (!admin) {
@@ -220,6 +220,7 @@ class loginController {
 }
 
 module.exports = new loginController();
+
 
 
 

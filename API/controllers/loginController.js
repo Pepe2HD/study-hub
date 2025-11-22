@@ -8,10 +8,16 @@ require('dotenv').config();
 class loginController {
     async sendCode (req, res) {
         try {
-            const { email, senha } = req.body;
+            const { user, senha } = req.body;
 
-            const admin = await Admin.findOne({ where: { email } });
-            if (!admin) return res.status(404).json({ erro: "Email incorreto" });
+            let admin = await Admin.findOne({ where: { email: user } });
+            
+            if (!admin) {
+                admin = await Admin.findOne({ where: { nome: user } });
+                if (!admin) {
+                    return res.status(400).json({ erro: "Código inválido ou expirado." });
+                }
+            }
 
             const senhaValida = await bcrypt.compare(senha, admin.senha);
             if (!senhaValida) return res.status(401).json({ erro: "Senha incorreta" });
@@ -57,18 +63,27 @@ class loginController {
 
     async validateCode (req, res) {
         try {
-            const { email, code } = req.body;
+            const { user, code } = req.body;
 
-            const admin = await Admin.findOne({
+            let admin = await Admin.findOne({
                 where: {
-                email,
+                email: user,
                 login_code: code,
                 login_expires: { [Op.gt]: new Date() }
                 }
             });
 
             if (!admin) {
-                return res.status(400).json({ erro: "Código inválido ou expirado." });
+                admin = await Admin.findOne({
+                    where: {
+                    nome: user,
+                    login_code: code,
+                    login_expires: { [Op.gt]: new Date() }
+                    }
+                });
+                if (!admin) {
+                    return res.status(400).json({ erro: "Código inválido ou expirado." });
+                }
             }
 
             await admin.update({
@@ -203,3 +218,4 @@ class loginController {
 }
 
 module.exports = new loginController();
+

@@ -1,19 +1,17 @@
-const nodemailer = require("nodemailer");
+const sgMail = require("@sendgrid/mail");
 require("dotenv").config();
 
-const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,       // 587 para STARTTLS
-    secure: false,   // STARTTLS
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    }
-});
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-transporter.verify((error, success) => {
-    console.log(error || "SMTP conectado!");
-});
+async function sendMail({ to, subject, html }) {
+    const msg = {
+        to,
+        from: process.env.EMAIL_USER, 
+        subject,
+        html
+    };
 
+    await sgMail.send(msg);
+}
 
-module.exports = transporter;
+module.exports = sendMail;

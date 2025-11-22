@@ -25,6 +25,7 @@ class loginController {
             const code = Math.floor(100000 + Math.random() * 900000).toString();
 
             const expires = new Date(Date.now() + 10 * 60 * 1000); 
+            expires.setHours(expires.getHours() - 3);
 
             await admin.update({
                 login_code: code,
@@ -112,7 +113,8 @@ class loginController {
 
             const crypto = require("crypto");
             const token = crypto.randomBytes(32).toString("hex");
-            const expires = new Date(Date.now() + 3600000); // 1h
+            const expires = new Date(Date.now() + 3600000); 
+            expires.setHours(expires.getHours() - 3);
 
             await admin.update({ reset_token: token, reset_expires: expires });
 
@@ -218,5 +220,6 @@ class loginController {
 }
 
 module.exports = new loginController();
+
 
 

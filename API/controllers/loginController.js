@@ -49,7 +49,7 @@ class loginController {
             `;
 
             await sendMail({
-                to: email,
+                to: admin.email,
                 subject: "Seu código de login",
                 html: htmlTemplate
             });
@@ -177,7 +177,7 @@ class loginController {
                 `;
 
             await sendMail({
-                to: email,
+                to: admin.email,
                 subject: "Redefinição de senha",
                 html: htmlTemplate
             });
@@ -218,4 +218,5 @@ class loginController {
 }
 
 module.exports = new loginController();
+
 

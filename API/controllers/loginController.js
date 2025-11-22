@@ -40,7 +40,7 @@ class loginController {
             return res.json({ mensagem: "Código enviado para o e-mail." });
         } catch (error) {
             console.error(error);
-            return res.status(500).json({ erro: "Erro interno do servidor" });
+            return res.status(500).json({ erro: "Erro interno do servidor", error });
         }
     }
 
@@ -131,5 +131,6 @@ class loginController {
         res.json({ mensagem: "Senha redefinida com sucesso!" });
     }
 }
+
 
 module.exports = new loginController();

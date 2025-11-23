@@ -40,13 +40,13 @@ let cursoSelecionado = null;
 /* ============================
    API
 =============================*/
-const API_URL = "https://study-hub-7qc5.onrender.com/curso";
-const API_DISCIPLINA = "https://study-hub-7qc5.onrender.com/disciplina";
-const API_PROFESSOR = "https://study-hub-7qc5.onrender.com/professor";
+const API_URL = "https://study-hub-2mr9.onrender.com/curso";
+const API_DISCIPLINA = "https://study-hub-2mr9.onrender.com/disciplina";
+const API_PROFESSOR = "https://study-hub-2mr9.onrender.com/professor";
 
 // APIs para buscar associações (IDs)
-const API_CURSO_DISCIPLINA = "https://study-hub-7qc5.onrender.com/curso/disciplina";
-const API_DISCIPLINA_PROFESSOR_RVS = "https://study-hub-7qc5.onrender.com/disciplina/professor/rvs";
+const API_CURSO_DISCIPLINA = "https://study-hub-2mr9.onrender.com/curso/disciplina";
+const API_DISCIPLINA_PROFESSOR_RVS = "https://study-hub-2mr9.onrender.com/disciplina/professor/rvs";
 
 /* ============================
    1. CARREGAR CURSOS DA API
@@ -376,3 +376,4 @@ document.addEventListener("click", function(event) {
         allMenus.forEach(menu => menu.style.display = "none");
     }
 });
+

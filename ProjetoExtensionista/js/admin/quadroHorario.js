@@ -27,7 +27,7 @@ if (!idCurso) {
 // ============================
 // ENDPOINTS (já fornecidos por você)
 // ============================
-const BASE = "https://study-hub-7qc5.onrender.com";
+const BASE = "https://study-hub-2mr9.onrender.com";
 const API_CURSO = `${BASE}/curso`;
 const API_PERIODO = `${BASE}/periodo`;
 const API_DISCIPLINA_CURSO = `${BASE}/curso/disciplina`; // GET /curso/disciplina/{idCurso}
@@ -658,3 +658,4 @@ document.addEventListener("DOMContentLoaded", async () => {
   // preencherTabelaPorPeriodo caso um período já esteja selecionado
   if (selectPeriodo.value) preencherTabelaPorPeriodo(selectPeriodo.value);
 });
+

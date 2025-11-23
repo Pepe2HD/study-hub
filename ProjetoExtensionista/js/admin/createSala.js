@@ -26,7 +26,7 @@ btnCadastrar.addEventListener('click', async () => {
   if (!capacidade) return alert("Digite a capacidade.");
 
   try {
-    const res = await fetch("https://study-hub-7qc5.onrender.com/sala", {
+    const res = await fetch("https://study-hub-2mr9.onrender.com/sala", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -51,3 +51,4 @@ btnCadastrar.addEventListener('click', async () => {
     alert("Erro: " + err.message);
   }
 });
+

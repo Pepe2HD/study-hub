@@ -14,7 +14,7 @@ if (menuBtn && sidebar) {
 //-----------------------------------------
 // API
 //-----------------------------------------
-const API_CURSO = "https://study-hub-7qc5.onrender.com/curso";
+const API_CURSO = "https://study-hub-2mr9.onrender.com/curso";
 
 //-----------------------------------------
 // BOTÃO CADASTRAR CURSO
@@ -57,3 +57,4 @@ document.getElementById("btnCadastrar").addEventListener("click", async () => {
     alert("Erro ao criar curso.");
   }
 });
+

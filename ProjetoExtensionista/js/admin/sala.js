@@ -36,7 +36,7 @@ let currentList = [];
 /* ============================
    API
 =============================*/
-const API_URL = "https://study-hub-7qc5.onrender.com/sala";
+const API_URL = "https://study-hub-2mr9.onrender.com/sala";
 
 /* ============================
    1. CARREGAR SALAS DA API
@@ -263,3 +263,4 @@ function filterSalas() {
    10. INICIAR
 =============================*/
 carregarSalas();
+

@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fasec - Professor</title>
+    <title>Fasec - Professores</title>
     <link rel="stylesheet" href="/css/admin/prof.css">
 </head>
-
 <body>
     <div class="sidebar" id="sidebar">
         <img src="/images/fasec.jpeg" alt="Logo" class="logo">
@@ -25,34 +23,22 @@
         <button class="menu-btn" id="menu-btn">☰</button>
     </header>
 
-    <div id="modal" class="modal">
-        <div class="modalContent">
-            <div class="modal-content">
-                <input type="text" id="modalSearch" placeholder="Pesquisar...">
-                <ul id="modalList">
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div id="confirmModal" class="modalRemove" role="dialog" aria-modal="true">
+    <div id="confirmModal" class="modalRemove">
         <div class="modalContentRemove">
             <div class="modal-confirm-box">
-                <p id="confirmText"></p>
+                <p id="confirmText">Deseja excluir?</p>
                 <div class="modal-buttons">
                     <button id="confirmNo">Voltar</button>
                     <button id="confirmYes">Excluir</button>
-
                 </div>
             </div>
         </div>
     </div>
 
-
-
     <main>
         <div class="content">
             <div class="prof-container">
+                
                 <div class="search-bar">
                     <button id="searchBtn">🔍</button>
                     <input type="text" placeholder="Pesquisar professor..." id="searchInput">
@@ -62,10 +48,6 @@
                     <button id="btnCurso">Curso</button>
                     <button id="btnDisciplinas">Disciplinas</button>
                 </div>
-                <div class="filtersActives">
-                    <div id="activeFilters" class="active-filters">
-                    </div>
-                </div>
 
                 <div class="profs-box">
                     <div class="profs-header">
@@ -73,55 +55,13 @@
                     </div>
 
                     <ul class="prof-list" id="prof-list">
-                        <li>
-                            <span class="course-name">Pedro Henrique</span>
-                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
-                                <button class="delete-btn">🗑️ Excluir</button>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="course-name">Giovanna Bonfim</span>
-                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
-                                <button class="delete-btn">🗑️ Excluir</button>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="course-name">Marcos</span>
-                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
-                                <button class="delete-btn">🗑️ Excluir</button>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="course-name">Ana Cecilia</span>
-                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
-                                <button class="delete-btn">🗑️ Excluir</button>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="course-name">Fernando H.</span>
-                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
-                                <button class="delete-btn">🗑️ Excluir</button>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="course-name">Tiago G.</span>
-                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
-                                <button class="delete-btn">🗑️ Excluir</button>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="course-name">Lorena M.</span>
-                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
-                                <button class="delete-btn">🗑️ Excluir</button>
-                            </div>
-                        </li>
                     </ul>
                 </div>
 
                 <div class="createProf">
                     <div class="text">
                         <div class="title">Cadastre um professor</div>
-                        <div class="subtitle">Inclua um professor e configure suas atribuições na faculdade.</div>
+                        <div class="subtitle">Inclua um professor e configure suas atribuições.</div>
                     </div>
                     <div class="button">
                         <a href="/html/admin/createProf.html">
@@ -135,5 +75,4 @@
 
     <script src="/js/admin/prof.js"></script>
 </body>
-
 </html>

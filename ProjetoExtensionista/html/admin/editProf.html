@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fasec - Atualizando Professor</title>
+    <title>Fasec - Editar Professor</title>
     <link rel="stylesheet" href="/css/admin/edit.css">
 </head>
-
 <body>
     <div class="sidebar" id="sidebar">
         <img src="/images/fasec.jpeg" alt="Logo" class="logo">
@@ -29,17 +27,17 @@
         <div class="content">
             <div class="form-container">
                 <div class="title">
-                    <h1>Atualizando professor</h1>
+                    <h1>Editando professor</h1>
                 </div>
 
                 <div class="form-box">
-                    <input type="text" id="nome" name="nome" placeholder="Nome">
-                    <input type="email" id="email" name="email" placeholder="Email">
+                    <input type="text" id="nome" placeholder="Carregando nome...">
+                    <input type="email" id="email" placeholder="Carregando email...">
                 </div>
 
                 <div class="button-group">
-                    <button class="btn-voltar" onclick="window.history.back()">Voltar</button>
-                    <button class="btn-cadastrar" id="btnCadastrar" type="button">Atualizar</button>
+                    <button class="btn-voltar" onclick="window.location.href='/html/admin/prof.html'">Voltar</button>
+                    <button class="btn-cadastrar" id="btnCadastrar" type="button">Salvar Alterações</button>
                 </div>
             </div>
         </div>
@@ -47,5 +45,4 @@
 
     <script src="/js/admin/editProf.js"></script>
 </body>
-
 </html>

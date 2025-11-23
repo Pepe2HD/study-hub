@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar">
         <img src="/images/fasec.jpeg" alt="Logo" class="logo">
         <nav>
@@ -21,20 +22,22 @@
         </nav>
     </div>
 
+    <!-- HEADER -->
     <header>
         <button class="menu-btn" id="menu-btn">☰</button>
     </header>
 
+    <!-- MODAL FILTRO -->
     <div id="modal" class="modal">
         <div class="modalContent">
             <div class="modal-content">
                 <input type="text" id="modalSearch" placeholder="Pesquisar...">
-                <ul id="modalList">
-                </ul>
+                <ul id="modalList"></ul>
             </div>
         </div>
     </div>
 
+    <!-- MODAL CONFIRMAÇÃO EXCLUSÃO -->
     <div id="confirmModal" class="modalRemove" role="dialog" aria-modal="true">
         <div class="modalContentRemove">
             <div class="modal-confirm-box">
@@ -42,81 +45,43 @@
                 <div class="modal-buttons">
                     <button id="confirmNo">Voltar</button>
                     <button id="confirmYes">Excluir</button>
-
                 </div>
             </div>
         </div>
     </div>
 
-
+    <!-- MAIN -->
     <main>
         <div class="content">
             <div class="disc-container">
+
+                <!-- BARRA DE PESQUISA -->
                 <div class="search-bar">
                     <button id="searchBtn">🔍</button>
                     <input type="text" placeholder="Pesquisar disciplina..." id="searchInput">
                 </div>
 
+                <!-- FILTROS -->
                 <div class="filters">
                     <button id="btnDisciplinas">Cursos</button>
-                    <button id="btnProfessores">Professores</button>
-                </div>
-                <div class="filtersActives">
-                    <div id="activeFilters" class="active-filters">
-                    </div>
                 </div>
 
+                <!-- TAGS ATIVAS -->
+                <div class="filtersActives">
+                    <div id="activeFilters" class="active-filters"></div>
+                </div>
+
+                <!-- LISTA DE DISCIPLINAS -->
                 <div class="discs-box">
                     <div class="discs-header">
                         <h3>Disciplinas</h3>
                     </div>
-
                     <ul class="disc-list" id="disc-list">
-                        <li data-professor="Pedro Henrique" data-cursos="Engenharia de Software, Ciência da Computação">
-                            <span class="course-name">Introdução à Programação</span>
-                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
-                                <button class="delete-btn">🗑️ Excluir</button>
-                            </div>
-                        </li>
-                        <li data-professor="Giovanna Bonfim" data-cursos="Ciência da Computação, Medicina">
-                            <span class="course-name">Matemática Aplicada</span>
-                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
-                                <button class="delete-btn">🗑️ Excluir</button>
-                            </div>
-                        </li>
-                        <li data-professor="Marcos" data-cursos="Biotecnologia">
-                            <span class="course-name">Física Geral</span>
-                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
-                                <button class="delete-btn">🗑️ Excluir</button>
-                            </div>
-                        </li>
-                        <li data-professor="Ana Cecilia" data-cursos="Ciências Contábeis, Psicologia">
-                            <span class="course-name">Gestão de Pessoas</span>
-                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
-                                <button class="delete-btn">🗑️ Excluir</button>
-                            </div>
-                        </li>
-                        <li data-professor="Fernando H." data-cursos="Design Gráfico">
-                            <span class="course-name">Design de Interação</span>
-                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
-                                <button class="delete-btn">🗑️ Excluir</button>
-                            </div>
-                        </li>
-                        <li data-professor="Tiago G." data-cursos="Psicologia">
-                            <span class="course-name">Psicologia Cognitiva</span>
-                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
-                                <button class="delete-btn">🗑️ Excluir</button>
-                            </div>
-                        </li>
-                        <li data-professor="Lorena M." data-cursos="Medicina">
-                            <span class="course-name">Anatomia Humana</span>
-                            <div class="actions"> <button class="edit-btn">✏️ Editar</button>
-                                <button class="delete-btn">🗑️ Excluir</button>
-                            </div>
-                        </li>
+                        <!-- Itens preenchidos dinamicamente via JS -->
                     </ul>
                 </div>
 
+                <!-- CADASTRO DE DISCIPLINA -->
                 <div class="createDisc">
                     <div class="text">
                         <div class="title">Cadastre uma disciplina</div>
@@ -128,6 +93,7 @@
                         </a>
                     </div>
                 </div>
+
             </div>
         </div>
     </main>

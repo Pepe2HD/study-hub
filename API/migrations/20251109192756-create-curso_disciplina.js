@@ -1,39 +1,30 @@
 'use strict';
 
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('curso_disciplina', {
-      id_curso: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'curso',
-          key: 'id_curso'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
-      },
-      id_disciplina: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'disciplina',
-          key: 'id_disciplina'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
-      },
-    });
+  async up(queryInterface, Sequelize) {
+    await queryInterface.sequelize.query(`
+      CREATE TABLE curso_disciplina (
+        id_curso INT NOT NULL,
+        id_disciplina INT NOT NULL,
 
-    await queryInterface.addConstraint('curso_disciplina', {
-      fields: ['id_curso', 'id_disciplina'],
-      type: 'primary key',
-      name: 'id_curso_disciplina'
-    });
+        CONSTRAINT fk_curso
+          FOREIGN KEY (id_curso)
+          REFERENCES curso (id_curso)
+          ON UPDATE CASCADE
+          ON DELETE CASCADE,
+
+        CONSTRAINT fk_disciplina
+          FOREIGN KEY (id_disciplina)
+          REFERENCES disciplina (id_disciplina)
+          ON UPDATE CASCADE
+          ON DELETE CASCADE,
+
+        PRIMARY KEY (id_curso, id_disciplina)
+      );
+    `);
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('curso_disciplina');
   }
 };

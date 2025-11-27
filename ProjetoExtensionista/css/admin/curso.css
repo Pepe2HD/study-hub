@@ -373,6 +373,78 @@ p {
     background-color: #d0d0d0;
 }
 
+.modal-vincular-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 40%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        .vincular-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .vincular-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .vincular-controls select {
+            flex: 1;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        .btn-add-vinculo {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-add-vinculo:hover { background-color: #45a049; }
+        
+        .lista-vinculadas {
+            list-style: none;
+            padding: 0;
+            max-height: 200px;
+            overflow-y: auto;
+            border-top: 1px solid #eee;
+        }
+        .lista-vinculadas li {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .btn-remove-vinculo {
+            color: #ff4444;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .close-vincular {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            top: 5px;
+            right: 15px;
+        }
+        .close-vincular:hover { color: black; }
+
+
+
+
+
 .filtersActives {
     display: flex;
     justify-content: left;

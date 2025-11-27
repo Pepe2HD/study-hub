@@ -238,6 +238,63 @@ main {
     background: #4d627e;
 }
 
+/* ==========================
+   DROPDOWN MENU (NOVO CÓDIGO)
+========================== */
+.option-container {
+    position: relative;
+    display: inline-block;
+}
+
+.option-btn {
+    background: none;
+    border: none;
+    font-size: 40px;
+    cursor: pointer;
+    padding: 1px;
+    border-radius: 5px;
+    color: #ffffff;
+    margin-right: 10px;
+    line-height: 0.5; /* Ajuste para centralizar verticalmente os pontos */
+}
+
+.option-btn:hover {
+    background: #3b4f7a;
+}
+
+.option-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 40px; /* Ajustado levemente para não sobrepor o botão */
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    min-width: 130px;
+    box-shadow: 0px 3px 8px rgba(0,0,0,0.15);
+    z-index: 20;
+    overflow: hidden; /* Garante que o hover respeite o border-radius */
+}
+
+.option-dropdown button {
+    width: 100%;
+    padding: 10px;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 16px; /* Ajustado para um tamanho mais padrão */
+    color: #333; /* Cor do texto do menu para contraste com o fundo branco */
+}
+
+.option-dropdown button:hover {
+    background: #f2f2f2;
+}
+
+/* ==========================
+   FIM DROPDOWN
+========================== */
+
 .actions {
     display: flex;
     gap: 10px;

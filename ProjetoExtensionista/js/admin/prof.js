@@ -58,19 +58,24 @@ async function carregarProfessores() {
     }
 }
 
-// 2. Renderizar item na lista
+// 2. Renderizar item na lista (MODIFICADO COM O MENU DROPDOWN)
 function adicionarProfessorNaTela(prof) {
     const li = document.createElement("li");
     
-    // Ajuste aqui conforme o retorno do seu backend (ex: prof.id ou prof._id ou prof.id_professor)
+    // Ajuste de IDs
     const idProf = prof.id || prof.id_professor || prof._id; 
     const nomeProf = prof.nome;
 
     li.innerHTML = `
         <span class="course-name">${nomeProf}</span>
-        <div class="actions"> 
-            <button class="edit-btn" onclick="irParaEdicao('${idProf}')">✏️ Editar</button>
-            <button class="delete-btn" onclick="abrirModalExcluir('${idProf}', '${nomeProf}')">🗑️ Excluir</button>
+
+        <div class="option-container">
+            <button class="option-btn">⋮</button>
+
+            <div class="option-dropdown">
+                <button onclick="irParaEdicao('${idProf}')">✏️ Editar</button>
+                <button onclick="abrirModalExcluir('${idProf}', '${nomeProf}')">🗑️ Excluir</button>
+            </div>
         </div>
     `;
     profList.appendChild(li);
@@ -104,7 +109,8 @@ confirmYes.addEventListener("click", async () => {
         });
 
         if (response.ok) {
-            alert("Professor excluído com sucesso!");
+            // Se necessário, descomente o alert abaixo
+            // alert("Professor excluído com sucesso!");
             carregarProfessores(); // Recarrega a lista
         } else {
             alert("Erro ao excluir. Tente novamente.");
@@ -132,6 +138,36 @@ searchInput.addEventListener("input", function() {
             item.style.display = "none";
         }
     });
+});
+
+/* ============================
+   NOVO: CONTROLE DO MENU DROPDOWN
+=============================*/
+document.addEventListener("click", function(event) {
+    // Verifica se clicou no botão de 3 pontinhos
+    const isButton = event.target.matches(".option-btn");
+    
+    // Seleciona todos os menus abertos
+    const allMenus = document.querySelectorAll(".option-dropdown");
+
+    if (isButton) {
+        const dropdown = event.target.nextElementSibling;
+        
+        // Verifica se este específico já está aberto
+        const isOpen = dropdown.style.display === "block";
+
+        // Fecha todos antes de abrir o novo (para não ficarem 2 abertos)
+        allMenus.forEach(menu => menu.style.display = "none");
+
+        // Se não estava aberto, abre. Se estava, o código acima já fechou.
+        if (!isOpen) {
+            dropdown.style.display = "block";
+        }
+
+    } else {
+        // Se clicar fora, fecha tudo
+        allMenus.forEach(menu => menu.style.display = "none");
+    }
 });
 
 // Inicializar ao carregar a página

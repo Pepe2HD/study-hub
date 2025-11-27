@@ -2,8 +2,6 @@
 // CONFIGURAÇÃO DA API
 // ==============================
 const API_URL = "https://study-hub-2mr9.onrender.com/disciplina";  
-// Se quiser mudar a rota, basta alterar a constante acima.
-
 
 // ==============================
 // FUNÇÃO PARA ENVIAR PARA A API
@@ -26,17 +24,12 @@ async function enviarParaAPI(dados) {
     }
 }
 
-
 // ==============================
 // AÇÃO DO BOTÃO CADASTRAR
 // ==============================
 document.getElementById("btnCadastrar").addEventListener("click", async () => {
     const nome = document.getElementById("nome").value.trim();
     const tipo = document.getElementById("tipo").value;
-    const salaSelect = document.getElementById("sala");
-
-    // id_sala pode ser null
-    const id_sala = salaSelect.value === "" ? null : Number(salaSelect.value);
 
     if (!nome) {
         alert("Digite o nome da disciplina!");
@@ -46,7 +39,7 @@ document.getElementById("btnCadastrar").addEventListener("click", async () => {
     const dadosDisciplina = {
         nome: nome,
         tipo: tipo,
-        id_sala: id_sala
+        id_sala: null // Enviamos null pois o campo foi removido da tela
     };
 
     console.log("Enviando para API:", dadosDisciplina);
@@ -56,7 +49,9 @@ document.getElementById("btnCadastrar").addEventListener("click", async () => {
 
     if (resposta.ok) {
         alert("Disciplina cadastrada com sucesso!");
+        // Opcional: Limpar o campo nome após cadastrar
+        document.getElementById("nome").value = "";
     } else {
-        alert("Erro: " + resposta.resultado.message);
+        alert("Erro: " + (resposta.resultado.message || "Erro desconhecido"));
     }
 });

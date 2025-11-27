@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fasec - Curso</title>
     <link rel="stylesheet" href="/css/admin/curso.css">
+  
 </head>
 
 <body>
@@ -29,8 +30,7 @@
         <div class="modalContent">
             <div class="modal-content">
                 <input type="text" id="modalSearch" placeholder="Pesquisar...">
-                <ul id="modalList">
-                </ul>
+                <ul id="modalList"></ul>
             </div>
         </div>
     </div>
@@ -42,12 +42,30 @@
                 <div class="modal-buttons">
                     <button id="confirmNo">Voltar</button>
                     <button id="confirmYes">Excluir</button>
-
                 </div>
             </div>
         </div>
     </div>
 
+    <div id="modalVincular" class="modal" style="display: none;">
+        <div class="modal-vincular-content">
+            <span class="close-vincular" id="closeVincular">&times;</span>
+            <div class="vincular-header">
+                <h3 id="tituloVincular">Gerenciar Disciplinas</h3>
+            </div>
+            
+            <div class="vincular-controls">
+                <select id="selectDisciplinaVincular">
+                    <option value="">Carregando...</option>
+                </select>
+                <button id="btnAdicionarVinculo" class="btn-add-vinculo">Adicionar</button>
+            </div>
+
+            <h4>Disciplinas do Curso:</h4>
+            <ul id="listaVinculadas" class="lista-vinculadas">
+                </ul>
+        </div>
+    </div>
 
     <main>
         <div class="content">
@@ -62,15 +80,13 @@
                     <button id="btnProfessores">Professores</button>
                 </div>
                 <div class="filtersActives">
-                    <div id="activeFilters" class="active-filters">
-                    </div>
+                    <div id="activeFilters" class="active-filters"></div>
                 </div>
 
                 <div class="cursos-box">
                     <div class="cursos-header">
                         <h3>Cursos</h3>
                     </div>
-
                     <ul class="curso-list" id="curso-list"></ul>
                 </div>
 

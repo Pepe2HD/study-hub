@@ -1,18 +1,14 @@
-/* ==========================
-   BASE / RESET
-========================== */
 body {
     margin: 0;
+    display: flex;
     font-family: Arial, sans-serif;
     display: flex;
 }
 
-/* ==========================
-   SIDEBAR
-========================== */
 .sidebar {
     background-color: #2b2b2b;
     width: 20%;
+    position: fixed;
     height: 100vh;
     padding: 20px;
     color: #fff;
@@ -24,6 +20,10 @@ body {
 
 .sidebar.active {
     left: -20%;
+}
+
+nav {
+    margin-top: 100px;
 }
 
 .logo {
@@ -89,9 +89,6 @@ body {
     transition: transform .4s ease;
 }
 
-/* ==========================
-   HEADER
-========================== */
 header {
     width: 100%;
     background: transparent;
@@ -117,9 +114,6 @@ header {
     color: #2b2b2b;
 }
 
-/* ==========================
-   MAIN CONTENT
-========================== */
 main {
     margin-left: 20%;
     padding: 80px 10px;
@@ -131,7 +125,7 @@ main {
     transition: 0.3s;
 }
 
-.sidebar.active ~ main {
+.sidebar.active~main {
     margin-left: 0;
     width: 100%;
 }
@@ -142,26 +136,72 @@ main {
     flex-direction: column;
 }
 
-/* ==========================
-   PROFESSOR PAGE
-========================== */
+h1 {
+    font-size: 50px;
+    margin-bottom: 12px;
+}
+
+p {
+    margin-top: 0;
+    font-size: 23px;
+}
+
+.buttons {
+    margin-top: 80px;
+    display: flex;
+    gap: 100px;
+}
+
+.btn {
+    background-color: #4f8ac8;
+    padding: 60px 100px;
+    color: white;
+    text-decoration: none;
+    font-size: 35px;
+    border-radius: 10px;
+    box-shadow: -10px 10px 0px #a1b7c9;
+    transition: transform .2s;
+}
+
+.btn:hover {
+    transform: translate(-10px, 10px);
+    box-shadow: 0px 0px 0px;
+}
+
 .prof-container {
-    width: 100%;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 30px;
+    text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-/* SEARCH BAR */
 .search-bar {
     display: flex;
-    align-items: center;
+    justify-content: left;
+    margin-bottom: 20px;
     background: #5a84af;
     border-radius: 50px;
     height: 70px;
+    align-items: center;
     width: 100%;
-    padding-left: 20px;
-    gap: 20px;
+}
+
+.search-bar input {
+    width: 50%;
+    padding: 12px;
+    border-radius: 30px;
+    border: none;
+    background: #5a84af;
+    color: #fff;
+    outline: none;
+}
+
+.search-bar ::placeholder {
+    color: #cfe8ff;
+    font-size: 22px;
 }
 
 .search-bar button {
@@ -171,83 +211,85 @@ main {
     border-radius: 50%;
     cursor: pointer;
     font-size: 23px;
+    height: 80%;
+    margin-left: 40px;
 }
 
-.search-bar input {
-    width: 70%;
-    background: #5a84af;
-    border: none;
-    outline: none;
-    color: white;
-    font-size: 22px;
-}
-
-/* FILTERS */
 .filters {
     display: flex;
     justify-content: left;
     gap: 15px;
-    margin: 15px 0;
+    margin-bottom: 10px;
     width: 100%;
 }
 
 .filters button {
-    padding: 8px 12px;
+    padding: 8px 10px;
     background: #6e81b1;
+    color: white;
     border: none;
     border-radius: 50px;
-    color: white;
     cursor: pointer;
+    text-align: center;
+    width: 15%;
     font-size: 17px;
 }
 
-/* ACTIVE FILTER TAGS */
-.active-filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    width: 100%;
-}
-
-.filter-tag {
-    background-color: #5a75b1;
-    color: white;
-    padding: 5px 12px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-/* PROFESSOR LIST */
 .profs-box {
     background: #79A4C7;
     width: 70%;
+    margin: 0 auto;
     border-radius: 12px;
     padding: 20px;
+    text-align: left;
 }
 
 .profs-header {
     border-bottom: 2px solid #ffffff55;
     padding-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .profs-header h3 {
     color: white;
     margin: 0;
-    font-size: 28px;
 }
 
 .prof-list {
     list-style: none;
     padding: 0;
+    max-height: 300px; 
+    overflow-y: auto;
+    padding-right: 20px;
+}
+
+.prof-list::-webkit-scrollbar {
+    width: 6px;
+    color: #41558b;
+}
+
+.prof-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.prof-list::-webkit-scrollbar-thumb {
+    background: #5a84af;
+    border-radius: 10px;
+}
+
+.prof-list::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 .prof-list li {
     background: #5B7EAC;
-    margin: 10px 0;
-    padding: 15px;
     color: white;
-    border-radius: 10px;
+    margin: 8px 0;
+    padding: 10px;
+    border-radius: 8px;
+    transition: 0.3s;
+    cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -257,12 +299,274 @@ main {
     background: #4d627e;
 }
 
-/* ==========================
-   DROPDOWN MENU (NOVO CÓDIGO)
-========================== */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal #modalSearch {
+    display: flex;
+    justify-content: left;
+    margin-bottom: 10px;
+    background: #ffffff;
+    border-radius: 20px;
+    height: 30px;
+    align-items: center;
+    width: 85%;
+    font-size: 20px;
+}
+
+.modalContent {
+    background-color: #c3cce0;
+    margin: 10% auto;
+    padding: 40px;
+    border-radius: 10px;
+    width: 35%;
+}
+
+.modal-content {
+    background-color: #5a75b1;
+    margin: 10% auto;
+    padding: 50px;
+    border-radius: 10px;
+    width: 85%;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+.modal-content ul {
+    list-style: none;
+    padding: 0 15px 0 0;
+    max-height: 200px;
+    overflow-y: auto;
+    font-size: 20px;
+}
+
+.modal-content li {
+    background-color: #e0e0e0;
+    padding: 8px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#modalList li {
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    list-style: none;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.modal-content ul::-webkit-scrollbar {
+    width: 10px;
+}
+
+.modal-content ul::-webkit-scrollbar-track {
+    background: #c3cce0;
+    border-radius: 10px;
+}
+
+.modal-content ul::-webkit-scrollbar-thumb {
+    background-color: #5a75b1;
+    border-radius: 10px;
+    border: 2px solid #c3cce0;
+}
+
+.modal-content ul::-webkit-scrollbar-thumb:hover {
+    background-color: #3b4f7a;
+}
+
+.modal-content li:hover {
+    background-color: #d0d0d0;
+}
+
+.filtersActives {
+    display: flex;
+    justify-content: left;
+    width: 100%;
+    margin-top: 0px;
+    margin-bottom: 30px;
+}
+
+.active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin: 10px 0;
+}
+
+.filter-tag {
+    display: inline-flex;
+    align-items: center;
+    background-color: #5a75b1;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 14px;
+    user-select: none;
+    transition: background 0.2s;
+}
+
+.filter-tag:hover {
+    background-color: #41558b;
+}
+
+.filter-tag span {
+    margin-left: 8px;
+    font-weight: bold;
+}
+
+.modalRemove {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modalContentRemove {
+    background-color: #ADC7D0;
+    padding: 30px 20px;
+    border-radius: 12px;
+    min-width: 500px;
+    max-width: 500px;
+    height: 350px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+}
+
+.modal-confirm-box p {
+    font-size: 35px;
+    margin-bottom: 70px;
+    color: #000000;
+}
+
+.modal-buttons button {
+    margin: 0 10px;
+    padding: 15px 45px;
+    border-radius: 8px;
+    border: none;
+    font-size: 25px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.course-name {
+    display: -webkit-box;          
+    -webkit-box-orient: vertical;  
+    overflow: hidden;              
+    text-overflow: ellipsis;       
+    -webkit-line-clamp: 2;        
+    line-clamp: 2;                 
+    word-break: break-word;       
+}
+
+#confirmYes {
+    background-color: #62A954;
+    color: white;
+}
+
+#confirmYes:hover {
+    background-color: #408332;
+}
+
+#confirmNo {
+    background-color: #A65B5B;
+    color: white;
+}
+
+#confirmNo:hover {
+    background-color: #924444;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.createProf {
+    background: #79A4C7;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 90%;
+    height: 150px;
+    margin-top: 30px;
+    border-radius: 15px;
+    color: white;
+}
+
+.createProf .text {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    text-align: left;
+    margin-left: 20px;
+}
+
+.createProf .title {
+    font-size: 23px;
+    margin-bottom: 5px;
+}
+
+.createProf .subtitle {
+    font-size: 18px;
+    margin-top: 5px;
+}
+
+.createProf .button {
+    display: flex;
+    justify-content: right;
+    margin-right: 30px;
+    width: 70%;
+}
+
+.createProf button {
+    padding: 10px 30px;
+    background-color: #41558b;
+    border: none;
+    border-radius: 15px;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.createProf button:hover {
+    background-color: #243666;
+}
+
 .option-container {
     position: relative;
     display: inline-block;
+    z-index: 50;
 }
 
 .option-btn {
@@ -274,7 +578,9 @@ main {
     border-radius: 5px;
     color: #ffffff;
     margin-right: 10px;
-    line-height: 0.5; /* Ajuste para centralizar verticalmente os pontos */
+    line-height: 0.5; 
+    z-index: 51; 
+    position: relative;
 }
 
 .option-btn:hover {
@@ -285,14 +591,14 @@ main {
     display: none;
     position: absolute;
     right: 0;
-    top: 40px; /* Ajustado levemente para não sobrepor o botão */
+    top: 40px; 
     background: white;
     border: 1px solid #ccc;
     border-radius: 6px;
     min-width: 130px;
     box-shadow: 0px 3px 8px rgba(0,0,0,0.15);
-    z-index: 20;
-    overflow: hidden; /* Garante que o hover respeite o border-radius */
+     z-index: 100;
+    overflow: hidden; 
 }
 
 .option-dropdown button {
@@ -302,226 +608,247 @@ main {
     border: none;
     text-align: left;
     cursor: pointer;
-    font-size: 16px; /* Ajustado para um tamanho mais padrão */
-    color: #333; /* Cor do texto do menu para contraste com o fundo branco */
+    font-size: 16px; 
+    color: #333; 
 }
 
 .option-dropdown button:hover {
     background: #f2f2f2;
 }
 
-/* ==========================
-   FIM DROPDOWN
-========================== */
 
-.actions {
-    display: flex;
-    gap: 10px;
+@media (max-width: 1100px) {
+    .sidebar {
+        width: 30%;
+    }
+
+    main {
+        margin-left: 30%;
+        width: 70%;
+    }
+
+    .menu-btn {
+        margin-left: 25%;
+        color: #fff;
+    }
+
+    .sidebar.active {
+        left: -30%;
+    }
+
+    .sidebar.active~main {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .filters button {
+        width: 20%;
+    }
 }
 
-.edit-btn,
-.delete-btn {
-    border: none;
-    border-radius: 8px;
-    padding: 10px 20px;
-    font-size: 18px;
-    cursor: pointer;
-}
-
-.edit-btn {
-    background: #4CAF50;
-    color: white;
-}
-
-.edit-btn:hover {
-    background: #2d8530;
-}
-
-.delete-btn {
-    background: #e74c3c;
-    color: white;
-}
-
-.delete-btn:hover {
-    background: #a33529;
-}
-
-/* CREATE PROFESSOR CARD */
-.createProf {
-    background: #79A4C7;
-    margin-top: 30px;
-    width: 90%;
-    height: 150px;
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    padding: 20px;
-    color: white;
-}
-
-.createProf .text {
-    width: 40%;
-}
-
-.createProf .title {
-    font-size: 23px;
-}
-
-.createProf .subtitle {
-    font-size: 18px;
-    margin-top: 5px;
-}
-
-.createProf .button {
-    width: 60%;
-    display: flex;
-    justify-content: flex-end;
-}
-
-.createProf button {
-    padding: 10px 30px;
-    background: #41558b;
-    border: none;
-    border-radius: 15px;
-    color: white;
-    font-size: 20px;
-}
-
-/* ==========================
-   MODALS
-========================== */
-.modal,
-.modalRemove {
-    display: none;
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100vh;
-    background: rgba(0,0,0,0.4);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-}
-
-.modalContent {
-    background: #c3cce0;
-    padding: 40px;
-    border-radius: 10px;
-    width: 35%;
-}
-
-.modal-content {
-    background: #5a75b1;
-    padding: 40px;
-    border-radius: 10px;
-}
-
-.modal-content input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-}
-
-.modal-content ul {
-    list-style: none;
-    padding: 0;
-    max-height: 250px;
-    overflow-y: auto;
-    background: #e0e0e0;
-    border-radius: 8px;
-}
-
-.modal-content li {
-    padding: 12px;
-    border-bottom: 1px solid #ccc;
-    cursor: pointer;
-}
-
-.modal-content li:hover {
-    background: #d0d0d0;
-}
-
-/* CONFIRM REMOVE */
-.modalContentRemove {
-    background: #ADC7D0;
-    padding: 30px;
-    border-radius: 12px;
-    width: 500px;
-    text-align: center;
-}
-
-.modal-buttons button {
-    padding: 15px 45px;
-    border-radius: 8px;
-    border: none;
-    font-size: 22px;
-    cursor: pointer;
-    margin: 0 10px;
-}
-
-#confirmYes {
-    background: #62A954;
-    color: white;
-}
-
-#confirmNo {
-    background: #A65B5B;
-    color: white;
-}
-
-/* ==========================
-   RESPONSIVIDADE
-========================== */
 @media (max-width: 1300px) {
     .sidebar {
         left: -100%;
-        width: 70%;
+        width: 60%;
+        transition: 0.3s;
+        z-index: 100;
     }
+
     .sidebar.active {
         left: 0;
     }
+
+    header {
+        z-index: 1100;
+    }
+
     .menu-btn {
+        margin-left: 10px;
         font-size: 40px;
         color: #2b2b2b;
-        position: fixed;
-        top: 20px;
-        left: 20px;
     }
+
+    .menu-btn.active {
+        margin-left: 60%;
+        color: #fff;
+    }
+
     main {
         margin-left: 0;
         width: 100%;
-        padding-top: 100px;
+        padding: 100px 0px;
     }
+
+
+    h1 {
+        font-size: 50px;
+        text-align: center;
+    }
+
+    p {
+        font-size: 24px;
+        text-align: center;
+    }
+
+    .buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+    }
+
+    .btn {
+        width: 80%;
+        padding: 40px 0;
+    }
+
+    .filters button {
+        width: auto;
+        font-size: 25px;
+        padding: 10px 15px;
+    }
+
+    .search-bar input {
+        width: 70%;
+    }
+
+    .course-name {
+        font-size: 25px;
+    }
+
     .profs-box {
         width: 100%;
     }
+
     .createProf {
         flex-direction: column;
         height: auto;
         text-align: center;
+        gap: 10px;
+        padding: 20px;
+    }
+
+    .createProf .text,
+    .createProf .button {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+        margin: 0;
+    }
+
+    .modalContent,
+    .modal-content {
+        width: 80%;
+    }
+
+    .modalContentRemove {
+        max-width: 400px;
+        min-width: auto;
+        height: auto;
+        padding: 20px;
+    }
+
+    .modal-confirm-box p {
+        font-size: 28px;
+    }
+
+    .modal-buttons button {
+        padding: 12px 30px;
+        font-size: 20px;
     }
 }
 
-@media (max-width: 600px) {
-    .search-bar input {
-        width: 100%;
-        font-size: 18px;
+@media (max-width: 840px) {
+    .profs-box {
+        width:90%;
     }
+}
+
+@media (max-width: 550px) {
+    .btn {
+        width: 90%;
+        padding: 30px 0;
+        font-size: 24px;
+    }
+
+    .sidebar a {
+        font-size: 24px;
+        margin: 25px auto;
+    }
+
+    .logo {
+        width: 150px;
+    }
+
+    
+
+    .menu-btn {
+        font-size: 35px;
+    }
+
+    h1 {
+        font-size: 32px;
+        text-align: center;
+    }
+
+    p {
+        font-size: 18px;
+        text-align: center;
+    }
+
     .filters {
         flex-direction: column;
+        align-items: center;
     }
-    .prof-list li {
-        flex-direction: column;
-        align-items: flex-start;
+
+    .filters button {
+        width: 80%;
+        font-size: 20px;
     }
-    .actions {
-        width: 100%;
-        justify-content: flex-end;
-    }
-    .modalContent,
-    .modal-content {
+
+    .profs-box {
         width: 90%;
     }
 
+    .prof-list li {
+        gap: 10px;
+    }
+
+    .actions {
+        justify-content: flex-end;
+        width: 100%;
+    }
+
+    .modalContent,
+    .modal-content {
+        width: 95%;
+        padding: 25px;
+    }
+
+    .modal-confirm-box p {
+        font-size: 24px;
+    }
+
+    .modal-buttons button {
+        padding: 10px 25px;
+        font-size: 18px;
+    }
+
+    .createProf button {
+        width: 90%;
+        font-size: 18px;
+    }
+
+    .search-bar input {
+        width: 100%;
+    }
+
+    .search-bar ::placeholder {
+        font-size: 18px;
+    }
+
+    .search-bar button {
+        padding: 10px 15px;
+        font-size: 18px;
+        margin-left: 5px;
+    }
 }

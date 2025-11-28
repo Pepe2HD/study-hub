@@ -97,9 +97,13 @@ function renderizarSalas(salas) {
                 ${sala.nome} — Bloco ${sala.bloco}
             </span>
 
-            <div class="actions">
-                <button class="edit-btn" onclick="editarSala(${sala.id_sala})">✏️ Editar</button>
-                <button class="delete-btn" onclick="abrirModalExcluir(${sala.id_sala}, '${sala.nome}')">🗑️ Excluir</button>
+            <div class="option-container">
+                <button class="option-btn">⋮</button>
+
+                <div class="option-dropdown">
+                    <button onclick="editarSala(${sala.id_sala})">✏️ Editar</button>
+                    <button onclick="abrirModalExcluir(${sala.id_sala}, '${sala.nome}')">🗑️ Excluir</button>
+                </div>
             </div>
         `;
 
@@ -260,7 +264,31 @@ function filterSalas() {
 }
 
 /* ============================
-   10. INICIAR
+   10. OPÇÕES
+=============================*/
+window.addEventListener("click", (e) => {
+    if (e.target === modalFiltro) closeFiltro();
+    if (e.target === modalVincular) {
+        modalVincular.style.display = "none";
+        carregarCursos();
+    }
+});
+
+document.addEventListener("click", function(event) {
+    const isButton = event.target.matches(".option-btn");
+    const allMenus = document.querySelectorAll(".option-dropdown");
+
+    if (isButton) {
+        const dropdown = event.target.nextElementSibling;
+        const isOpen = dropdown.style.display === "block";
+        allMenus.forEach(menu => menu.style.display = "none");
+        if (!isOpen) dropdown.style.display = "block";
+    } else {
+        allMenus.forEach(menu => menu.style.display = "none");
+    }
+});
+
+/* ============================
+   11. INICIAR
 =============================*/
 carregarSalas();
-

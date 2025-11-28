@@ -292,7 +292,7 @@ async function selecionarDisciplina(d) {
   inputBuscaProfessor.disabled = false;
 
   try {
-    const res = await fetch(`${API_DISCIPLINA_PROF}/${d.id_disciplina}`);
+    const res = await fetch(`${API_PROFESSOR}`);
     const professores = await res.json();
 
     function render(filtro = "") {
@@ -658,4 +658,5 @@ document.addEventListener("DOMContentLoaded", async () => {
   // preencherTabelaPorPeriodo caso um período já esteja selecionado
   if (selectPeriodo.value) preencherTabelaPorPeriodo(selectPeriodo.value);
 });
+
 

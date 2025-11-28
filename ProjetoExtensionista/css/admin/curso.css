@@ -389,8 +389,6 @@ p {
     background-color: #3b4f7a;
 }
 
-
-
 .modal-content li:hover {
     background-color: #d0d0d0;
 }
@@ -603,6 +601,7 @@ p {
     box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.15);
     z-index: 100;
     overflow: hidden;
+    
 }
 
 .option-dropdown button {
@@ -959,9 +958,8 @@ p {
     .logo {
         width: 150px;
     }
-
     .menu-btn {
-        font-size: 35px;
+        font-size: 50px;
     }
 
     h1 {

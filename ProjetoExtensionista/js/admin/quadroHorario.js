@@ -446,16 +446,19 @@ btnAdicionarHorario?.addEventListener("click", async () => {
 // ============================
 function inicializarTabelaInterativa() {
   if (!tabela) return;
+
   tabela.querySelectorAll("tr").forEach((tr) => {
+    // ignorar linhas que não são de aula
+    if (!tr.dataset.turno) return;
+
     tr.querySelectorAll("td").forEach((td, colIndex) => {
-      if (colIndex === 0) return; // primeira coluna é o rótulo de horário
+      if (colIndex === 0) return; // primeira coluna é o horário
       // se vazio, coloca "Adicionar +"
       if (!td.innerHTML.trim()) {
         td.innerText = "Adicionar +";
         td.classList.add("campo-vazio");
       }
       td.addEventListener("click", (e) => {
-        // se clicou no botão remover interno, ignora (o botão tem stopPropagation)
         if (e.target && e.target.closest(".remover-horario-btn")) return;
         const horario = tr.cells[0].innerText.trim();
         const dia = tabela.rows[0].cells[colIndex].innerText.trim();
@@ -474,9 +477,12 @@ async function preencherTabelaPorPeriodo(periodoId) {
 
   // reset visual
   for (let r = 1; r < tabela.rows.length; r++) {
-    for (let c = 1; c < tabela.rows[r].cells.length; c++) {
-      tabela.rows[r].cells[c].innerHTML = "Adicionar +";
-      tabela.rows[r].cells[c].classList.add("campo-vazio");
+    const tr = tabela.rows[r];
+    if (!tr.dataset.turno) continue; 
+
+    for (let c = 1; c < tr.cells.length; c++) {
+      tr.cells[c].innerHTML = "Adicionar +";
+      tr.cells[c].classList.add("campo-vazio");
     }
   }
 
@@ -658,5 +664,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   // preencherTabelaPorPeriodo caso um período já esteja selecionado
   if (selectPeriodo.value) preencherTabelaPorPeriodo(selectPeriodo.value);
 });
+
 
 

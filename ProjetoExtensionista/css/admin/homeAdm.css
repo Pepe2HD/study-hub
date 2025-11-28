@@ -153,19 +153,20 @@ p {
 }
 
 .btn {
-    background-color: #4f8ac8;
-    padding: 60px 100px;
+    background: linear-gradient(135deg, #4f8ac8, #3a6fa3);
+    padding: 45px 80px;
     color: white;
     text-decoration: none;
-    font-size: 35px;
-    border-radius: 10px;
-    box-shadow: -10px 10px 0px #a1b7c9;
-    transition: transform .2s;
+    font-size: 32px;
+    border-radius: 15px;
+    box-shadow: -8px 8px 0px rgba(43, 68, 88, 0.6);
+    transition: 0.25s ease;
+    font-weight: 600;
 }
 
 .btn:hover {
-    transform: translate(-10px, 10px);
-    box-shadow: 0px 0px 0px;
+    transform: translate(-8px, 8px);
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
 }
 
 
@@ -190,7 +191,7 @@ p {
         left: -30%;
     }
 
-    .sidebar.active ~ main {
+    .sidebar.active~main {
         margin-left: 0;
         width: 100%;
     }
@@ -253,7 +254,7 @@ p {
     .btn {
         width: 55%;
         padding: 50px 0;
-        font-size:35px;
+        font-size: 35px;
         text-align: center;
     }
 
@@ -288,4 +289,3 @@ p {
         font-size: 35px;
     }
 }
-

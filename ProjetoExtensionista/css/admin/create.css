@@ -826,6 +826,14 @@ h1 {
         padding: 100px 20px;
     }
 
+    .sidebar {
+        width: 70%;
+    }
+
+    .menu-btn {
+        margin-left: 62%;
+    }
+
     .buttons {
         flex-direction: column;
         align-items: center;
@@ -890,12 +898,17 @@ h1 {
 }
 
 @media (max-width: 600px) {
-    .sidebar {
-        width: 70%;
-    }
-
     .sidebar.active {
         left: -80%;
+    }
+
+    .sidebar a {
+        font-size: 24px;
+        margin: 25px auto;
+    }
+
+    .logo {
+        width: 150px;
     }
 
     .menu-btn {

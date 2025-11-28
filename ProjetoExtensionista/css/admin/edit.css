@@ -33,6 +33,7 @@ nav {
     border-radius: 20px;
 }
 
+
 .sidebar a {
     display: block;
     color: #fff;
@@ -88,6 +89,7 @@ nav {
     transform: scaleX(0);
     transition: transform .4s ease;
 }
+
 
 header {
     width: 100%;
@@ -733,21 +735,25 @@ h1 {
 
 @media (max-width: 1200px) {
     .sidebar {
-        width: 25%;
+        width: 40%;
     }
 
     main {
-        margin-left: 25%;
-        width: 75%;
+        margin-left: 40%;
+        width: 60%;
     }
 
     .sidebar.active {
-        left: -25%;
+        left: -40%;
     }
 
-    .sidebar.active ~ main {
+    .sidebar.active~main {
         margin-left: 0;
         width: 100%;
+    }
+
+    .menu-btn {
+        margin-left: 35%;
     }
 
     .btn {
@@ -761,31 +767,6 @@ h1 {
 }
 
 @media (max-width: 992px) {
-    body {
-        flex-direction: column;
-    }
-
-    .sidebar {
-        width: 250px;
-        left: -250px;
-        position: fixed;
-        z-index: 1000;
-    }
-
-    .sidebar.active {
-        left: 0;
-    }
-
-    .menu-btn {
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        font-size: 40px;
-        color: #2b2b2b;
-        z-index: 1100;
-        margin-left: 0;
-    }
-
     main {
         margin-left: 0;
         width: 100%;
@@ -855,21 +836,32 @@ h1 {
         font-size: 12px;
         padding: 8px;
     }
+
+    #periodo {
+        font-size: 25px;
+    }
+
+    .horario-create #btnHorario {
+        font-size: 25px;
+    }
+
+    .horario-create #quadroContainer {
+        font-size: 25px;
+    }
+    
 }
 
 @media (max-width: 600px) {
     .sidebar {
-        width: 220px;
-        left: -220px;
+        width: 70%;
     }
 
     .sidebar.active {
-        left: 0;
+        left: -80%;
     }
 
     .menu-btn {
-        font-size: 35px;
-        color: #2b2b2b;
+        margin-left: 62%;
     }
 
     h1 {
@@ -967,4 +959,3 @@ h1 {
         gap: 3px;
     }
 }
-

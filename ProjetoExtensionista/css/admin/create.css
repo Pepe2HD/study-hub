@@ -37,26 +37,31 @@ nav {
     display: block;
     color: #fff;
     text-decoration: none;
-    margin: 40px auto;
-    font-size: 35px;
-    width: 60%;
-    position: relative;
+    margin: 35px auto;
+    font-size: 28px;
+    width: 70%;
+    font-weight: 500;
     padding-bottom: 5px;
+    position: relative;
+    transition: color .3s ease;
+}
+
+.sidebar a:hover {
+    color: #8fc4ff;
 }
 
 .sidebar a::after {
     content: "";
     position: absolute;
-    bottom: 0;
-    right: 0;
+    bottom: -3px;
+    left: 0;
     height: 3px;
     width: 100%;
-    background-color: #555;
-    transform-origin: right;
+    background: #8fc4ff;
+    transform-origin: left;
     transform: scaleX(0);
-    transition: transform 0.5s ease-in-out;
+    transition: transform .4s ease;
 }
-
 
 .sidebar a:hover::after {
     transform: scaleX(1);
@@ -64,7 +69,11 @@ nav {
 
 .sidebar .sair {
     color: rgb(212, 96, 96);
-    margin-top: 150px;
+    margin-top: 100px;
+}
+
+.sidebar .sair:hover {
+    color: rgb(212, 96, 96);
 }
 
 .sidebar .sair::after {
@@ -77,7 +86,7 @@ nav {
     background-color: #c75e5e;
     transform-origin: right;
     transform: scaleX(0);
-    transition: transform 0.5s ease-in-out;
+    transition: transform .4s ease;
 }
 
 header {
@@ -1005,3 +1014,4 @@ h1 {
         gap: 3px;
     }
 }
+

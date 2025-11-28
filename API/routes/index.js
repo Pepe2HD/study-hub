@@ -1,4 +1,4 @@
-// routes/index.js
+const auth = require("../middlewares/auth");
 const express = require('express');
 const router = express.Router();
 
@@ -12,6 +12,12 @@ const salaRoutes = require('./salaRoutes');
 const turnoRoutes = require('./turnoRoutes');
 const curso_disciplinaRouter = require('./curso_disciplinaRoutes');
 const loginRouter = require('./loginRoutes');
+router.get("/admin/check-auth", auth, (req, res) => {
+    res.json({
+        valido: true,
+        usuario: req.user
+    });
+});
 
 router.use('/admin', adminRoutes);
 router.use('/curso', cursoRoutes);
@@ -26,3 +32,4 @@ router.use('/login', loginRouter);
 
 
 module.exports = router;
+

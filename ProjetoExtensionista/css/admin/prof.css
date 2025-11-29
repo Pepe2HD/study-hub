@@ -811,11 +811,6 @@ p {
         gap: 10px;
     }
 
-    .actions {
-        justify-content: flex-end;
-        width: 100%;
-    }
-
     .modalContent,
     .modal-content {
         width: 95%;
@@ -850,3 +845,4 @@ p {
         margin-left: 5px;
     }
 }
+

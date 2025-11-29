@@ -122,6 +122,54 @@ html {
     font-weight: bold;
 }
 
+#alert-erro {
+    display:flex;
+    color:#c00;
+    font-size:18px;
+    margin-top:0;
+    margin-bottom:5px;
+    text-align:left;
+}
+
+#alert-email {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    font-size:18px;
+    max-width: 400px;
+    padding: 12px 20px;
+
+    background: #84aad6;
+    color: #2E2F76;
+    border: 1px solid #2E2F76;
+    border-radius: 6px;
+    text-align: center;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    opacity: 0;                
+    pointer-events: none;
+    transition: opacity 0.5s;
+
+    z-index: 2000;
+}
+#alert-email.show {
+    opacity: 1;             
+}
+#alert-email.success {
+    background: #8be09b;
+    color: #1e4d1d;
+    border-color: #1e4d1d;
+}
+#alert-email.fail {
+    background: #ffb3b3;
+    color: #7a0000;
+    border-color: #7a0000;
+}
+
 #usuario {
     margin-top: 70px;
 }
@@ -129,7 +177,7 @@ html {
 #esqueceu-senha {
     font-size: 18px;
     color: white;
-    display: flex;
+    display: block;
 }
 
 #btn-login {
@@ -357,3 +405,4 @@ html {
         width: 100%;
     }
 }
+

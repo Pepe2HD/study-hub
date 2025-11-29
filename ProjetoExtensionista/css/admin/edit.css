@@ -70,18 +70,10 @@ nav {
 
 .sidebar .sair {
     color: rgb(212, 96, 96);
-    margin-top: 75px;
-}
-
-.sidebar .logout {
-    color: rgb(212, 96, 96);
+    margin-top: 100px;
 }
 
 .sidebar .sair:hover {
-    color: rgb(212, 96, 96);
-}
-
-.sidebar .logout:hover {
     color: rgb(212, 96, 96);
 }
 
@@ -98,18 +90,6 @@ nav {
     transition: transform .4s ease;
 }
 
-.sidebar .logout::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    height: 3px;
-    width: 100%;
-    background-color: #c75e5e;
-    transform-origin: right;
-    transform: scaleX(0);
-    transition: transform .4s ease;
-}
 
 header {
     width: 100%;
@@ -797,6 +777,10 @@ h1 {
         width: 70%;
     }
 
+    .sidebar.active {
+        left: -70%;
+    }
+
     .menu-btn {
         margin-left: 62%;
     }
@@ -1002,6 +986,3 @@ h1 {
         gap: 3px;
     }
 }
-
-
-

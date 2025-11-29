@@ -1,3 +1,16 @@
+//-----------------------------------------
+// MENU LATERAL
+//-----------------------------------------
+const menuBtn = document.getElementById('menu-btn');
+const sidebar = document.getElementById('sidebar');
+
+if (menuBtn && sidebar) {
+  menuBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('active');
+    menuBtn.classList.toggle('active');
+  });
+}
+
 // ==============================
 // CONFIGURAÇÃO DAS APIS
 // ==============================
@@ -113,5 +126,6 @@ document.getElementById("btnCadastrar").addEventListener("click", async () => {
     await salvarCursosAssociados(listaCursos);
 
 });
+
 
 

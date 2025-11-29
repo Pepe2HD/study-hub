@@ -810,6 +810,11 @@ p {
     .prof-list li {
         gap: 10px;
     }
+    
+    .actions {
+        justify-content: flex-end;
+        width: 100%;
+    }
 
     .modalContent,
     .modal-content {
@@ -845,4 +850,5 @@ p {
         margin-left: 5px;
     }
 }
+
 

@@ -869,12 +869,22 @@ h1 {
         width: 150px;
     }
 
-    .sidebar.active {
+    .sidebar {
         left: -80%;
     }
 
+    .sidebar.active {
+        left: 0;
+    }
+
     .menu-btn {
+        margin-left: 5%;
+        color: #000;
+    }
+
+    .menu-btn.active {
         margin-left: 62%;
+        color: #fff;
     }
 
     h1 {

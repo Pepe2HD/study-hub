@@ -1,4 +1,3 @@
-// editCurso-simples.js
 //-----------------------------------------
 // MENU LATERAL
 //-----------------------------------------
@@ -13,7 +12,7 @@ if (menuBtn && sidebar) {
 }
 
 //-----------------------------------------
-// BASE DA API (hospedada)
+// API BASE
 //-----------------------------------------
 const API_BASE = "https://study-hub-2mr9.onrender.com";
 
@@ -24,33 +23,97 @@ const params = new URLSearchParams(window.location.search);
 const idCurso = params.get("id");
 
 if (!idCurso) {
-    alert("Curso não encontrado.");
+  showPopup("Curso não encontrado.", "erro");
+  setTimeout(() => {
     window.location.href = "/html/admin/curso.html";
+  }, 1500);
 }
 
 //-----------------------------------------
-// ELEMENTOS
+// ELEMENTOS DO DOM
 //-----------------------------------------
 const inputNome = document.getElementById("nome");
 const inputCarga = document.getElementById("hours");
 const btnSalvar = document.getElementById("btnAtualizar");
 
 //-----------------------------------------
-// CARREGAR CURSO
+// POP-UP PROFISSIONAL
+//-----------------------------------------
+const popup = document.getElementById("popup");
+const popupText = document.getElementById("popup-text");
+const popupTitle = document.getElementById("popup-title");
+const popupIcon = document.querySelector(".popup-icon");
+const popupClose = document.getElementById("popup-close");
+
+function showPopup(message, type = "erro") {
+  popupText.textContent = message;
+
+  popup.classList.remove("sucesso", "erro");
+  popup.classList.add(type);
+
+  if (type === "sucesso") {
+    popupTitle.textContent = "Sucesso!";
+    popupIcon.innerHTML = "✔️";
+  } else {
+    popupTitle.textContent = "Erro!";
+    popupIcon.innerHTML = "❌";
+  }
+
+  popup.style.display = "flex";
+
+  setTimeout(() => {
+    popup.classList.add("show");
+  }, 10);
+}
+
+function hidePopup() {
+  popup.classList.remove("show");
+  setTimeout(() => popup.style.display = "none", 250);
+}
+
+popupClose.addEventListener("click", hidePopup);
+
+//-----------------------------------------
+// LOADING DO BOTÃO
+//-----------------------------------------
+function toggleLoading(isLoading) {
+  if (isLoading) {
+    btnSalvar.classList.add("loading");
+    btnSalvar.textContent = "Salvando...";
+    btnSalvar.disabled = true;
+  } else {
+    btnSalvar.classList.remove("loading");
+    btnSalvar.textContent = "Salvar Alterações";
+    btnSalvar.disabled = false;
+  }
+}
+
+//-----------------------------------------
+// CARREGAR CURSO EXISTENTE
 //-----------------------------------------
 async function carregarCurso() {
-    try {
-        const res = await fetch(`${API_BASE}/curso/${idCurso}`);
-        if (!res.ok) throw new Error(`Resposta não OK: ${res.status}`);
-        const curso = await res.json();
+  toggleLoading(true);
+  btnSalvar.textContent = "Carregando...";
 
-        inputNome.value = curso.nome ?? "";
-        inputCarga.value = curso.carga_horaria ?? "";
+  try {
+    const res = await fetch(`${API_BASE}/curso/${idCurso}`);
 
-    } catch (error) {
-        console.error("Erro ao carregar curso:", error);
-        alert("Erro ao carregar dados do curso. Veja o console para detalhes.");
+    if (!res.ok) {
+      showPopup("Erro ao carregar curso.", "erro");
+      return;
     }
+
+    const curso = await res.json();
+
+    inputNome.value = curso.nome ?? "";
+    inputCarga.value = curso.carga_horaria ?? "";
+
+  } catch (error) {
+    console.error("Erro ao carregar curso:", error);
+    showPopup("Erro interno ao carregar curso.", "erro");
+  } finally {
+    toggleLoading(false);
+  }
 }
 
 carregarCurso();
@@ -59,41 +122,57 @@ carregarCurso();
 // SALVAR ALTERAÇÕES
 //-----------------------------------------
 btnSalvar.addEventListener("click", async () => {
-    const nome = inputNome.value.trim();
-    const cargaRaw = inputCarga.value.trim();
+  const nome = inputNome.value.trim();
+  const cargaRaw = inputCarga.value.trim();
 
-    if (!nome || !cargaRaw) {
-        alert("Preencha todos os campos.");
-        return;
+  if (!nome || !cargaRaw) {
+    showPopup("Preencha todos os campos.", "erro");
+    return;
+  }
+
+  const carga = Number(cargaRaw);
+
+  if (!Number.isFinite(carga) || carga <= 0) {
+    showPopup("Informe uma carga horária válida (maior que 0).", "erro");
+    return;
+  }
+
+  toggleLoading(true);
+
+  try {
+    const res = await fetch(`${API_BASE}/curso/${idCurso}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        nome: nome,
+        carga_horaria: carga
+      })
+    });
+
+    if (!res.ok) {
+      const txt = await res.text().catch(() => "");
+      showPopup("Erro ao atualizar: " + txt, "erro");
+      return;
     }
 
-    const carga = Number(cargaRaw);
-    if (!Number.isFinite(carga) || carga <= 0) {
-        alert("Informe uma carga horária válida (número maior que 0).");
-        return;
-    }
+    showPopup("Curso atualizado com sucesso!", "sucesso");
 
-    try {
-        const res = await fetch(`${API_BASE}/curso/${idCurso}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                nome: nome,
-                carga_horaria: carga
-            })
-        });
+    setTimeout(() => {
+      window.location.href = "/html/admin/curso.html";
+    }, 1500);
 
-        if (!res.ok) {
-            const txt = await res.text().catch(() => "");
-            throw new Error(`Status ${res.status} ${txt}`);
-        }
+  } catch (error) {
+    console.error("Erro ao salvar alterações:", error);
+    showPopup("Falha ao salvar. Verifique sua conexão.", "erro");
 
-        alert("Curso atualizado com sucesso!");
-        window.location.href = "/html/admin/curso.html";
-
-    } catch (error) {
-        console.error("Erro ao salvar alterações:", error);
-        alert("Erro ao salvar alterações. Veja o console para detalhes.");
-    }
+  } finally {
+    toggleLoading(false);
+  }
 });
 
+//-----------------------------------------
+// ENVIAR COM ENTER
+//-----------------------------------------
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") btnSalvar.click();
+});

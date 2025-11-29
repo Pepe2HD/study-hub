@@ -11,121 +11,167 @@ if (menuBtn && sidebar) {
   });
 }
 
-// ==============================
-// CONFIGURAÇÃO DAS APIS
-// ==============================
+//-----------------------------------------
+// API BASE
+//-----------------------------------------
 const API_DISCIPLINA = "https://study-hub-2mr9.onrender.com/disciplina";
-const API_CURSO_DISCIPLINA = "https://study-hub-2mr9.onrender.com/curso/disciplina";
 
-
-// ==============================
-// PEGAR ID DA DISCIPLINA DA URL
-// ==============================
-const urlParams = new URLSearchParams(window.location.search);
-const disciplinaId = urlParams.get("id");
+//-----------------------------------------
+// PEGAR ID DA DISCIPLINA
+//-----------------------------------------
+const params = new URLSearchParams(window.location.search);
+const disciplinaId = params.get("id");
 
 if (!disciplinaId) {
-    alert("ID da disciplina não encontrado!");
-    window.history.back();
+  showPopup("Disciplina não encontrada.", "erro");
+  setTimeout(() => window.location.href = "/html/admin/disciplina.html", 1500);
 }
 
+//-----------------------------------------
+// ELEMENTOS DO DOM
+//-----------------------------------------
+const inputNome = document.getElementById("nome");
+const inputTipo = document.getElementById("tipo");
+const btnSalvar = document.getElementById("btnCadastrar");
 
-// ==============================
-// CARREGAR DADOS DA DISCIPLINA
-// ==============================
+//-----------------------------------------
+// POPUP PROFISSIONAL
+//-----------------------------------------
+const popup = document.getElementById("popup");
+const popupText = document.getElementById("popup-text");
+const popupTitle = document.getElementById("popup-title");
+const popupIcon = document.querySelector(".popup-icon");
+const popupClose = document.getElementById("popup-close");
+
+function showPopup(message, type = "erro") {
+  popupText.textContent = message;
+
+  popup.classList.remove("erro", "sucesso");
+  popup.classList.add(type);
+
+  if (type === "sucesso") {
+    popupTitle.textContent = "Sucesso!";
+    popupIcon.innerHTML = "✔️";
+  } else {
+    popupTitle.textContent = "Erro!";
+    popupIcon.innerHTML = "❌";
+  }
+
+  popup.style.display = "flex";
+  setTimeout(() => popup.classList.add("show"), 10);
+}
+
+function hidePopup() {
+  popup.classList.remove("show");
+  setTimeout(() => popup.style.display = "none", 250);
+}
+
+popupClose.addEventListener("click", hidePopup);
+
+//-----------------------------------------
+// LOADING DO BOTÃO
+//-----------------------------------------
+function toggleLoading(isLoading) {
+  if (isLoading) {
+    btnSalvar.disabled = true;
+    btnSalvar.textContent = "Salvando...";
+    btnSalvar.classList.add("loading");
+  } else {
+    btnSalvar.disabled = false;
+    btnSalvar.textContent = "Salvar Alterações";
+    btnSalvar.classList.remove("loading");
+  }
+}
+
+//-----------------------------------------
+// CARREGAR DISCIPLINA
+//-----------------------------------------
 async function carregarDados() {
-    try {
-        const resposta = await fetch(`${API_DISCIPLINA}/${disciplinaId}`);
-        const dados = await resposta.json();
+  toggleLoading(true);
+  btnSalvar.textContent = "Carregando...";
 
-        document.getElementById("nome").value = dados.nome;
-        document.getElementById("tipo").value = dados.tipo;
+  try {
+    const res = await fetch(`${API_DISCIPLINA}/${disciplinaId}`);
 
-    } catch (erro) {
-        console.error("Erro ao carregar disciplina:", erro);
-        alert("Não foi possível carregar os dados da disciplina.");
+    if (!res.ok) {
+      showPopup("Erro ao carregar disciplina.", "erro");
+      return;
     }
+
+    const disc = await res.json();
+
+    inputNome.value = disc.nome ?? "";
+    inputTipo.value = disc.tipo ?? "";
+
+  } catch (erro) {
+    console.error("Erro ao carregar:", erro);
+    showPopup("Erro interno ao carregar dados.", "erro");
+  } finally {
+    toggleLoading(false);
+  }
 }
 
 carregarDados();
 
-
-// ==============================
-// FUNÇÃO PARA ATUALIZAR DISCIPLINA
-// ==============================
+//-----------------------------------------
+// ATUALIZAR DISCIPLINA
+//-----------------------------------------
 async function atualizarDisciplina() {
-    const nome = document.getElementById("nome").value.trim();
-    const tipo = document.getElementById("tipo").value;
+  const nome = inputNome.value.trim();
+  const tipo = inputTipo.value;
 
-    if (!nome) {
-        alert("Digite o nome da disciplina!");
-        return;
+  if (!nome) {
+    showPopup("Digite o nome da disciplina.", "erro");
+    return false;
+  }
+
+  try {
+    const res = await fetch(`${API_DISCIPLINA}/${disciplinaId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nome, tipo })
+    });
+
+    if (!res.ok) {
+      const txt = await res.text().catch(() => "");
+      showPopup("Erro ao atualizar disciplina: " + txt, "erro");
+      return false;
     }
 
-    const dados = { nome, tipo };
+    return true;
 
-    try {
-        const resposta = await fetch(`${API_DISCIPLINA}/${disciplinaId}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(dados)
-        });
-
-        const resultado = await resposta.json();
-
-        if (!resposta.ok) {
-            alert("Erro ao atualizar: " + resultado.message);
-            return;
-        }
-
-        alert("Disciplina atualizada com sucesso!");
-
-    } catch (erro) {
-        console.error("Erro ao atualizar disciplina:", erro);
-        alert("Erro de conexão com a API.");
-    }
+  } catch (erro) {
+    console.error("Erro ao atualizar disciplina:", erro);
+    showPopup("Erro ao salvar disciplina.", "erro");
+    return false;
+  }
 }
 
+//-----------------------------------------
+// BOTÃO SALVAR ALTERAÇÕES
+//-----------------------------------------
+btnSalvar.addEventListener("click", async () => {
+  toggleLoading(true);
 
-// ==============================
-// FUNÇÃO PARA ENVIAR ASSOCIAÇÃO CURSO ⇄ DISCIPLINA
-// ==============================
-async function salvarCursosAssociados(listaCursos) {
-    try {
-        const resposta = await fetch(API_CURSO_DISCIPLINA, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                disciplina_id: disciplinaId,
-                cursos: listaCursos
-            })
-        });
+  const ok = await atualizarDisciplina();
 
-        return await resposta.json();
+  if (!ok) {
+    toggleLoading(false);
+    return;
+  }
 
-    } catch (erro) {
-        console.error("Erro ao associar cursos:", erro);
-        return { erro: true };
-    }
-}
+  showPopup("Disciplina atualizada com sucesso!", "sucesso");
 
+  setTimeout(() => {
+    window.location.href = "/html/admin/disciplina.html";
+  }, 1500);
 
-// ==============================
-// BOTÃO ATUALIZAR
-// ==============================
-document.getElementById("btnCadastrar").addEventListener("click", async () => {
-
-    // 1) Atualiza disciplina
-    await atualizarDisciplina();
-
-    // 2) (OPCIONAL) enviar lista de cursos selecionados
-    // pegue IDs dos tags selecionados
-    const tags = document.querySelectorAll("#cursosAssociadosTags .tag");
-    const listaCursos = [...tags].map(tag => Number(tag.dataset.id));
-
-    await salvarCursosAssociados(listaCursos);
-
+  toggleLoading(false);
 });
 
-
-
+//-----------------------------------------
+// ENVIAR COM ENTER
+//-----------------------------------------
+document.addEventListener("keydown", e => {
+  if (e.key === "Enter") btnSalvar.click();
+});

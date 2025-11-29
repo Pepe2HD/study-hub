@@ -104,6 +104,7 @@ nav {
     right: 0;
     height: 3px;
     width: 100%;
+    background-color: #c75e5e;
     transform-origin: right;
     transform: scaleX(0);
     transition: transform .4s ease;
@@ -309,6 +310,7 @@ p {
         font-size: 50px;
     }
 }
+
 
 
 

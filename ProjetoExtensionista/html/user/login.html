@@ -9,6 +9,9 @@
 </head>
 
 <body>
+
+    <p id="alert-email"></p>
+    
     <div class="container">
         <div class="left-side">
             <h1>Ainda não cadastrado?</h1>
@@ -19,8 +22,10 @@
         <div class="right-side">
             <img src="/images/fasec.jpeg" alt="Logo FASEC" class="logo">
             <div class="login-box">
+                
                 <input type="text" placeholder="Usuário" id="usuario">
                 <input type="password" placeholder="Senha" id="senha">
+                <p id="alert-erro"></p>
                 <a href="#" id="esqueceu-senha">Esqueci a senha...</a>
                 <button id="btn-login" onclick="login()">LOGIN</button>
                 <button id="btn-entrar-sem-login" onclick="entrarSemLogin()">ENTRAR SEM LOGIN</button>
@@ -28,8 +33,9 @@
             <button id="btn-voltar" onclick="voltar()">VOLTAR</button>
         </div>
     </div>
-
-    <script src="/js/user/login.js"></script>
+    <script type="module" src="/js/middlewares/loginGuard.js"></script>
+    <script src="/js/login/send-code.js"></script>
 </body>
 
 </html>
+

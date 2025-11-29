@@ -649,7 +649,7 @@ p {
 @media (max-width: 1300px) {
     .sidebar {
         left: -100%;
-        width: 60%;
+        width: 70%;
         transition: 0.3s;
         z-index: 100;
     }
@@ -850,5 +850,6 @@ p {
         margin-left: 5px;
     }
 }
+
 
 

@@ -81,6 +81,10 @@ nav {
     color: rgb(212, 96, 96);
 }
 
+.sidebar .logout:hover {
+    color: rgb(212, 96, 96);
+}
+
 .sidebar .sair::after {
     content: "";
     position: absolute;
@@ -1036,5 +1040,6 @@ h1 {
         gap: 3px;
     }
 }
+
 
 

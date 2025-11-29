@@ -1,86 +1,181 @@
-/* ============================
-   CONFIGURAÇÃO
-=============================*/
-const API_URL = "https://study-hub-2mr9.onrender.com/professor";
-
+//-----------------------------------------
+// MENU LATERAL
+//-----------------------------------------
 const menuBtn = document.getElementById('menu-btn');
 const sidebar = document.getElementById('sidebar');
 
-// Captura o ID da URL (ex: editProf.html?id=10)
-const params = new URLSearchParams(window.location.search);
-const idProfessor = params.get('id');
-
-const inputNome = document.getElementById('nome');
-const inputEmail = document.getElementById('email');
-const btnSalvar = document.getElementById('btnCadastrar'); // Reaproveitando a classe/id do botão
-
 if (menuBtn && sidebar) {
-    menuBtn.addEventListener('click', () => {
-        sidebar.classList.toggle('active');
-        menuBtn.classList.toggle('active');
+  menuBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('active');
+    menuBtn.classList.toggle('active');
+  });
+}
+
+//-----------------------------------------
+// API BASE
+//-----------------------------------------
+const API_PROFESSOR = "https://study-hub-2mr9.onrender.com/professor";
+
+//-----------------------------------------
+// PEGAR ID DA URL
+//-----------------------------------------
+const params = new URLSearchParams(window.location.search);
+const professorId = params.get("id");
+
+if (!professorId) {
+  showPopup("Professor não encontrado.", "erro");
+  setTimeout(() => window.location.href = "/html/admin/prof.html", 1500);
+}
+
+//-----------------------------------------
+// ELEMENTOS DO DOM
+//-----------------------------------------
+const inputNome = document.getElementById("nome");
+const inputEmail = document.getElementById("email");
+const btnSalvar = document.getElementById("btnCadastrar");
+
+//-----------------------------------------
+// POPUP PROFISSIONAL
+//-----------------------------------------
+const popup = document.getElementById("popup");
+const popupText = document.getElementById("popup-text");
+const popupTitle = document.getElementById("popup-title");
+const popupIcon = document.querySelector(".popup-icon");
+const popupClose = document.getElementById("popup-close");
+
+function showPopup(message, type = "erro") {
+  popupText.textContent = message;
+
+  popup.classList.remove("erro", "sucesso");
+  popup.classList.add(type);
+
+  if (type === "sucesso") {
+    popupTitle.textContent = "Sucesso!";
+    popupIcon.innerHTML = "✔️";
+  } else {
+    popupTitle.textContent = "Erro!";
+    popupIcon.innerHTML = "❌";
+  }
+
+  popup.style.display = "flex";
+  setTimeout(() => popup.classList.add("show"), 10);
+}
+
+function hidePopup() {
+  popup.classList.remove("show");
+  setTimeout(() => popup.style.display = "none", 250);
+}
+
+popupClose.addEventListener("click", hidePopup);
+
+//-----------------------------------------
+// LOADING DO BOTÃO
+//-----------------------------------------
+function toggleLoading(isLoading) {
+  if (isLoading) {
+    btnSalvar.disabled = true;
+    btnSalvar.textContent = "Salvando...";
+    btnSalvar.classList.add("loading");
+  } else {
+    btnSalvar.disabled = false;
+    btnSalvar.textContent = "Salvar Alterações";
+    btnSalvar.classList.remove("loading");
+  }
+}
+
+//-----------------------------------------
+// CARREGAR DADOS DO PROFESSOR
+//-----------------------------------------
+async function carregarProfessor() {
+  toggleLoading(true);
+  btnSalvar.textContent = "Carregando...";
+
+  try {
+    const res = await fetch(`${API_PROFESSOR}/${professorId}`);
+
+    if (!res.ok) {
+      showPopup("Erro ao carregar professor.", "erro");
+      return;
+    }
+
+    const prof = await res.json();
+
+    inputNome.value = prof.nome ?? "";
+    inputEmail.value = prof.email ?? "";
+
+  } catch (erro) {
+    console.error("Erro ao carregar:", erro);
+    showPopup("Erro interno ao carregar dados.", "erro");
+  } finally {
+    toggleLoading(false);
+  }
+}
+
+carregarProfessor();
+
+//-----------------------------------------
+// ATUALIZAR PROFESSOR
+//-----------------------------------------
+async function atualizarProfessor() {
+  const nome = inputNome.value.trim();
+  const email = inputEmail.value.trim();
+
+  if (!nome) {
+    showPopup("Digite o nome do professor.", "erro");
+    return false;
+  }
+
+  if (!email || !email.includes("@") || !email.includes(".")) {
+    showPopup("Digite um e-mail válido.", "erro");
+    return false;
+  }
+
+  try {
+    const res = await fetch(`${API_PROFESSOR}/${professorId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nome, email })
     });
+
+    if (!res.ok) {
+      const txt = await res.text().catch(() => "");
+      showPopup("Erro ao atualizar professor: " + txt, "erro");
+      return false;
+    }
+
+    return true;
+
+  } catch (erro) {
+    console.error("Erro ao atualizar:", erro);
+    showPopup("Erro ao salvar professor.", "erro");
+    return false;
+  }
 }
 
-/* ============================
-   CARREGAR DADOS DO PROFESSOR
-=============================*/
-async function carregarDadosProfessor() {
-    if (!idProfessor) {
-        alert("ID do professor não encontrado.");
-        window.location.href = "/html/admin/prof.html";
-        return;
-    }
+//-----------------------------------------
+// BOTÃO SALVAR ALTERAÇÕES
+//-----------------------------------------
+btnSalvar.addEventListener("click", async () => {
+  toggleLoading(true);
 
-    try {
-        const response = await fetch(`${API_URL}/${idProfessor}`);
-        if (!response.ok) throw new Error("Professor não encontrado");
+  const ok = await atualizarProfessor();
+  if (!ok) {
+    toggleLoading(false);
+    return;
+  }
 
-        const prof = await response.json();
-        
-        // Preenche os inputs
-        inputNome.value = prof.nome || "";
-        inputEmail.value = prof.email || "";
+  showPopup("Professor atualizado com sucesso!", "sucesso");
 
-    } catch (error) {
-        console.error(error);
-        alert("Erro ao carregar dados do professor.");
-        window.location.href = "/html/admin/prof.html";
-    }
-}
+  setTimeout(() => {
+    window.location.href = "/html/admin/prof.html";
+  }, 1500);
 
-/* ============================
-   SALVAR ALTERAÇÕES (PUT)
-=============================*/
-btnSalvar.addEventListener('click', async function() {
-    const nome = inputNome.value.trim();
-    const email = inputEmail.value.trim();
-
-    if (!nome || !email) {
-        alert("Preencha todos os campos.");
-        return;
-    }
-
-    try {
-        const response = await fetch(`${API_URL}/${idProfessor}`, {
-            method: "PUT", // ou PATCH, dependendo do seu backend
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ nome, email })
-        });
-
-        if (response.ok) {
-            alert("Professor atualizado com sucesso!");
-            window.location.href = "/html/admin/prof.html";
-        } else {
-            alert("Erro ao atualizar professor.");
-        }
-
-    } catch (error) {
-        console.error(error);
-        alert("Erro de conexão ao atualizar.");
-    }
+  toggleLoading(false);
 });
 
-// Inicia o carregamento ao abrir a página
-document.addEventListener("DOMContentLoaded", carregarDadosProfessor);
+//-----------------------------------------
+// ENVIAR COM ENTER
+//-----------------------------------------
+document.addEventListener("keydown", e => {
+  if (e.key === "Enter") btnSalvar.click();
+});

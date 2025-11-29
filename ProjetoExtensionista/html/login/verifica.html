@@ -76,6 +76,55 @@
             transition: 0.3s;
         }
 
+        #reenviar-code {
+            display:block;
+            color:white;
+            font-size:18px;
+            margin-top:0;
+            margin-bottom:20px;
+            align-self: center;
+            text-align: center;
+        }
+
+        #alert-erro {
+            display:flex;
+            color:#c00;
+            font-size:18px;
+            margin-left: 10px;
+            margin-top:0px;
+            margin-bottom:10px;
+            text-align:left;
+        }
+        
+        #alert-email {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: auto;
+            font-size:18px;
+            max-width: 400px;
+            padding: 12px 20px;
+
+            background: #84aad6;
+            color: #2E2F76;
+            border: 1px solid #2E2F76;
+            border-radius: 6px;
+            text-align: center;
+
+            font-size: 14px;
+            font-weight: 500;
+
+            opacity: 0;                
+            pointer-events: none;
+            transition: opacity 0.5s;
+
+            z-index: 2000;
+        }
+        #alert-email.show {
+            opacity: 1;             
+        }
+
         button:hover {
             background: #1c3550;
         }
@@ -138,60 +187,29 @@
 </head>
 
 <body>
-
+    
+    <p id="alert-email">Enviamos um código para confirmar seu login. Verifique seu e-mail, lembre-se de olhar a caixa de spam!</p>
+    
     <div class="container">
 
         <h1>Digite o código</h1>
         <p>Insira os 6 dígitos para continuar</p>
 
         <div class="code-box">
-            <input type="text" maxlength="1" class="digit">
-            <input type="text" maxlength="1" class="digit">
-            <input type="text" maxlength="1" class="digit">
-            <input type="text" maxlength="1" class="digit">
-            <input type="text" maxlength="1" class="digit">
-            <input type="text" maxlength="1" class="digit">
+            <input id="carac1" type="text" maxlength="1" class="digit">
+            <input id="carac2" type="text" maxlength="1" class="digit">
+            <input id="carac3" type="text" maxlength="1" class="digit">
+            <input id="carac4" type="text" maxlength="1" class="digit">
+            <input id="carac5" type="text" maxlength="1" class="digit">
+            <input id="carac6" type="text" maxlength="1" class="digit">
         </div>
-
+        <p id="alert-erro"></p>
+        <a href="#" id="reenviar-code">Reenviar código</a>
         <button id="prosseguirBtn">Prosseguir</button>
 
     </div>
-
-    <script>
-
-        const inputs = document.querySelectorAll(".digit");
-
-        // Movimenta automaticamente para o próximo campo
-        inputs.forEach((input, index) => {
-            input.addEventListener("input", () => {
-                if (input.value.length === 1 && index < inputs.length - 1) {
-                    inputs[index + 1].focus();
-                }
-            });
-
-            // Caso o usuário aperte backspace e o campo esteja vazio
-            input.addEventListener("keydown", (e) => {
-                if (e.key === "Backspace" && input.value === "" && index > 0) {
-                    inputs[index - 1].focus();
-                }
-            });
-        });
-
-        document.getElementById("prosseguirBtn").addEventListener("click", () => {
-            let codigo = "";
-
-            inputs.forEach(input => codigo += input.value);
-
-            if (codigo.length !== 6) {
-                alert("Digite todos os 6 dígitos.");
-                return;
-            }
-
-            alert("Código aceito: " + codigo);
-        });
-
-    </script>
-
+    <script src="/js/login/validate-code.js"></script>
 </body>
 </html>
+
 

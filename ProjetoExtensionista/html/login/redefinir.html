@@ -61,7 +61,17 @@
         input::placeholder {
             color: #2b4e7366;
         }
-
+        
+        #alert-erro {
+            display:flex;
+            color:#c00;
+            font-size:18px;
+            margin-left: 10px;
+            margin-top:0;
+            margin-bottom:20px;
+            text-align:left;
+        }
+         
         button {
             width: 70%;
             padding: 15px;
@@ -145,31 +155,14 @@
 
         <input type="password" id="senha1" placeholder="Nova senha">
         <input type="password" id="senha2" placeholder="Repita a nova senha">
-
+        <p id="alert-erro"></p>
         <button id="prosseguir">Prosseguir</button>
 
     </div>
-
-    <script>
-        document.getElementById("prosseguir").addEventListener("click", () => {
-            const s1 = document.getElementById("senha1").value.trim();
-            const s2 = document.getElementById("senha2").value.trim();
-
-            if (s1.length < 5) {
-                alert("A senha deve ter pelo menos 5 caracteres.");
-                return;
-            }
-
-            if (s1 !== s2) {
-                alert("As senhas não coincidem.");
-                return;
-            }
-
-            alert("Senha redefinida com sucesso!");
-        });
-    </script>
-
+    
+    <script src="/js/login/reset-pass.js"></script>
 </body>
 </html>
+
 
 

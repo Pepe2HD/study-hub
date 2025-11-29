@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quadro de horários</title>
+    <link rel="stylesheet" href="/css/admin/edit.css">
+</head>
+
+<body>
+    <div class="sidebar" id="sidebar">
+        <img src="/images/fasec.jpeg" alt="Logo" class="logo">
+       <nav>
+            <a href="/index.html">Início</a>
+            <a href="/html/user/horario.html">Horário</a>
+            <a href="/html/user/grade.html">Grade</a>
+            <a href="/html/user/login.html">Login</a>
+        </nav>
+    </div>
+
+    <header>
+        <button class="menu-btn" id="menu-btn">☰</button>
+    </header>
+
+    <div id="overlay"></div>
+    <div id="modalHorario">
+        <span id="closeModal">&times;</span>
+        <p id="textoPeriodoSelecionado" class="texto-periodo"></p>
+        <table id="tabelaHorario">
+
+            <tr>
+                <th>Horário</th>
+                <th>Segunda-feira</th>
+                <th>Terça-feira</th>
+                <th>Quarta-feira</th>
+                <th>Quinta-feira</th>
+                <th>Sexta-feira</th>
+                <th>Sábado</th>
+                <th>Domingo</th>
+            </tr>
+            <tr data-turno="1">
+                <td>8:00 - 9:50</td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+            </tr>
+            <tr data-turno="2">
+                <td>9:50 - 11:40</td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+            </tr>
+            <tr>
+                <td>Almoço <br>11:00 - 14:00</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            <tr data-turno="3">
+                <td>14:00 - 15:50</td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+            </tr>
+            <tr data-turno="4">
+                <td>15:50 - 17:40</td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+            </tr>
+            <tr>
+                <td>Jantar <br>17:40 - 19:00</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            <tr data-turno="5">
+                <td>19:00 - 20:50</td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+            </tr>
+            <tr data-turno="6">
+                <td>20:50 - 22:00</td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+                <td class="td-horario"></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ================= MODAL SELEÇÃO (DISCIPLINA / PROF / SALA) ================= -->
+    <div id="overlaySelecao" class="overlay-selecao"></div>
+
+  
+    <main>
+        <div class="horario-create">
+            <h1 id="tituloCurso"></h1>
+
+            <select id="periodo" name="periodo">
+                <option value="">Selecione o período</option>
+            </select>
+
+            <input type="button" id="btnHorario" name="btnHorario" value="Quadro de horários" disabled>
+
+            <div id="quadroContainer"></div>
+        </div>
+    </main>
+
+    <script src="/js/user/quadroHorario.js"></script>
+</body>
+</html>

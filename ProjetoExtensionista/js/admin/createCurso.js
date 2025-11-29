@@ -1,9 +1,16 @@
 //-----------------------------------------
-// MENU LATERAL
+// ELEMENTOS DO DOM
 //-----------------------------------------
 const menuBtn = document.getElementById('menu-btn');
 const sidebar = document.getElementById('sidebar');
+const btnCadastrar = document.getElementById("btnCadastrar");
+const nomeInput = document.getElementById("nome");
+const hoursInput = document.getElementById("hours");
 
+
+//-----------------------------------------
+// MENU LATERAL
+//-----------------------------------------
 if (menuBtn && sidebar) {
   menuBtn.addEventListener('click', () => {
     sidebar.classList.toggle('active');
@@ -17,21 +24,73 @@ if (menuBtn && sidebar) {
 const API_CURSO = "https://study-hub-2mr9.onrender.com/curso";
 
 //-----------------------------------------
+// POP-UP PROFISSIONAL
+//-----------------------------------------
+const popup = document.getElementById("popup");
+const popupText = document.getElementById("popup-text");
+const popupTitle = document.getElementById("popup-title");
+const popupIcon = document.querySelector(".popup-icon");
+const popupClose = document.getElementById("popup-close");
+
+function showPopup(message, type = "erro") {
+  popupText.textContent = message;
+
+  popup.classList.remove("sucesso", "erro");
+  popup.classList.add(type);
+
+  if (type === "sucesso") {
+    popupTitle.textContent = "Sucesso!";
+    popupIcon.innerHTML = "✔️";
+  } else {
+    popupTitle.textContent = "Erro!";
+    popupIcon.innerHTML = "❌";
+  }
+
+  popup.style.display = "flex";
+
+  setTimeout(() => {
+    popup.classList.add("show");
+  }, 10);
+}
+
+function hidePopup() {
+  popup.classList.remove("show");
+  setTimeout(() => {
+    popup.style.display = "none";
+  }, 250);
+}
+
+popupClose.addEventListener("click", hidePopup);
+
+
+//-----------------------------------------
+// LOADING DO BOTÃO
+//-----------------------------------------
+function toggleLoading(isLoading) {
+  if (isLoading) {
+    btnCadastrar.classList.add("loading");
+    btnCadastrar.textContent = "Cadastrando...";
+    btnCadastrar.disabled = true;
+  } else {
+    btnCadastrar.classList.remove("loading");
+    btnCadastrar.textContent = "Cadastrar";
+    btnCadastrar.disabled = false;
+  }
+}
+
+//-----------------------------------------
 // BOTÃO CADASTRAR CURSO
 //-----------------------------------------
-document.getElementById("btnCadastrar").addEventListener("click", async () => {
-  const nomeValue = document.getElementById("nome").value.trim();
-  const hoursValue = document.getElementById("hours").value.trim();
+btnCadastrar.addEventListener("click", async () => {
+  const nomeValue = nomeInput.value.trim();
+  const hoursValue = hoursInput.value.trim();
 
-  if (!nomeValue) {
-    alert("Digite o nome do curso.");
+  if (!nomeValue || !hoursValue) {
+    showPopup("Preencha todos os campos.", "erro");
     return;
   }
 
-  if (!hoursValue) {
-    alert("Digite a carga horária do curso.");
-    return;
-  }
+  toggleLoading(true);
 
   try {
     const res = await fetch(API_CURSO, {
@@ -44,17 +103,29 @@ document.getElementById("btnCadastrar").addEventListener("click", async () => {
     });
 
     if (!res.ok) {
-      alert("Erro ao criar o curso.");
+      const errorText = await res.text();
+      showPopup("Erro ao criar o curso: " + errorText, "erro");
       return;
     }
 
-    alert("Curso criado com sucesso!");
+    showPopup("Curso criado com sucesso!", "sucesso");
 
-    window.location.href = "/html/admin/curso.html";
+    setTimeout(() => {
+      window.location.href = "/html/admin/curso.html";
+    }, 1500);
 
   } catch (erro) {
     console.error("Erro ao criar curso:", erro);
-    alert("Erro ao criar curso.");
+    showPopup("Erro ao criar curso. Verifique sua conexão.", "erro");
+
+  } finally {
+    toggleLoading(false);
   }
 });
 
+//-----------------------------------------
+// ENVIAR COM ENTER
+//-----------------------------------------
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") btnCadastrar.click();
+});

@@ -72,6 +72,10 @@ nav {
     margin-top: 100px;
 }
 
+.sidebar .logout {
+    color: rgb(212, 96, 96);
+}
+
 .sidebar .sair:hover {
     color: rgb(212, 96, 96);
 }
@@ -847,3 +851,4 @@ p {
         margin-left: 5px;
     }
 }
+

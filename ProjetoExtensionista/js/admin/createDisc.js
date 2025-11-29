@@ -1,9 +1,15 @@
 //-----------------------------------------
-// MENU LATERAL
+// ELEMENTOS DO DOM
 //-----------------------------------------
 const menuBtn = document.getElementById('menu-btn');
 const sidebar = document.getElementById('sidebar');
+const btnCadastrar = document.getElementById("btnCadastrar");
+const nomeInput = document.getElementById("nome");
+const tipoInput = document.getElementById("tipo");
 
+//-----------------------------------------
+// MENU LATERAL
+//-----------------------------------------
 if (menuBtn && sidebar) {
   menuBtn.addEventListener('click', () => {
     sidebar.classList.toggle('active');
@@ -11,61 +17,121 @@ if (menuBtn && sidebar) {
   });
 }
 
-// ==============================
-// CONFIGURAÇÃO DA API
-// ==============================
-const API_URL = "https://study-hub-2mr9.onrender.com/disciplina";  
+//-----------------------------------------
+// API
+//-----------------------------------------
+const API_DISC = "https://study-hub-2mr9.onrender.com/disciplina";
 
-// ==============================
-// FUNÇÃO PARA ENVIAR PARA A API
-// ==============================
-async function enviarParaAPI(dados) {
-    try {
-        const resposta = await fetch(API_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(dados)
-        });
+//-----------------------------------------
+// POP-UP BONITO
+//-----------------------------------------
+const popup = document.getElementById("popup");
+const popupText = document.getElementById("popup-text");
+const popupTitle = document.getElementById("popup-title");
+const popupIcon = document.querySelector(".popup-icon");
+const popupClose = document.getElementById("popup-close");
 
-        const resultado = await resposta.json();
-        return { ok: resposta.ok, resultado };
-    } catch (erro) {
-        console.error("Erro ao conectar na API:", erro);
-        return { ok: false, resultado: { message: "Falha de conexão com servidor" } };
-    }
+function showPopup(message, type = "erro") {
+  popupText.textContent = message;
+
+  popup.classList.remove("sucesso", "erro");
+  popup.classList.add(type);
+
+  if (type === "sucesso") {
+    popupTitle.textContent = "Sucesso!";
+    popupIcon.innerHTML = "✔️";
+  } else {
+    popupTitle.textContent = "Erro!";
+    popupIcon.innerHTML = "❌";
+  }
+
+  popup.style.display = "flex";
+
+  setTimeout(() => {
+    popup.classList.add("show");
+  }, 10);
 }
 
-// ==============================
-// AÇÃO DO BOTÃO CADASTRAR
-// ==============================
-document.getElementById("btnCadastrar").addEventListener("click", async () => {
-    const nome = document.getElementById("nome").value.trim();
-    const tipo = document.getElementById("tipo").value;
+function hidePopup() {
+  popup.classList.remove("show");
+  setTimeout(() => {
+    popup.style.display = "none";
+  }, 250);
+}
 
-    if (!nome) {
-        alert("Digite o nome da disciplina!");
-        return;
+popupClose.addEventListener("click", hidePopup);
+
+//-----------------------------------------
+// LOADING DO BOTÃO
+//-----------------------------------------
+function toggleLoading(isLoading) {
+  if (isLoading) {
+    btnCadastrar.classList.add("loading");
+    btnCadastrar.textContent = "Cadastrando...";
+    btnCadastrar.disabled = true;
+  } else {
+    btnCadastrar.classList.remove("loading");
+    btnCadastrar.textContent = "Cadastrar";
+    btnCadastrar.disabled = false;
+  }
+}
+
+//-----------------------------------------
+// BOTÃO CADASTRAR DISCIPLINA
+//-----------------------------------------
+btnCadastrar.addEventListener("click", async () => {
+  const nomeValue = nomeInput.value.trim();
+  const tipoValue = tipoInput.value.trim();
+
+  if (!nomeValue) {
+    showPopup("Digite o nome da disciplina!", "erro");
+    return;
+  }
+
+  toggleLoading(true);
+
+  const dadosDisciplina = {
+    nome: nomeValue,
+    tipo: tipoValue,
+    id_sala: null
+  };
+
+  try {
+    const res = await fetch(API_DISC, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(dadosDisciplina)
+    });
+
+    const result = await res.json();
+
+    if (!res.ok) {
+      showPopup("Erro ao criar a disciplina: " + (result.message || "Erro desconhecido"), "erro");
+      return;
     }
 
-    const dadosDisciplina = {
-        nome: nome,
-        tipo: tipo,
-        id_sala: null // Enviamos null pois o campo foi removido da tela
-    };
+    showPopup("Disciplina criada com sucesso!", "sucesso");
 
-    console.log("Enviando para API:", dadosDisciplina);
+    setTimeout(() => {
+      window.location.href = "/html/admin/disciplina.html";
+    }, 1500);
 
-    // Enviando
-    const resposta = await enviarParaAPI(dadosDisciplina);
+    nomeInput.value = "";
 
-    if (resposta.ok) {
-        alert("Disciplina cadastrada com sucesso!");
-        // Opcional: Limpar o campo nome após cadastrar
-        document.getElementById("nome").value = "";
-    } else {
-        alert("Erro: " + (resposta.resultado.message || "Erro desconhecido"));
-    }
+  } catch (erro) {
+    console.error("Erro ao criar disciplina:", erro);
+    showPopup("Erro de conexão com o servidor.", "erro");
 
+  } finally {
+    toggleLoading(false);
+  }
+});
+
+//-----------------------------------------
+// ENVIAR COM ENTER
+//-----------------------------------------
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && !btnCadastrar.disabled) {
+    btnCadastrar.click();
+  }
 });

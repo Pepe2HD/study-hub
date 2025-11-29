@@ -728,6 +728,120 @@ h1 {
     transform: scale(0.97);
 }
 
+.btn-cadastrar.loading {
+    opacity: 0.7;
+    pointer-events: none;
+    position: relative;
+}
+
+.btn-cadastrar.loading::after {
+    content: "";
+    width: 16px;
+    height: 16px;
+    border: 3px solid transparent;
+    border-top: 3px solid white;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+@keyframes spin {
+    from { transform: translateY(-50%) rotate(0deg); }
+    to { transform: translateY(-50%) rotate(360deg); }
+}
+
+/* OVERLAY */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+
+.popup.show {
+  opacity: 1;
+}
+
+/* CAIXA */
+.popup-box {
+  background: #ffffff;
+  padding: 32px 36px;
+  border-radius: 14px;
+  width: 20%;
+  text-align: center;
+  box-shadow: 0px 6px 20px rgba(0,0,0,0.15);
+  animation: popupScale 0.25s ease;
+}
+
+/* ÍCONE */
+.popup-icon {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 15px auto;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 38px;
+}
+
+.popup.sucesso .popup-icon {
+  background: rgba(40,199,111,0.15);
+  color: #28c76f;
+}
+
+.popup.erro .popup-icon {
+  background: rgba(234,84,85,0.15);
+  color: #ea5455;
+}
+
+#popup-title {
+  font-size: 28px;
+  margin-bottom: 6px;
+  color: #333;
+  font-weight: 700;
+}
+
+#popup-text {
+  font-size: 20px;
+  color: #555;
+  margin-bottom: 25px;
+}
+
+/* BOTÃO */
+.popup-btn {
+  padding: 10px 22px;
+  background: #6366f1;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.popup-btn:hover {
+  background: #4f46e5;
+}
+
+@keyframes popupScale {
+  0% { transform: scale(0.8); opacity: 0 }
+  100% { transform: scale(1); opacity: 1 }
+}
+
 
 
 
@@ -860,6 +974,10 @@ h1 {
     .horario-create #quadroContainer {
         font-size: 25px;
     }
+
+    .popup-box {
+        width: 35%;
+    }
     
 }
 
@@ -984,5 +1102,9 @@ h1 {
 
     .tags-container {
         gap: 3px;
+    }
+
+    .popup-box {
+        width: 40%;
     }
 }

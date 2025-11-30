@@ -135,3 +135,72 @@ document.addEventListener("keydown", (e) => {
     btnCadastrar.click();
   }
 });
+
+//-----------------------------------------
+// BOTÃO VOLTAR COM CONFIRMAÇÃO - 
+//-----------------------------------------
+const btnVoltar = document.getElementById("btn-voltar"); 
+
+function showConfirmPopup(message, onConfirm) {
+  popupText.textContent = message;
+  popupTitle.textContent = "Confirmação";
+  popupIcon.textContent = "⚠️";
+
+  popup.classList.remove("sucesso", "erro");
+  popup.classList.add("confirm");
+
+  const popupBox = popup.querySelector(".popup-box");
+  const confirmArea = popupBox.querySelector(".popup-confirm-buttons");
+  confirmArea.innerHTML = ""; 
+  confirmArea.style.display = "flex"; 
+  confirmArea.style.justifyContent = "center";
+
+  const btnNo = document.createElement("button");
+  btnNo.textContent = "Não";
+  btnNo.className = "popup-btn popup-no";
+
+  const btnYes = document.createElement("button");
+  btnYes.textContent = "Sim";
+  btnYes.className = "popup-btn popup-yes";
+
+
+  confirmArea.appendChild(btnNo);
+  confirmArea.appendChild(btnYes);
+
+  const btnOk = popupBox.querySelector("#popup-close");
+  btnOk.style.visibility = "hidden";
+
+  popup.style.display = "flex";
+  setTimeout(() => popup.classList.add("show"), 10);
+
+  btnYes.addEventListener("click", () => {
+    hideConfirm();
+    if (onConfirm) onConfirm();
+  });
+  btnNo.addEventListener("click", hideConfirm);
+
+  function hideConfirm() {
+    popup.classList.remove("show");
+    setTimeout(() => {
+      popup.style.display = "none";
+      confirmArea.style.display = "none";
+      confirmArea.innerHTML = "";
+      btnOk.style.visibility = "visible"; 
+      popup.classList.remove("confirm");
+    }, 250);
+  }
+}
+
+if (btnVoltar) {
+  btnVoltar.addEventListener("click", () => {
+    if (nomeInput.value.trim() || hoursInput.value.trim()) {
+      showConfirmPopup(
+        "Você tem certeza que deseja voltar? As alterações não salvas serão perdidas.",
+        () => window.history.back()
+      );
+    } else {
+      window.history.back();
+    }
+  });
+}
+

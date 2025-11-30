@@ -691,3 +691,4 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (selectPeriodo.value) preencherTabelaPorPeriodo(selectPeriodo.value);
 });
 
+

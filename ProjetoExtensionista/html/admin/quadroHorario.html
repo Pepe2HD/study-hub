@@ -173,9 +173,23 @@
 
             <input type="button" id="btnHorario" name="btnHorario" value="Quadro de horários" disabled>
 
-            <div id="quadroContainer"></div>
+                <div id="quadroContainer">
+                    <button class="btn-cancelar" id="btnCancelar" type="button">Cancelar</button>
+                    <button class="btn-salvar-horarios" id="btnSalvarHorarios" type="button">Salvar horário</button>
+                </div>          
         </div>
     </main>
+
+    <div id="popup" class="popup">
+        <div class="popup-box">
+            <div class="popup-icon"></div>
+            <h2 id="popup-title">Título</h2>
+            <p id="popup-text">Mensagem do popup</p>
+            <button id="popup-close" class="popup-btn">OK</button>
+            <button id="popup-confirm" class="popup-btn">SIM</button>
+        </div>
+    </div>
+
     <script type="module" src="/js/middlewares/adminAuthGuard.js"></script>
     <script src="/js/admin/quadroHorario.js"></script>
 </body>

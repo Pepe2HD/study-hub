@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fasec - Curso</title>
+    <link rel="stylesheet" href="/css/admin/curso.css">
+  
+</head>
+
+<body>
+    <div class="sidebar" id="sidebar">
+        <img src="/images/fasec.jpeg" alt="Logo" class="logo">
+         <nav>
+            <a href="/index.html">Início</a>
+            <a href="/html/user/horario.html">Horário</a>
+            <a href="/html/user/grade.html">Grade</a>
+            <a href="/html/user/login.html">Login</a>
+        </nav>
+    </div>
+
+    <header>
+        <button class="menu-btn" id="menu-btn">☰</button>
+    </header>
+
+    <div id="modal" class="modal">
+        <div class="modalContent">
+            <div class="modal-content">
+                <input type="text" id="modalSearch" placeholder="Pesquisar...">
+                <ul id="modalList"></ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="confirmModal" class="modalRemove" role="dialog" aria-modal="true">
+        <div class="modalContentRemove">
+            <div class="modal-confirm-box">
+                <p id="confirmText"></p>
+                <div class="modal-buttons">
+                    <button id="confirmNo">Voltar</button>
+                    <button id="confirmYes">Excluir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalVincular" class="modal" style="display: none;">
+        <div class="modal-vincular-content">
+            <span class="close-vincular" id="closeVincular">&times;</span>
+            <div class="vincular-header">
+                <h3 id="tituloVincular">Gerenciar Disciplinas</h3>
+            </div>
+            
+            
+
+            <h4>Disciplinas do Curso:</h4>
+            <ul id="listaVinculadas" class="lista-vinculadas">
+                </ul>
+        </div>
+    </div>
+
+    <main>
+        <div class="content">
+            <div class="curso-container">
+                <div class="search-bar">
+                    <button id="searchBtn">🔍</button>
+                    <input type="text" placeholder="Pesquisar curso..." id="searchInput">
+                </div>
+
+                <div class="filters">
+                    <button id="btnDisciplinas">Disciplinas</button>
+                    <button id="btnProfessores">Professores</button>
+                </div>
+                <div class="filtersActives">
+                    <div id="activeFilters" class="active-filters"></div>
+                </div>
+
+                <div class="cursos-box">
+                    <div class="cursos-header">
+                        <h3>Cursos</h3>
+                    </div>
+                    <ul class="curso-list" id="curso-list"></ul>
+                </div>
+
+                
+            </div>
+        </div>
+    </main>
+
+    <script src="/js/user/horario.js"></script>
+</body>
+
+</html>

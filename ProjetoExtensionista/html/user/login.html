@@ -9,33 +9,35 @@
 </head>
 
 <body>
-
     <p id="alert-email"></p>
-    
-    <div class="container">
-        <div class="left-side">
-            <h1>Ainda não cadastrado?</h1>
-            <p>Cadastre-se agora mesmo clicando no botão abaixo!</p>
-            <button id="btn-cadastro" onclick="cadastrar()">Cadastre-se</button>
+
+    <div class="login-container">
+
+        <img src="/images/fasec.jpeg" alt="Logo" class="logo">
+
+        <div class="login-box">
+
+            <h1>Bem-vindo</h1>
+            <p>Acesse sua conta</p>
+
+            <input type="text" id="usuario" placeholder="Usuário" class="input-usuario">
+            <input type="password" id="senha" placeholder="Senha" class="input-senha">
+
+            <p id="alert-erro"></p>
+
+            <a href="#" id="esqueceu-senha">Esqueci a senha</a>
+
+            <button id="btn-login" onclick="login()">LOGIN</button>
+            <button id="btn-entrar-sem-login" onclick="entrarSemLogin()">ENTRAR SEM LOGIN</button>
+
         </div>
 
-        <div class="right-side">
-            <img src="/images/fasec.jpeg" alt="Logo FASEC" class="logo">
-            <div class="login-box">
-                
-                <input type="text" placeholder="Usuário" id="usuario">
-                <input type="password" placeholder="Senha" id="senha">
-                <p id="alert-erro"></p>
-                <a href="#" id="esqueceu-senha">Esqueci a senha...</a>
-                <button id="btn-login" onclick="login()">LOGIN</button>
-                <button id="btn-entrar-sem-login" onclick="entrarSemLogin()">ENTRAR SEM LOGIN</button>
-            </div>
-            <button id="btn-voltar" onclick="voltar()">VOLTAR</button>
-        </div>
+        <button id="btn-voltar" onclick="voltar()">VOLTAR</button>
+
     </div>
+
     <script type="module" src="/js/middlewares/loginGuard.js"></script>
     <script src="/js/login/send-code.js"></script>
+
 </body>
-
 </html>
-

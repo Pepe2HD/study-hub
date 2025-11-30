@@ -1,3 +1,6 @@
+// quadroHorario.js
+// Gerencia somente o quadro de horários de um curso (carregar / editar / salvar / excluir)
+
 // ============================
 // MENU LATERAL
 // ============================
@@ -9,7 +12,7 @@ menuBtn?.addEventListener("click", () => {
 });
 
 //============================
-// POPUP
+// POPUP PROFISSIONAL
 //============================
 
 const popup = document.getElementById("popup");
@@ -30,9 +33,11 @@ function showPopup(message, type = "erro") {
     popupTitle.textContent = "Sucesso!";
     popupIcon.innerHTML = "✔️";
     btnConfirm.style.display = "none";
+    btnClose.textContent = "OK";
   } else if (type === "erro") {
     popupTitle.textContent = "Erro!";
     popupIcon.innerHTML = "❌";
+    btnClose.textContent = "OK";
     btnConfirm.style.display = "none";
   } else if (type === "alert") {
     btnClose.textContent = "NÃO";
@@ -218,7 +223,6 @@ async function carregarCursoEHorarios() {
     // se já tiver um período entre os horários existentes e selectPeriodo estiver vazio, preencha
     const periodoInicial = selectPeriodo.value || (horariosDoCurso[0]?.id_periodo ?? null);
     if (periodoInicial) {
-      selectPeriodo.value = periodoInicial;
       const txt = selectPeriodo.options[selectPeriodo.selectedIndex]?.text || "";
       document.getElementById("textoPeriodoSelecionado").textContent = txt ? `Período: ${txt}` : "";
       preencherTabelaPorPeriodo(periodoInicial);
@@ -686,7 +690,4 @@ document.addEventListener("DOMContentLoaded", async () => {
   // preencherTabelaPorPeriodo caso um período já esteja selecionado
   if (selectPeriodo.value) preencherTabelaPorPeriodo(selectPeriodo.value);
 });
-
-
-
 

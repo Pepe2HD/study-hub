@@ -1,6 +1,3 @@
-// quadroHorario.js
-// Gerencia somente o quadro de horários de um curso (carregar / editar / salvar / excluir)
-
 // ============================
 // MENU LATERAL
 // ============================
@@ -10,6 +7,47 @@ menuBtn?.addEventListener("click", () => {
   sidebar.classList.toggle("active");
   menuBtn.classList.toggle("active");
 });
+
+//============================
+// POPUP
+//============================
+
+const popup = document.getElementById("popup");
+const popupText = document.getElementById("popup-text");
+const popupTitle = document.getElementById("popup-title");
+const popupIcon = document.querySelector(".popup-icon");
+const popupClose = document.getElementById("popup-close");
+const btnConfirm = document.getElementById("popup-confirm");
+const btnClose = document.getElementById("popup-close");
+
+function showPopup(message, type = "erro") {
+  popupText.textContent = message;
+
+  popup.classList.remove("erro", "sucesso", "alert");
+  popup.classList.add(type);
+
+  if (type === "sucesso") {
+    popupTitle.textContent = "Sucesso!";
+    popupIcon.innerHTML = "✔️";
+    btnConfirm.style.display = "none";
+  } else if (type === "erro") {
+    popupTitle.textContent = "Erro!";
+    popupIcon.innerHTML = "❌";
+    btnConfirm.style.display = "none";
+  } else if (type === "alert") {
+    btnClose.textContent = "NÃO";
+    popupTitle.textContent = "Atenção!";
+    popupIcon.innerHTML = "⚠️";
+  }
+
+  popup.style.display = "flex";
+  setTimeout(() => popup.classList.add("show"), 10);
+}
+
+function hidePopup() {
+  popup.classList.remove("show");
+  setTimeout(() => popup.style.display = "none", 250);
+}
 
 // ============================
 // PEGAR ID DO CURSO NA URL
@@ -25,13 +63,12 @@ if (!idCurso) {
 }
 
 // ============================
-// ENDPOINTS (já fornecidos por você)
+// ENDPOINTS 
 // ============================
 const BASE = "https://study-hub-2mr9.onrender.com";
 const API_CURSO = `${BASE}/curso`;
 const API_PERIODO = `${BASE}/periodo`;
-const API_DISCIPLINA_CURSO = `${BASE}/curso/disciplina`; // GET /curso/disciplina/{idCurso}
-const API_DISCIPLINA_PROF = `${BASE}/disciplina/professor`; // GET /disciplina/professor/{idDisc}
+const API_DISCIPLINA_CURSO = `${BASE}/curso/disciplina`; 
 const API_DISCIPLINA = `${BASE}/disciplina`;
 const API_PROFESSOR = `${BASE}/professor`;
 const API_SALA = `${BASE}/sala`;
@@ -60,9 +97,8 @@ const listaProfessores = document.getElementById("listaProfessores");
 const inputBuscaSala = document.getElementById("buscaSala");
 const listaSalas = document.getElementById("listaSalas");
 const btnAdicionarHorario = document.getElementById("btnAdicionarHorario");
-
-// container para botão salvar (criado dinamicamente se não existir)
-const quadroContainer = document.getElementById("quadroContainer");
+const btnSave = document.getElementById("btnSalvarHorarios");
+const btnCancel = document.getElementById("btnCancelar");
 
 // ============================
 // ESTADO LOCAL
@@ -177,7 +213,6 @@ async function carregarCursoEHorarios() {
       horario: h.horario,
       id_disciplina: h.id_disciplina,
       id_professor: h.id_professor,
-      id_sala: h.id_sala
     }));
 
     // se já tiver um período entre os horários existentes e selectPeriodo estiver vazio, preencha
@@ -407,7 +442,6 @@ btnAdicionarHorario?.addEventListener("click", async () => {
     horario: horarioAtual,
     id_disciplina: disciplinaSelecionada.id_disciplina,
     id_professor: professorSelecionado.id_professor,
-    id_sala: salaSelecionada.id_sala
   };
 
   // remover duplicata (mesmo dia + horario) se existir
@@ -502,7 +536,7 @@ async function preencherTabelaPorPeriodo(periodoId) {
   filtrados.forEach(h => {
     const disciplina = disciplinas.find(d => Number(d.id_disciplina) === Number(h.id_disciplina));
     const professor = professores.find(p => Number(p.id_professor) === Number(h.id_professor));
-    const sala = salas.find(s => Number(s.id_sala) === Number(h.id_sala));
+    const sala = salas.find(s => Number(s.id_sala) === Number(disciplina.id_sala));
 
     // encontrar coluna pelo nome do dia (assume texto igual entre frontend/backend)
     let colunaIndex = -1;
@@ -542,28 +576,19 @@ async function preencherTabelaPorPeriodo(periodoId) {
   });
 }
 
-// ============================
-// CRIAR BOTÃO "Salvar horários" DINAMICAMENTE (se não existir no HTML)
-// ============================
-function criarBotaoSalvarSeNaoExistir() {
-  // já existe um botão com id btnSalvarHorarios?
-  if (document.getElementById("btnSalvarHorarios")) return;
-  const btn = document.createElement("button");
-  btn.id = "btnSalvarHorarios";
-  btn.textContent = "Salvar horários";
-  btn.className = "btn-salvar-horarios";
-  // coloca abaixo do quadroContainer ou no quadroContainer
-  if (quadroContainer) quadroContainer.appendChild(btn);
-  else document.body.appendChild(btn);
-
-  btn.addEventListener("click", salvarHorarios);
-}
-criarBotaoSalvarSeNaoExistir();
+btnSave.addEventListener("click", salvarHorarios);
 
 // ============================
 // SALVAR HORÁRIOS (POST/PUT/DELETE) e depois redirecionar para /html/admin/curso.html
 // ============================
 async function salvarHorarios() {
+
+  btnCancel.disabled = true;
+  btnCancel.classList.add("loading");
+  btnSave.disabled = true;
+  btnSave.textContent = "Salvando...";
+  btnSave.classList.add("loading");
+
   try {
     // 1) Para cada item em horariosSelecionados:
     //    - Se já existir um id_horario correspondente (comparando por dia+turno+periodo -> achar em horariosExistentes), faz PUT no id_horario.
@@ -643,14 +668,25 @@ async function salvarHorarios() {
       }
     }
 
-    alert("Horários salvos com sucesso!");
-    // redireciona para lista de cursos (Opção A)
-    window.location.href = "/html/admin/curso.html";
+    showPopup("Horários salvos com sucesso!", "sucesso");
+    btnClose.addEventListener("click", () => {
+      window.location.href = "/html/admin/curso.html";
+    })
   } catch (err) {
     console.error("Erro ao salvar horários:", err);
-    alert("Erro ao salvar horários. Veja o console para detalhes.");
+    showPopup("Erro ao salvar horários, tente novamente.", "erro");
   }
 }
+
+btnCancel.addEventListener("click", () => {
+  showPopup("Tem certeza que deseja apagar suas alterações?", "alert");
+  btnClose.addEventListener("click", () => {
+    hidePopup();
+  })
+  btnConfirm.addEventListener("click", () => {
+    window.location.href = "/html/admin/curso.html";
+  })
+})
 
 // ============================
 // INICIALIZAÇÃO DO MÓDULO

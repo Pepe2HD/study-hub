@@ -110,19 +110,6 @@ async function carregarCursos() {
             const profPromises = disciplinaIDs.map(async idDisc => {
                 const nomeDisc = disciplinasMap.get(idDisc);
                 if (nomeDisc) curso.disciplinasNomes.push(nomeDisc);
-
-                // Busca professores da disciplina
-                try {
-                    const profDaDiscRes = await fetch(`${API_DISCIPLINA_PROFESSOR_RVS}/${idDisc}`);
-                    if (profDaDiscRes.ok) {
-                        const profDaDiscData = await profDaDiscRes.json();
-                        if (Array.isArray(profDaDiscData)) {
-                            profDaDiscData.forEach(p => professorIDsUnicos.add(p.id_professor));
-                        }
-                    }
-                } catch (err) {
-                    console.error(`Erro prof da disc ${idDisc}:`, err);
-                }
             });
 
             await Promise.all(profPromises);
@@ -465,4 +452,5 @@ document.addEventListener("click", function(event) {
 });
 
 // Inicialização
+
 carregarCursos();

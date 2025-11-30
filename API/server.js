@@ -7,7 +7,8 @@ app.use(cors({
   origin: [
     "https://study-hubs.netlify.app",
     "https://study-hub-pearl.vercel.app",
-    "http://127.0.0.1:5500"         
+    "http://127.0.0.1:5500",
+    "http://127.0.0.1:5501"
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE'], 
   credentials: true // se você usa cookies ou autenticação

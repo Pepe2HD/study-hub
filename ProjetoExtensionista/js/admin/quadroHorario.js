@@ -414,20 +414,6 @@ btnAdicionarHorario?.addEventListener("click", async () => {
     return alert("Selecione disciplina, professor e sala antes de confirmar.");
   }
 
-  // tentar associar disciplina↔professor (POST /disciplina/professor)
-  try {
-    await fetch(`${API_DISCIPLINA}/professor`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        id_disciplina: disciplinaSelecionada.id_disciplina,
-        id_professor: professorSelecionado.id_professor
-      })
-    });
-  } catch (err) {
-    console.warn("Não foi possível associar disciplina-professor (não bloqueante):", err);
-  }
-
   // atualizar sala da disciplina (não bloqueante)
   await atualizarSalaDisciplina(disciplinaSelecionada.id_disciplina, salaSelecionada.id_sala);
 
@@ -700,6 +686,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // preencherTabelaPorPeriodo caso um período já esteja selecionado
   if (selectPeriodo.value) preencherTabelaPorPeriodo(selectPeriodo.value);
 });
+
 
 
 

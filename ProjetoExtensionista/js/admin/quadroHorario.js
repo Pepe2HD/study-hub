@@ -523,7 +523,7 @@ async function preencherTabelaPorPeriodo(periodoId) {
   filtrados.forEach(h => {
     const disciplina = disciplinas.find(d => Number(d.id_disciplina) === Number(h.id_disciplina));
     const professor = professores.find(p => Number(p.id_professor) === Number(h.id_professor));
-    const sala = salas.find(s => Number(s.id_sala) === Number(disciplina.id_sala));
+    const sala = salas.find(s => Number(s.id_sala) === Number(disciplina?.id_sala));
 
     // encontrar coluna pelo nome do dia (assume texto igual entre frontend/backend)
     let colunaIndex = -1;
@@ -687,6 +687,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // preencherTabelaPorPeriodo caso um período já esteja selecionado
   if (selectPeriodo.value) preencherTabelaPorPeriodo(selectPeriodo.value);
 });
+
 
 
 

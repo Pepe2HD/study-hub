@@ -1,6 +1,3 @@
-// quadroHorario.js
-// Gerencia somente o quadro de horários de um curso (carregar / editar / salvar / excluir)
-
 // ============================
 // MENU LATERAL
 // ============================
@@ -690,5 +687,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   // preencherTabelaPorPeriodo caso um período já esteja selecionado
   if (selectPeriodo.value) preencherTabelaPorPeriodo(selectPeriodo.value);
 });
+
 
 

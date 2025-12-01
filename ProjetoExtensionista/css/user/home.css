@@ -721,14 +721,13 @@ p {
         font-size: 24px;
         margin: 25px auto;
     }
+    .logo {
+        width: 120px;
+    }
 }
 
 /* Celulares pequenos (até 480px) */
 @media (max-width: 480px) {
-    .logo {
-        width: 120px;
-    }
-
     .btn {
         padding: 20px 30px;
         font-size: 20px;

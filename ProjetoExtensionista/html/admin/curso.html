@@ -56,10 +56,20 @@
             </div>
             
             <div class="vincular-controls">
-                <select id="selectDisciplinaVincular">
-                    <option value="">Carregando...</option>
-                </select>
-                <button id="btnAdicionarVinculo" class="btn-add-vinculo">Adicionar</button>
+                <div class="vincular-buttons">
+                    <div class="search-disc">
+                        <label for="searchDisciplina">Pesquisar disciplina:</label>
+                        <input type="text" id="searchDisciplina" placeholder="Digite para filtrar...">
+                    </div>
+                    <div class="select-disc">
+                        <div class="select-custom" id="disciplinaSelect">
+                            <div class="select-trigger">Selecione uma disciplina...</div>
+                            <div class="select-options"></div>
+                        </div>
+                        <button id="btnAdicionarVinculo" class="btn-add-vinculo">Adicionar</button>
+                    </div>
+
+                </div>
             </div>
 
             <h4>Disciplinas do Curso:</h4>
@@ -111,4 +121,5 @@
 
 
 </html>
+
 

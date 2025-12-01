@@ -639,6 +639,28 @@ async function salvarHorarios() {
   }
 }
 
+// -----------------------------------------
+// FUNÇÃO PARA IR PARA A PÁGINA DE HORÁRIO
+// -----------------------------------------
+function irParaHorario(event) {
+    event.preventDefault();
+
+    // Recupera o ID salvo no localStorage
+    const cursoId = localStorage.getItem("cursoSelecionado");
+
+    if (!cursoId) {
+        showPopup(`Você ainda não selecionou um curso!<br>Vá até a página de grades e escolha um.`, "erro");
+        return;
+    }
+
+    // Redireciona para a página de horário com ID na URL
+    window.location.href = `/html/user/quadroHorario.html?id=${cursoId}`;
+}
+
+if (btnHorarioAbre) {
+    btnHorarioAbre.addEventListener("click", irParaHorario);
+}
+
 // ============================
 // INICIALIZAÇÃO DO MÓDULO
 // - carregar períodos
@@ -651,6 +673,5 @@ document.addEventListener("DOMContentLoaded", async () => {
   // preencherTabelaPorPeriodo caso um período já esteja selecionado
   if (selectPeriodo.value) preencherTabelaPorPeriodo(selectPeriodo.value);
 });
-
 
 

@@ -67,6 +67,27 @@ const API_DISCIPLINA_PROFESSOR_RVS = "https://study-hub-2mr9.onrender.com/discip
 let disciplinasMap = new Map();
 let professoresMap = new Map();
 
+
+// ===============================
+// FECHAR SELECT CUSTOM AO CLICAR FORA
+// ===============================
+document.addEventListener("click", (event) => {
+    const select = document.querySelector(".select-custom");
+    const options = document.querySelector(".select-custom .select-options");
+
+    if (!select) return;
+
+    // Se clicou no trigger → alterna o menu normalmente
+    if (event.target.closest(".select-trigger")) {
+        return; 
+    }
+
+    // Se clicou fora do select → fecha
+    if (!event.target.closest(".select-custom")) {
+        options.style.display = "none";
+    }
+});
+
 /* ============================
    1. CARREGAR CURSOS
 =============================*/
@@ -110,6 +131,19 @@ async function carregarCursos() {
             const profPromises = disciplinaIDs.map(async idDisc => {
                 const nomeDisc = disciplinasMap.get(idDisc);
                 if (nomeDisc) curso.disciplinasNomes.push(nomeDisc);
+
+                // Busca professores da disciplina
+                try {
+                    const profDaDiscRes = await fetch(`${API_DISCIPLINA_PROFESSOR_RVS}/${idDisc}`);
+                    if (profDaDiscRes.ok) {
+                        const profDaDiscData = await profDaDiscRes.json();
+                        if (Array.isArray(profDaDiscData)) {
+                            profDaDiscData.forEach(p => professorIDsUnicos.add(p.id_professor));
+                        }
+                    }
+                } catch (err) {
+                    console.error(`Erro prof da disc ${idDisc}:`, err);
+                }
             });
 
             await Promise.all(profPromises);
@@ -177,6 +211,60 @@ function renderizarCursos(cursos) {
 
     filterCursos();
 }
+// filtrar opções com o input #searchDisciplina
+document.addEventListener("DOMContentLoaded", () => {
+  const searchInput = document.getElementById("searchDisciplina");
+  const optionsSelector = "#disciplinaSelect .select-options .option-item";
+
+  if (!searchInput) return; // nada a fazer se o input não existir
+
+  searchInput.addEventListener("input", () => {
+    const filter = searchInput.value.trim().toLowerCase();
+    const items = document.querySelectorAll(optionsSelector);
+
+    // se não houver itens ainda, não faz nada
+    if (!items || items.length === 0) return;
+
+    items.forEach(item => {
+      const text = (item.textContent || "").toLowerCase();
+      // usa '' para mostrar (herdar display default) ou 'none' para esconder
+      item.style.display = text.includes(filter) ? "" : "none";
+    });
+
+    // opcional: se desejar que o dropdown abra automaticamente ao digitar:
+    const optionsBox = document.querySelector("#disciplinaSelect .select-options");
+    if (optionsBox && filter.length > 0) {
+      optionsBox.style.display = "block";
+    }
+  });
+});
+
+
+function preencherSelectCustom(disciplinas) {
+    const trigger = document.querySelector(".select-custom .select-trigger");
+    const optionsBox = document.querySelector(".select-custom .select-options");
+
+    optionsBox.innerHTML = "";
+
+    disciplinas.forEach(d => {
+        const item = document.createElement("div");
+        item.textContent = d.nome;
+        item.dataset.value = d.id;
+
+        item.addEventListener("click", () => {
+            trigger.textContent = d.nome;
+            trigger.dataset.value = d.id;
+            optionsBox.style.display = "none";
+        });
+
+        optionsBox.appendChild(item);
+    });
+
+    trigger.addEventListener("click", () => {
+        optionsBox.style.display =
+            optionsBox.style.display === "block" ? "none" : "block";
+    });
+}
 
 /* ============================
    3. FUNÇÕES DE NAVEGAÇÃO
@@ -219,16 +307,27 @@ confirmNo.addEventListener("click", () => {
    5. MODAL DE VÍNCULO (NOVO)
 =============================*/
 
+// Referências do select custom
+const selectWrapper = document.getElementById("disciplinaSelect");
+const trigger = selectWrapper.querySelector(".select-trigger");
+const optionsBox = selectWrapper.querySelector(".select-options");
+
+let disciplinaSelecionada = null;
+
 // Abrir Modal
 async function abrirModalVincular(idCurso, nomeCurso) {
     cursoEmEdicaoVinculo = idCurso;
     tituloVincular.textContent = `Disciplinas de: ${nomeCurso}`;
     modalVincular.style.display = "block";
-    
-    // Reset visual
-    selectDisciplinaVincular.innerHTML = '<option>Carregando...</option>';
-    listaVinculadas.innerHTML = '<li>Carregando...</li>';
-    selectDisciplinaVincular.disabled = true;
+
+    // Reset visual do select custom
+    trigger.textContent = "Carregando...";
+    trigger.dataset.value = "";
+    optionsBox.innerHTML = "<div>Carregando...</div>";
+    disciplinaSelecionada = null;
+
+    // Reset lista
+    listaVinculadas.innerHTML = "<li>Carregando...</li>";
     btnAdicionarVinculo.disabled = true;
 
     await carregarDadosDoModalVinculo(idCurso);
@@ -237,27 +336,24 @@ async function abrirModalVincular(idCurso, nomeCurso) {
 // Carregar dados e preencher listas
 async function carregarDadosDoModalVinculo(idCurso) {
     try {
-        // 1. Pega TODAS as disciplinas do sistema
+        // 1. Pega TODAS as disciplinas
         const resTodas = await fetch(API_DISCIPLINA);
         const todasDisciplinas = await resTodas.json();
 
-        // 2. Pega as disciplinas JÁ vinculadas a este curso
-        const resVinculadas = await fetch(`${API_CURSO_DISCIPLINA}/${idCurso}`);
-        let vinculadas = [];
-        if (resVinculadas.ok) {
-            vinculadas = await resVinculadas.json();
-        }
+        // 2. Pega disciplinas vinculadas
+        const resVinc = await fetch(`${API_CURSO_DISCIPLINA}/${idCurso}`);
+        let vinculadas = resVinc.ok ? await resVinc.json() : [];
 
-        // 3. Renderiza a lista de vinculadas (com botão de excluir)
+        // 3. Renderiza vinculadas
         listaVinculadas.innerHTML = "";
         const idsVinculados = new Set();
 
         if (vinculadas.length === 0) {
-            listaVinculadas.innerHTML = '<li style="color:#777">Nenhuma disciplina vinculada.</li>';
+            listaVinculadas.innerHTML = `<li style="color:#777;">Nenhuma disciplina vinculada.</li>`;
         } else {
             vinculadas.forEach(disc => {
                 idsVinculados.add(disc.id_disciplina);
-                
+
                 const li = document.createElement("li");
                 li.innerHTML = `
                     <span>${disc.nome}</span>
@@ -267,31 +363,50 @@ async function carregarDadosDoModalVinculo(idCurso) {
             });
         }
 
-        // 4. Preencher Select (apenas com as NÃO vinculadas)
-        selectDisciplinaVincular.innerHTML = '<option value="">Selecione uma disciplina...</option>';
-        
-        todasDisciplinas.forEach(disc => {
-            if (!idsVinculados.has(disc.id_disciplina)) {
-                const opt = document.createElement("option");
-                opt.value = disc.id_disciplina;
-                opt.textContent = disc.nome;
-                selectDisciplinaVincular.appendChild(opt);
-            }
-        });
+        // 4. Preencher SELECT CUSTOM (somente disciplinas NÃO vinculadas)
+        optionsBox.innerHTML = "";
+        trigger.textContent = "Selecione uma disciplina...";
+        trigger.dataset.value = "";
+        disciplinaSelecionada = null;
 
-        selectDisciplinaVincular.disabled = false;
-        btnAdicionarVinculo.disabled = false;
+        const disponiveis = todasDisciplinas.filter(d => !idsVinculados.has(d.id_disciplina));
 
-    } catch (error) {
-        console.error("Erro no modal de vinculo:", error);
+        if (disponiveis.length === 0) {
+            optionsBox.innerHTML = `<div style="padding:8px; color:#777;">Nenhuma disponível.</div>`;
+        } else {
+            disponiveis.forEach(d => {
+                const item = document.createElement("div");
+                item.classList.add("option-item");
+                item.textContent = d.nome;
+                item.dataset.value = d.id_disciplina;
+
+                item.addEventListener("click", () => {
+                    trigger.textContent = d.nome;
+                    trigger.dataset.value = d.id_disciplina;
+                    disciplinaSelecionada = d.id_disciplina;
+                    optionsBox.style.display = "none";
+                    btnAdicionarVinculo.disabled = false;
+                });
+
+                optionsBox.appendChild(item);
+            });
+        }
+
+        // Abre/fecha o dropdown
+        trigger.onclick = () => {
+            optionsBox.style.display = 
+                optionsBox.style.display === "block" ? "none" : "block";
+        };
+
+    } catch (err) {
+        console.error("Erro no modal de vínculo:", err);
         listaVinculadas.innerHTML = "<li>Erro ao carregar dados.</li>";
     }
 }
 
-// Ação: Adicionar Disciplina
+// Adicionar disciplina
 btnAdicionarVinculo.addEventListener("click", async () => {
-    const idDisciplina = selectDisciplinaVincular.value;
-    if (!idDisciplina || !cursoEmEdicaoVinculo) return;
+    if (!disciplinaSelecionada || !cursoEmEdicaoVinculo) return;
 
     try {
         const res = await fetch(API_CURSO_DISCIPLINA, {
@@ -299,12 +414,11 @@ btnAdicionarVinculo.addEventListener("click", async () => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 id_curso: cursoEmEdicaoVinculo,
-                id_disciplina: idDisciplina
+                id_disciplina: disciplinaSelecionada
             })
         });
 
         if (res.ok) {
-            // Recarrega apenas o modal para atualizar as listas
             await carregarDadosDoModalVinculo(cursoEmEdicaoVinculo);
         } else {
             alert("Erro ao vincular disciplina.");
@@ -314,7 +428,7 @@ btnAdicionarVinculo.addEventListener("click", async () => {
     }
 });
 
-// Ação: Remover Disciplina (chamada pelo botão HTML injetado)
+// Remover disciplina (HTML chama esta função)
 async function removerDisciplina(idCurso, idDisciplina) {
     if (!confirm("Remover esta disciplina do curso?")) return;
 
@@ -333,12 +447,12 @@ async function removerDisciplina(idCurso, idDisciplina) {
     }
 }
 
-// Fechar Modal de Vínculo
+// Fechar modal
 closeVincular.addEventListener("click", () => {
     modalVincular.style.display = "none";
-    // Recarrega a lista principal para refletir mudanças nos filtros/badges
     carregarCursos();
 });
+
 
 /* ============================
    6. FILTROS E PESQUISA
@@ -452,5 +566,5 @@ document.addEventListener("click", function(event) {
 });
 
 // Inicialização
-
 carregarCursos();
+

@@ -1,54 +1,94 @@
+// -----------------------------------------
+// ELEMENTOS DO DOM
+// -----------------------------------------
 const menuBtn = document.getElementById('menu-btn');
 const sidebar = document.getElementById('sidebar');
 
+const btnHorario = document.getElementById("btnHorario");
+const btnHorario2 = document.getElementById("btnHorario2");
+
+
+// -----------------------------------------
+// MENU LATERAL
+// -----------------------------------------
 if (menuBtn && sidebar) {
-  menuBtn.addEventListener('click', () => {
-    sidebar.classList.toggle('active');
-    menuBtn.classList.toggle('active');
-  });
+    menuBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+        menuBtn.classList.toggle('active');
+    });
 }
 
-const btnHorario = document.getElementById('btnHorario');
-const btnHorario2 = document.getElementById('btnHorario2');
-const modal = document.getElementById('modal');
-const overlay = document.getElementById('overlay');
-const closeModal = document.getElementById('closeModal');
 
-function openModal() {
-  if (!modal || !overlay) return;
-  modal.style.display = 'block';
-  overlay.style.display = 'block';
-  document.body.style.overflow = 'hidden';
+//-----------------------------------------
+// POP-UP PROFISSIONAL
+//-----------------------------------------
+const popup = document.getElementById("popup");
+const popupText = document.getElementById("popup-text");
+const popupTitle = document.getElementById("popup-title");
+const popupIcon = document.querySelector(".popup-icon");
+const popupClose = document.getElementById("popup-close");
+
+function showPopup(message, type = "erro") {
+  popupText.innerHTML = message;
+
+  popup.classList.remove("sucesso", "erro");
+  popup.classList.add(type);
+
+  if (type === "sucesso") {
+    popupTitle.textContent = "Sucesso!";
+    popupIcon.innerHTML = "✔️";
+  } else {
+    popupTitle.textContent = "Atenção!";
+    popupIcon.innerHTML = "❗";
+  }
+
+  popup.style.display = "flex";
+
+  setTimeout(() => {
+    popup.classList.add("show");
+  }, 10);
 }
 
-function closeModalFn() {
-  if (!modal || !overlay) return;
-  modal.style.display = 'none';
-  overlay.style.display = 'none';
-  document.body.style.overflow = '';
+function hidePopup() {
+  popup.classList.remove("show");
+  setTimeout(() => {
+    popup.style.display = "none";
+  }, 250);
 }
 
-if (btnHorario || btnHorario2) {
-  btnHorario.addEventListener('click', (e) => {
-    e.preventDefault();
-    openModal();
-  });
-  btnHorario2.addEventListener('click', (e) => {
-    e.preventDefault();
-    openModal();
-  });
+popupClose.addEventListener("click", hidePopup);
+
+// -----------------------------------------
+// FUNÇÃO PARA IR PARA A PÁGINA DE HORÁRIO
+// -----------------------------------------
+function irParaHorario(event) {
+    event.preventDefault();
+
+    // Recupera o ID salvo no localStorage
+    const cursoId = localStorage.getItem("cursoSelecionado");
+
+    if (!cursoId) {
+        showPopup(`Você ainda não selecionou um curso!<br>Vá até a página de grades e escolha um.`, "erro");
+        return;
+    }
+
+    // Redireciona para a página de horário com ID na URL
+    window.location.href = `/html/user/quadroHorario.html?id=${cursoId}`;
 }
 
-if (closeModal) {
-  closeModal.addEventListener('click', closeModalFn);
+
+
+// -----------------------------------------
+// EVENTOS — 2 botões diferentes
+// -----------------------------------------
+if (btnHorario) {
+    btnHorario.addEventListener("click", irParaHorario);
 }
 
-if (overlay) {
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) closeModalFn();
-  });
+if (btnHorario2) {
+    btnHorario2.addEventListener("click", irParaHorario);
 }
 
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeModalFn();
-});
+
+
+console.log("home.js carregado com sucesso");

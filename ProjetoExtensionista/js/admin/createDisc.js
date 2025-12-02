@@ -161,6 +161,7 @@ function showConfirmPopup(message, onConfirm) {
 
   const btnYes = document.createElement("button");
   btnYes.textContent = "Sim";
+  btnYes.id = "popup-confirm";
   btnYes.className = "popup-btn popup-yes";
 
 
@@ -193,7 +194,7 @@ function showConfirmPopup(message, onConfirm) {
 
 if (btnVoltar) {
   btnVoltar.addEventListener("click", () => {
-    if (nomeInput.value.trim() || hoursInput.value.trim()) {
+    if (nomeInput.value.trim()) {
       showConfirmPopup(
         "Você tem certeza que deseja voltar? As alterações não salvas serão perdidas.",
         () => window.history.back()
@@ -203,4 +204,5 @@ if (btnVoltar) {
     }
   });
 }
+
 

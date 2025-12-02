@@ -24,7 +24,6 @@ const confirmYes = document.getElementById('confirmYes');
 const confirmNo = document.getElementById('confirmNo');
 
 const btnDisciplinas = document.getElementById('btnDisciplinas');
-const btnProfessores = document.getElementById('btnProfessores');
 const modalFiltro = document.getElementById('modal');
 const modalList = document.getElementById('modalList');
 const modalSearch = document.getElementById('modalSearch');
@@ -95,15 +94,13 @@ async function carregarCursos() {
     cursosList.innerHTML = "<li>Carregando cursos...</li>";
 
     try {
-        const [cursosRes, discRes, profRes] = await Promise.all([
+        const [cursosRes, discRes] = await Promise.all([
             fetch(API_URL),
             fetch(API_DISCIPLINA),
-            fetch(API_PROFESSOR)
         ]);
 
         let cursos = await cursosRes.json();
         const disciplinasData = await discRes.json();
-        const professoresData = await profRes.json();
 
         if (!Array.isArray(cursos) || cursos.length === 0) {
             cursosList.innerHTML = `<li style="text-align:center; padding:15px;">Nenhum curso foi adicionado ainda.</li>`;
@@ -113,9 +110,6 @@ async function carregarCursos() {
         // Popula mapas para acesso rápido por ID
         disciplinasMap.clear();
         disciplinasData.forEach(d => disciplinasMap.set(d.id_disciplina, d.nome));
-        
-        professoresMap.clear();
-        professoresData.forEach(p => professoresMap.set(p.id_professor, p.nome));
 
         // Monta objetos completos
         cursos = await Promise.all(cursos.map(async curso => {
@@ -131,22 +125,7 @@ async function carregarCursos() {
             const profPromises = disciplinaIDs.map(async idDisc => {
                 const nomeDisc = disciplinasMap.get(idDisc);
                 if (nomeDisc) curso.disciplinasNomes.push(nomeDisc);
-
-                // Busca professores da disciplina
-                try {
-                    const profDaDiscRes = await fetch(`${API_DISCIPLINA_PROFESSOR_RVS}/${idDisc}`);
-                    if (profDaDiscRes.ok) {
-                        const profDaDiscData = await profDaDiscRes.json();
-                        if (Array.isArray(profDaDiscData)) {
-                            profDaDiscData.forEach(p => professorIDsUnicos.add(p.id_professor));
-                        }
-                    }
-                } catch (err) {
-                    console.error(`Erro prof da disc ${idDisc}:`, err);
-                }
             });
-
-            await Promise.all(profPromises);
 
             curso.professoresNomes = Array.from(professorIDsUnicos)
                 .map(idProf => professoresMap.get(idProf))
@@ -460,7 +439,6 @@ closeVincular.addEventListener("click", () => {
 searchInput.addEventListener("input", filterCursos);
 
 btnDisciplinas?.addEventListener("click", () => openFiltro(disciplinasUnicas, 'disciplinas'));
-btnProfessores?.addEventListener("click", () => openFiltro(professoresUnicos, 'professores'));
 
 function openFiltro(list, type) {
     currentList = list;

@@ -5,8 +5,8 @@ const bcrypt = require('bcryptjs');
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    const senhaCriptografada = await bcrypt.hash('admin123', 10);
-    const emailAdmin = 'pedroviniciuslimasilva219@gmail.com';
+    const senhaCriptografada = await bcrypt.hash('123456', 10);
+    const emailAdmin = 'ti2@fasec.edu.br;
 
     const adminExistente = await queryInterface.rawSelect('admin', {
       where: { email: emailAdmin },
@@ -15,7 +15,7 @@ module.exports = {
     if (!adminExistente) {
 
       await queryInterface.bulkInsert('admin', [{
-        nome: 'Administrador',
+        nome: 'João.vitor',
         email: emailAdmin,
         senha: senhaCriptografada,
       }], { modelName: 'Admin' });

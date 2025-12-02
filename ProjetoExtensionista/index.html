@@ -4,18 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fasec - Página Inicial</title>
-    <link rel="stylesheet" href="/css/user/home.css">
+    <title>Fasec - Curso</title>
+    <link rel="stylesheet" href="/css/admin/curso.css">
+  
 </head>
 
 <body>
     <div class="sidebar" id="sidebar">
         <img src="/images/fasec.jpeg" alt="Logo" class="logo">
-        <nav>
+         <nav>
             <a href="/index.html">Início</a>
             <a href="#" id="btnHorario">Horário</a>
             <a href="/html/user/grade.html">Grade</a>
-            <a href="/html/user/login.html">Login</a>
+            <a href="#" id="btnLogin">Login</a>
         </nav>
     </div>
 
@@ -23,111 +24,65 @@
         <button class="menu-btn" id="menu-btn">☰</button>
     </header>
 
-    <div id="overlay"></div>
-    <div id="modal">
-        <span id="closeModal">&times;</span>
+    <div id="modal" class="modal">
+        <div class="modalContent">
+            <div class="modal-content">
+                <input type="text" id="modalSearch" placeholder="Pesquisar...">
+                <ul id="modalList"></ul>
+            </div>
+        </div>
+    </div>
 
-        <table>
-            <tr>
-                <th>Horário</th>
-                <th>Segunda-feira</th>
-                <th>Terça-feira</th>
-                <th>Quarta-feira</th>
-                <th>Quinta-feira</th>
-                <th>Sexta-feira</th>
-                <th>Sábado</th>
-                <th>Domingo</th>
-            </tr>
-            <tr>
-                <td>8:00 - 9:50</td>
-                <td>Probabilidade e Estatistica <br>Bloco A, Sala 20</td>
-                <td>Programação Orientada a Objeto <br>Bloco A, Sala 16</td>
-                <td>Estrutura de Dados 1 <br>Bloco B, Sala 18</td>
-                <td>Prática Extensionista <br>Bloco A, Sala 5</td>
-                <td>Metodologia Cíentifica <br>Bloco B, Sala 7</td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>9:50 - 11:40</td>
-                <td>Probabilidade e Estatistica <br>Bloco A, Sala 20</td>
-                <td>Programação Orientada a Objeto <br>Bloco A, Sala 16</td>
-                <td>Estrutura de Dados 1 <br>Bloco B, Sala 18</td>
-                <td>Prática Extensionista <br>Bloco A, Sala 5</td>
-                <td>Metodologia Cíentifica <br>Bloco B, Sala 7</td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Almoço <br>11:00 - 14:00</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>14:00 - 15:50</td>
-                <td></td>
-                <td></td>
-                <td>Calculo diferencial e integral I <br> Bloco A, Sala 18</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>15:50 - 17:40</td>
-                <td></td>
-                <td></td>
-                <td>Calculo diferencial e integral I <br> Bloco A, Sala 18</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Jantar <br>17:40 - 19:00</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>19:00 - 20:50</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>20:50 - 22:00</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-        </table>
+    <div id="confirmModal" class="modalRemove" role="dialog" aria-modal="true">
+        <div class="modalContentRemove">
+            <div class="modal-confirm-box">
+                <p id="confirmText"></p>
+                <div class="modal-buttons">
+                    <button id="confirmNo">Voltar</button>
+                    <button id="confirmYes">Excluir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalVincular" class="modal" style="display: none;">
+        <div class="modal-vincular-content">
+            <span class="close-vincular" id="closeVincular">&times;</span>
+            <div class="vincular-header">
+                <h3 id="tituloVincular">Gerenciar Disciplinas</h3>
+            </div>
+            
+            
+
+            <h4>Disciplinas do Curso:</h4>
+            <ul id="listaVinculadas" class="lista-vinculadas">
+                </ul>
+        </div>
     </div>
 
     <main>
         <div class="content">
-            <h1>Bem vindo ao site!</h1>
-            <p>Consulte o horário para não se atrasar!</p>
-            <div class="buttons">
-                <a href="#" class="btn" id="btnHorario2">Ver horário</a>
-                <a href="/html/user/grade.html" class="btn">Ver grade</a>
+            <div class="curso-container">
+                <div class="search-bar">
+                    <button id="searchBtn">🔍</button>
+                    <input type="text" placeholder="Pesquisar curso..." id="searchInput">
+                </div>
+
+                <div class="filters">
+                    <button id="btnDisciplinas">Disciplinas</button>
+                </div>
+                <div class="filtersActives">
+                    <div id="activeFilters" class="active-filters"></div>
+                </div>
+
+                <div class="cursos-box">
+                    <div class="cursos-header">
+                        <h3>Cursos</h3>
+                    </div>
+                    <ul class="curso-list" id="curso-list"></ul>
+                </div>
+
+                
             </div>
         </div>
     </main>
@@ -141,8 +96,8 @@
             <button id="popup-close" class="popup-btn">OK</button>
         </div>
     </div>
-
-    <script src="/js/user/home.js"></script>
+    <script type="module" src="/js/middlewares/loginGuard.js"></script>
+    <script src="/js/user/grade.js"></script>
 </body>
 
 </html>

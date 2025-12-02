@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs');
 module.exports = {
   async up(queryInterface, Sequelize) {
     const senhaCriptografada = await bcrypt.hash('123456', 10);
-    const emailAdmin = 'ti2@fasec.edu.br;
+    const emailAdmin = 'ti2@fasec.edu.br';
 
     const adminExistente = await queryInterface.rawSelect('admin', {
       where: { email: emailAdmin },

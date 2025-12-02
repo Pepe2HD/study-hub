@@ -155,6 +155,7 @@ function showConfirmPopup(message, onConfirm) {
 
   const btnYes = document.createElement("button");
   btnYes.textContent = "Sim";
+  btnYes.id = "popup-confirm";
   btnYes.className = "popup-btn popup-yes";
 
 
@@ -197,3 +198,4 @@ if (btnVoltar) {
     }
   });
 }
+

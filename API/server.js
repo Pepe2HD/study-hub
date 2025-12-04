@@ -11,7 +11,7 @@ app.use(cors({
     "http://127.0.0.1:5501"
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE'], 
-  credentials: true // se você usa cookies ou autenticação
+  credentials: true 
 }));
 
 app.use(express.json());

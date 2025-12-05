@@ -588,9 +588,8 @@ p {
 
 
 .option-container {
-    position: absolute;
+    position: relative;
     display: inline-block;
-    z-index: 50;
     display: flex;
     justify-content: right;
     width: 33%;
@@ -892,5 +891,6 @@ p {
         width: 58%;
     }
 }
+
 
 

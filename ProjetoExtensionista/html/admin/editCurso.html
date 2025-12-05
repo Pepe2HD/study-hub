@@ -26,6 +26,36 @@
         <button class="menu-btn" id="menu-btn">☰</button>
     </header>
 
+    <div id="modalVincular" class="modal" style="display: none;">
+        <div class="modal-vincular-content">
+            <span class="close-vincular" id="closeVincular">&times;</span>
+            <div class="vincular-header">
+                <h3 id="tituloVincular">Gerenciar Disciplinas</h3>
+            </div>
+
+            <div class="vincular-controls">
+                <div class="vincular-buttons">
+                    <div class="search-disc">
+                        <label for="searchDisciplina">Pesquisar disciplina:</label>
+                        <input type="text" id="searchDisciplina" placeholder="Digite para filtrar...">
+                    </div>
+                    <div class="select-disc">
+                        <div class="select-custom" id="disciplinaSelect">
+                            <div class="select-trigger">Selecione uma disciplina...</div>
+                            <div class="select-options"></div>
+                        </div>
+                        <button id="btnAdicionarVinculo" class="btn-add-vinculo">Adicionar</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <h4>Disciplinas do Curso:</h4>
+            <ul id="listaVinculadas" class="lista-vinculadas">
+            </ul>
+        </div>
+    </div>
+
     <main>
         <div class="content">
             <div class="form-container">
@@ -36,6 +66,14 @@
                 <div class="form-box">
                     <input type="text" id="nome" name="nome" placeholder="Nome">
                     <input type="number" id="hours" name="hours" placeholder="Carga horaria total">
+                    <div class="buttons-form">
+                        <button class="abrirModalVincular" onclick="abrirModalVincular()">
+                            Ver disciplinas
+                        </button>
+                        <button class="abrirQuadroHorario" onclick="abrirQuadroHorario()">
+                            Ver quadro horario
+                        </button>
+                    </div>
                 </div>
 
                 <div class="button-group">
@@ -61,6 +99,7 @@
 </body>
 
 </html>
+
 
 
 

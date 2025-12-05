@@ -280,7 +280,6 @@ p {
     list-style: none;
     padding: 0;
     max-height: 300px; 
-    overflow-y: auto;
     padding-right: 20px;
 }
 
@@ -589,9 +588,12 @@ p {
 
 
 .option-container {
-    position: relative;
+    position: absolute;
     display: inline-block;
     z-index: 50;
+    display: flex;
+    justify-content: right;
+    width: 33%;
 }
 
 .option-btn {
@@ -778,11 +780,23 @@ p {
         padding: 12px 30px;
         font-size: 20px;
     }
+
+    .option-container {
+        width: 60%;
+    }
 }
 
 @media (max-width: 840px) {
     .salas-box {
         width:90%;
+    }
+
+    .sala-list li {
+        width: 97%;
+    }
+
+    .option-container {
+        width: 55%;
     }
 }
 
@@ -869,5 +883,14 @@ p {
     }
 }
 
+@media (max-width: 400px) {
+    .salas-box {
+        width: 95%;
+    }
+
+    .option-container {
+        width: 58%;
+    }
+}
 
 

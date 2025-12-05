@@ -280,7 +280,6 @@ p {
     list-style: none;
     padding: 0;
     max-height: 300px;
-    overflow-y: auto;
     padding-right: 20px;
 }
 
@@ -587,9 +586,12 @@ p {
 }
 
 .option-container {
-    position: relative;
+    position: absolute;
     display: inline-block;
     z-index: 50;
+    display: flex;
+    justify-content: right;
+    width: 33%;
 }
 
 .option-btn {
@@ -1092,6 +1094,9 @@ p {
         font-size: 50px;
     }
 
+    .option-container {
+        width: 60%;
+    }
 }
 
 @media (max-width: 992px) {
@@ -1110,6 +1115,13 @@ p {
         padding: 10px;
     }
 
+    .curso-list li {
+        width: 97%;
+    }
+
+    .option-container {
+        width: 55%;
+    }
 }
 
 @media (max-width: 720px) {
@@ -1231,3 +1243,12 @@ p {
     }
 }
 
+@media (max-width: 400px) {
+    .cursos-box {
+        width: 95%;
+    }
+
+    .option-container {
+        width: 58%;
+    }
+}

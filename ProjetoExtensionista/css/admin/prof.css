@@ -789,7 +789,7 @@ p {
         width:90%;
     }
 
-    .curso-list li {
+    .prof-list li {
         width: 97%;
     }
 
@@ -887,7 +887,7 @@ p {
 }
 
 @media (max-width: 400px) {
-    .cursos-box {
+    .profs-box {
         width: 95%;
     }
 
@@ -895,6 +895,7 @@ p {
         width: 58%;
     }
 }
+
 
 
 

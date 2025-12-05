@@ -149,9 +149,7 @@ function renderizarCursos(cursos) {
                 <button class="option-btn">⋮</button>
 
                 <div class="option-dropdown">
-                    <button onclick="abrirModalVincular(${curso.id_curso}, '${curso.nome}')">📚 Disciplinas</button>
                     <button onclick="editarCurso(${curso.id_curso})">✏️ Editar</button>
-                    <button onclick="abrirQuadroHorario(${curso.id_curso})">📅 Horários</button>
                     <button onclick="abrirModalExcluir(${curso.id_curso}, '${curso.nome}')">🗑️ Excluir</button>
                 </div>
             </div>
@@ -365,5 +363,6 @@ document.addEventListener("click", function(event) {
 
 // Inicialização
 carregarCursos();
+
 
 

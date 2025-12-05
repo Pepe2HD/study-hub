@@ -69,35 +69,14 @@ nav {
 
 .sidebar .sair {
     color: rgb(212, 96, 96);
-    margin-top: 75px;
-}
-
-.sidebar .logout {
-    color: rgb(212, 96, 96);
+    margin-top: 100px;
 }
 
 .sidebar .sair:hover {
     color: rgb(212, 96, 96);
 }
 
-.sidebar .logout:hover {
-    color: rgb(212, 96, 96);
-}
-
 .sidebar .sair::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    height: 3px;
-    width: 100%;
-    background-color: #c75e5e;
-    transform-origin: right;
-    transform: scaleX(0);
-    transition: transform .4s ease;
-}
-
-.sidebar .logout::after {
     content: "";
     position: absolute;
     bottom: 0;
@@ -263,6 +242,8 @@ p {
     border-radius: 12px;
     padding: 20px;
     text-align: left;
+
+    z-index: 1;
 }
 
 .cursos-header {
@@ -588,7 +569,6 @@ p {
 .option-container {
     position: absolute;
     display: inline-block;
-    z-index: 50;
     display: flex;
     justify-content: right;
     width: 33%;
@@ -640,186 +620,6 @@ p {
 
 .option-dropdown button:hover {
     background: #f2f2f2;
-}
-
-.modal-vincular-content {
-    background-color: #fefefe;
-    margin: 10% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 40%;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    position: relative;
-}
-
-.vincular-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    font-size: 20px;
-}
-
-.vincular-controls {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    font-size: 20px;
-}
-
-.vincular-controls select {
-    flex: 1;
-    padding: 8px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    font-size: 20px;
-}
-
-.select-custom {
-    position: relative;
-    width: 100%;
-    background: white;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    cursor: pointer;
-    user-select: none;
-}
-
-.select-trigger {
-    padding: 10px;
-}
-
-.select-options {
-    display: none;
-    position: absolute;
-    top: 95%;
-    left: 0;
-    width: 100%;
-    background: rgb(213, 216, 224);
-    border: 2px solid #585454;
-    max-height: 170px; /* = cerca de 6 itens */
-    overflow-y: auto;
-    z-index: 999;
-    border-radius: 10px;
-}
-
-#searchDisciplina {
-    width: 50%;
-    padding: 10px;
-    margin-bottom: 8px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 14px;
-}
-
-.vincular-buttons {
-    display: flex;
-    flex-direction: column;
-    width: 90%;
-}
-
-.search-disc {
-    display: flex;
-    flex-direction: column;
-}
-
-.search-disc input::placeholder {
-    font-size: 18px;
-}
-
-.select-disc {
-    display: flex;
-    flex-direction: row;
-    margin-top: 30px;
-    gap: 20px;
-}
-
-.select-options div {
-    padding: 10px;
-    cursor: pointer;
-}
-
-.select-options div:hover {
-    background: #adb3c0;
-}
-
-.option-item {
-    border:0.1px solid #333;
-}
-
-.btn-add-vinculo {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 20px;
-}
-
-.btn-add-vinculo:hover {
-    background-color: #45a049;
-}
-
-.lista-vinculadas {
-    list-style: none;
-    padding: 0;
-    max-height: 200px;
-    overflow-y: auto;
-    border-top: 1px solid #eee;
-    padding-right: 20px;
-    font-size: 20px;
-}
-
-.lista-vinculadas::-webkit-scrollbar {
-    width: 6px;
-    color: #41558b;
-}
-
-.lista-vinculadas::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px;
-}
-
-.lista-vinculadas::-webkit-scrollbar-thumb {
-    background: #5a84af;
-    border-radius: 10px;
-}
-
-.lista-vinculadas::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
-
-.lista-vinculadas li {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1; 
-}
-
-.btn-remove-vinculo {
-    color: #ff4444;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 20px;
-}
-
-.close-vincular {
-    color: #aaa;
-    font-size: 35px;
-    font-weight: bold;
-    cursor: pointer;
-    position: absolute;
-    top: 5px;
-    right: 15px;
-}
-
-.close-vincular:hover {
-    color: black;
 }
 
 /* OVERLAY */
@@ -1055,45 +855,6 @@ p {
         font-size: 20px;
     }
 
-    .modal-vincular-content {
-        width: 60%;
-        padding: 20px;
-        margin-top: 150px;
-    }
-
-    .vincular-header {
-        font-size: 25px;
-    }
-
-    .vincular-controls {
-        font-size: 25px;
-    }
-
-    .vincular-controls select {
-        font-size: 25px;
-    }
-
-    .btn-add-vinculo {
-        font-size: 25px;
-    }
-
-
-    .lista-vinculadas {
-        font-size: 25px;
-    }
-
-    .lista-vinculadas li {
-        font-size: 25px;
-    }
-
-    .btn-remove-vinculo {
-        font-size: 25px;
-    }
-
-    .close-vincular {
-        font-size: 50px;
-    }
-
     .option-container {
         width: 60%;
     }
@@ -1110,11 +871,6 @@ p {
         width: 90%;
     }
 
-    .modal-vincular-content {
-        width: 70%;
-        padding: 10px;
-    }
-
     .curso-list li {
         width: 97%;
     }
@@ -1122,34 +878,10 @@ p {
     .option-container {
         width: 55%;
     }
+
 }
 
 @media (max-width: 720px) {
-    .vincular-controls {
-        direction: flex;
-        flex-direction: column;
-    }
-
-    .vincular-controls {
-        width: 100%;
-    }
-    .vincular-buttons {
-        width: 100%;
-    }
-
-    .btn-add-vinculo {
-        width: 50%;
-        margin-right: 5px;
-        height: 50px;
-        margin-top: 10px;
-    }
-
-    .select-trigger {
-        width: 60%;
-    }
-    .lista-vinculadas {
-        max-height: 150px;
-    }
     .select-disc {
         flex-direction: column;
     }

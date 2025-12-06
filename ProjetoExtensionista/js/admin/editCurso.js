@@ -44,26 +44,33 @@ const popupText = document.getElementById("popup-text");
 const popupTitle = document.getElementById("popup-title");
 const popupIcon = document.querySelector(".popup-icon");
 const popupClose = document.getElementById("popup-close");
+const btnConfirm = document.getElementById("popup-confirm");
+const btnClose = document.getElementById("popup-close");
 
 function showPopup(message, type = "erro") {
   popupText.textContent = message;
 
-  popup.classList.remove("sucesso", "erro");
+  popup.classList.remove("erro", "sucesso", "alert");
   popup.classList.add(type);
 
   if (type === "sucesso") {
     popupTitle.textContent = "Sucesso!";
     popupIcon.innerHTML = "✔️";
-  } else {
+    btnConfirm.style.display = "none";
+    btnClose.textContent = "OK";
+  } else if (type === "erro") {
     popupTitle.textContent = "Erro!";
     popupIcon.innerHTML = "❌";
+    btnClose.textContent = "OK";
+    btnConfirm.style.display = "none";
+  } else if (type === "alert") {
+    btnClose.textContent = "NÃO";
+    popupTitle.textContent = "Atenção!";
+    popupIcon.innerHTML = "⚠️";
   }
 
   popup.style.display = "flex";
-
-  setTimeout(() => {
-    popup.classList.add("show");
-  }, 10);
+  setTimeout(() => popup.classList.add("show"), 10);
 }
 
 function hidePopup() {
@@ -210,7 +217,7 @@ async function abrirModalVincular() {
     try {
         // Garantir que existe ID
         if (!idCurso) {
-            alert("ID do curso não encontrado na URL.");
+            showPopup("ID do curso não encontrado na URL.","erro");
             return;
         }
 
@@ -220,7 +227,7 @@ async function abrirModalVincular() {
         const res = await fetch(`${API_BASE}/curso/${idCurso}`);
 
         if (!res.ok) {
-            alert("Erro ao carregar informações do curso.");
+            showPopup("Erro ao carregar informações do curso.","erro");
             return;
         }
 
@@ -243,7 +250,7 @@ async function abrirModalVincular() {
 
     } catch (err) {
         console.error("Erro ao abrir modal de vínculo:", err);
-        alert("Erro interno ao abrir o modal de disciplinas.");
+        showPopup("Erro interno ao abrir o modal de disciplinas.","erro");
     }
 }
 
@@ -341,6 +348,7 @@ btnAdicionarVinculo.addEventListener("click", async () => {
             await carregarDadosDoModalVinculo(cursoEmEdicaoVinculo);
         } else {
             alert("Erro ao vincular disciplina.");
+            showPopup("Erro ao vincular disciplina.","erro");
         }
 
     } catch (err) {
@@ -352,22 +360,29 @@ btnAdicionarVinculo.addEventListener("click", async () => {
    REMOVER DISCIPLINA
 ============================ */
 async function removerDisciplina(idCurso, idDisciplina) {
-    if (!confirm("Remover esta disciplina do curso?")) return;
-
-    try {
+    showPopup("Remover esta disciplina do curso?", "alert");
+    btnClose.addEventListener("click", () => {
+      hidePopup();
+      return;
+    })
+    btnConfirm.addEventListener("click", async () => {
+      hidePopup();
+      try {
         const res = await fetch(`${API_CURSO_DISCIPLINA}/${idCurso}/${idDisciplina}`, {
-            method: "DELETE"
+          method: "DELETE"
         });
 
         if (res.ok) {
             await carregarDadosDoModalVinculo(idCurso);
         } else {
-            alert("Erro ao remover vínculo.");
+            showPopup("Erro ao remover vínculo.","erro");
         }
 
     } catch (err) {
         console.error(err);
     }
+    })
+
 }
 
 /* ============================
